@@ -1,0 +1,16 @@
+[project]
+name = "lerobot_policy_my_custom_policy"
+version = "0.1.0"
+dependencies = [
+    "lerobot>=0.1.0",
+    "torch>=2.0.0",
+    "numpy>=1.24.0",
+]
+requires-python = ">= 3.10"
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools>=61.0",
+    "wheel",
+]
