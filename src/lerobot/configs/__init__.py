@@ -21,6 +21,7 @@ are intentionally NOT re-exported here to avoid circular dependencies
 Import them directly: ``from lerobot.configs.train import TrainPipelineConfig``
 """
 
+from .dataset import DatasetRecordConfig
 from .default import DatasetConfig, EvalConfig, PeftConfig, WandBConfig
 from .policies import PreTrainedConfig
 from .types import (
@@ -29,6 +30,12 @@ from .types import (
     PipelineFeatureType,
     PolicyFeature,
     RTCAttentionSchedule,
+)
+from .video import (
+    VALID_VIDEO_CODECS,
+    VIDEO_ENCODER_INFO_KEYS,
+    VideoEncoderConfig,
+    camera_encoder_defaults,
 )
 
 __all__ = [
@@ -39,9 +46,16 @@ __all__ = [
     "PolicyFeature",
     "RTCAttentionSchedule",
     # Config classes
+    "DatasetRecordConfig",
     "DatasetConfig",
     "EvalConfig",
     "PeftConfig",
     "PreTrainedConfig",
     "WandBConfig",
+    "VideoEncoderConfig",
+    # Defaults
+    "camera_encoder_defaults",
+    # Constants
+    "VALID_VIDEO_CODECS",
+    "VIDEO_ENCODER_INFO_KEYS",
 ]
