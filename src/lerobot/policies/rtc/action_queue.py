@@ -164,9 +164,8 @@ class ActionQueue:
             action_index_before_inference: Index before inference started, for validation.
         """
         with self.lock:
-            delay = self._check_and_resolve_delays(real_delay, action_index_before_inference)
-
             if self.cfg.enabled:
+                delay = self._check_and_resolve_delays(real_delay, action_index_before_inference)
                 self._replace_actions_queue(original_actions, processed_actions, delay)
                 return
 

@@ -60,12 +60,15 @@ class BaseStrategy(RolloutStrategy):
                 break
 
             obs = robot.get_observation()
+            observation_end = time.perf_counter()
             obs_processed = self._process_observation_and_notify(ctx.processors, obs)
+            processing_end = time.perf_counter()
 
             if self._handle_warmup(cfg.use_torch_compile, loop_start, control_interval):
                 continue
 
             action_dict = send_next_action(obs_processed, obs, ctx, interpolator)
+            action_end = time.perf_counter()
             self._log_telemetry(obs_processed, action_dict, ctx.runtime)
 
             dt = time.perf_counter() - loop_start
@@ -73,7 +76,16 @@ class BaseStrategy(RolloutStrategy):
                 precise_sleep(sleep_t)
             else:
                 logger.warning(
-                    f"Record loop is running slower ({1 / dt:.1f} Hz) than the target FPS ({cfg.fps} Hz). Dataset frames might be dropped and robot control might be unstable. Common causes are: 1) Camera FPS not keeping up 2) Policy inference taking too long 3) CPU starvation"
+                    "Control loop is running slower (%.1f Hz) than the target FPS (%.1f Hz): "
+                    "observation=%.1fms, processing=%.1fms, action=%.1fms, telemetry=%.1fms, total=%.1fms. "
+                    "Robot control might be unstable.",
+                    1 / dt,
+                    cfg.fps,
+                    (observation_end - loop_start) * 1000,
+                    (processing_end - observation_end) * 1000,
+                    (action_end - processing_end) * 1000,
+                    (time.perf_counter() - action_end) * 1000,
+                    dt * 1000,
                 )
 
     def teardown(self, ctx: RolloutContext) -> None:

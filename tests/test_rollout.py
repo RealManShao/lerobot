@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import dataclasses
+from threading import Event
 from unittest.mock import MagicMock
 
 import pytest
@@ -249,6 +250,51 @@ def test_create_inference_engine_sync():
         device="cpu",
     )
     assert isinstance(engine, SyncInferenceEngine)
+
+
+def test_rtc_disabled_does_not_pass_leftover_actions(monkeypatch):
+    import lerobot.rollout.inference.rtc as rtc_module
+    from lerobot.policies.rtc.configuration_rtc import RTCConfig
+    from lerobot.rollout.inference.rtc import RTCInferenceEngine
+
+    shutdown_event = Event()
+    policy = MagicMock()
+    preprocessor = MagicMock(side_effect=lambda batch: batch)
+    preprocessor.steps = []
+    postprocessor = MagicMock(side_effect=lambda actions: actions)
+    robot = MagicMock(robot_type="mock")
+    engine = RTCInferenceEngine(
+        policy=policy,
+        preprocessor=preprocessor,
+        postprocessor=postprocessor,
+        robot_wrapper=robot,
+        rtc_config=RTCConfig(enabled=False),
+        hw_features={},
+        task="test",
+        fps=30,
+        device="cpu",
+        shutdown_event=shutdown_event,
+    )
+
+    def predict_action_chunk(batch, **kwargs):
+        engine._shutdown_event.set()
+        return torch.zeros((1, 40, 1))
+
+    policy.predict_action_chunk.side_effect = predict_action_chunk
+    queue = MagicMock()
+    queue.qsize.return_value = 0
+    queue.get_action_index.return_value = 0
+    queue.get_left_over.return_value = torch.ones((5, 1))
+    engine._action_queue = queue
+    engine._obs_holder = {"obs": {}}
+    engine._policy_active.set()
+    monkeypatch.setattr(rtc_module, "build_dataset_frame", lambda *args, **kwargs: {})
+    monkeypatch.setattr(rtc_module, "prepare_observation_for_inference", lambda batch, *args: batch)
+
+    engine._rtc_loop()
+
+    queue.get_left_over.assert_not_called()
+    assert policy.predict_action_chunk.call_args.kwargs["prev_chunk_left_over"] is None
 
 
 # ---------------------------------------------------------------------------

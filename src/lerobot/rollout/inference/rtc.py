@@ -271,7 +271,7 @@ class RTCInferenceEngine(InferenceEngine):
                     try:
                         current_time = time.perf_counter()
                         idx_before = queue.get_action_index()
-                        prev_actions = queue.get_left_over()
+                        prev_actions = queue.get_left_over() if self._rtc_config.enabled else None
 
                         latency = latency_tracker.max()
                         delay = math.ceil(latency / time_per_chunk) if latency else 0

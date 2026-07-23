@@ -431,6 +431,26 @@ def test_merge_with_different_lengths():
     assert queue.qsize() == 35
 
 
+def test_merge_fifo_mode_ignores_rtc_delay_validation(sample_actions, caplog):
+    """FIFO prefetch appends chunks without RTC replacement-delay accounting."""
+    import logging
+
+    caplog.set_level(logging.WARNING)
+    queue = ActionQueue(RTCConfig(enabled=False, execution_horizon=10))
+    queue.merge(sample_actions["short"], sample_actions["short"], real_delay=0)
+    queue.get()
+
+    queue.merge(
+        sample_actions["original"],
+        sample_actions["processed"],
+        real_delay=125,
+        action_index_before_inference=0,
+    )
+
+    assert "Indexes diff is not equal to real delay" not in caplog.text
+    assert queue.qsize() == 59
+
+
 # merge() delay validation tests
 
 
