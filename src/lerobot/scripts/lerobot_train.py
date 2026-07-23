@@ -208,9 +208,9 @@ def train(cfg: TrainPipelineConfig, accelerator: "Accelerator | None" = None):
     # Create Accelerator if not provided
     # It will automatically detect if running in distributed mode or single-process mode
     # We set step_scheduler_with_optimizer=False to prevent accelerate from adjusting the lr_scheduler steps based on the num_processes
-    # We set find_unused_parameters=True to handle models with conditional computation
+    # Disable unused-parameter detection to avoid an extra autograd-graph traversal each iteration.
     if accelerator is None:
-        ddp_kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
+        ddp_kwargs = DistributedDataParallelKwargs(find_unused_parameters=False)
         # Accelerate auto-detects the device based on the available hardware and ignores the policy.device setting.
         # Force the device to be CPU when the active config's device is set to CPU (works for both policy and reward model training).
         force_cpu = cfg.trainable_config.device == "cpu"
@@ -737,6 +737,11 @@ def train(cfg: TrainPipelineConfig, accelerator: "Accelerator | None" = None):
 
     is_fsdp = accelerator.distributed_type == DistributedType.FSDP
     model_state_dict = accelerator.get_state_dict(policy) if is_fsdp else None
+
+    # Finish all distributed work before rank 0 starts network-bound Hub uploads.
+    # A barrier after the upload can exceed NCCL's timeout when an upload is slow or stalled.
+    accelerator.wait_for_everyone()
+
     if is_main_process:
         logging.info("End of training")
 
@@ -750,8 +755,7 @@ def train(cfg: TrainPipelineConfig, accelerator: "Accelerator | None" = None):
             preprocessor.push_to_hub(active_cfg.repo_id)
             postprocessor.push_to_hub(active_cfg.repo_id)
 
-    # Properly clean up the distributed process group
-    accelerator.wait_for_everyone()
+            # The Hub upload is rank-0-only, so do not wait on a collective after it.
     accelerator.end_training()
 
 

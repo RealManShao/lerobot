@@ -170,6 +170,7 @@ from lerobot.robots import (  # noqa: F401
     reachy2,
     rebot_b601_follower,
     so_follower,
+    tron2,
     unitree_g1 as unitree_g1_robot,
 )
 from lerobot.rollout import RolloutConfig, build_rollout_context, create_strategy
