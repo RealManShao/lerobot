@@ -242,7 +242,7 @@ class GrootPolicy(PreTrainedPolicy):
 
         if config is None:
             # Create default config with the pretrained path
-            config = GrootConfig(
+            config = cls.config_class(
                 base_model_path=str(pretrained_name_or_path),
             )
 
