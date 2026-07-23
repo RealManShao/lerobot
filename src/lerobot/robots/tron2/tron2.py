@@ -28,8 +28,11 @@ from .config_tron2 import Tron2RobotConfig
 
 if TYPE_CHECKING or _tron2_env_available:
     from tron2_env import Tron2Config, create_motion_controller
+    from tron2_env.bridge import BridgeConfig, BridgeObservationProvider
     from tron2_env.motion import MotionController
 else:
+    BridgeConfig = Any
+    BridgeObservationProvider = Any
     MotionController = Any
 
 
@@ -53,12 +56,13 @@ TRON2_JOINTS = (
     "head_pitch.pos",
     "head_yaw.pos",
 )
+TRON2_ACTIONS = TRON2_JOINTS[:16]
+BRIDGE_CAMERAS = ("cam_high", "cam_left_wrist", "cam_right_wrist")
 
 _LEFT_ARM = slice(0, 7)
 _LEFT_GRIPPER = 7
 _RIGHT_ARM = slice(8, 15)
 _RIGHT_GRIPPER = 15
-_HEAD = slice(16, 18)
 
 
 class Tron2Robot(Robot):
@@ -70,7 +74,12 @@ class Tron2Robot(Robot):
         super().__init__(config)
         self.config = config
         self.controller: MotionController | None = None
-        self.cameras = make_cameras_from_configs(config.cameras)
+        self.bridge_provider: BridgeObservationProvider | None = None
+        self._bridge_initial_observation: dict[str, Any] | None = None
+        self._bridge_ready = False
+        self.cameras = (
+            {} if config.observation_source == "bridge" else make_cameras_from_configs(config.cameras)
+        )
 
     @property
     def _motors_ft(self) -> dict[str, type]:
@@ -78,9 +87,15 @@ class Tron2Robot(Robot):
 
     @property
     def _cameras_ft(self) -> dict[str, tuple[int, int, int]]:
-        return {
-            name: (config.height, config.width, 3) for name, config in self.config.cameras.items()
-        }
+        if self.config.observation_source == "bridge":
+            shape = (self.config.bridge_camera_height, self.config.bridge_camera_width, 3)
+            return dict.fromkeys(BRIDGE_CAMERAS, shape)
+        features = {}
+        for name, config in self.config.cameras.items():
+            if config.height is None or config.width is None:
+                raise ValueError(f"Camera {name!r} must define width and height")
+            features[name] = (config.height, config.width, 3)
+        return features
 
     @cached_property
     def observation_features(self) -> dict[str, type | tuple[int, int, int]]:
@@ -88,13 +103,14 @@ class Tron2Robot(Robot):
 
     @cached_property
     def action_features(self) -> dict[str, type]:
-        return self._motors_ft
+        return dict.fromkeys(TRON2_ACTIONS, float)
 
     @property
     def is_connected(self) -> bool:
         return (
             self.controller is not None
             and self.controller.is_connected()
+            and (self.config.observation_source != "bridge" or self._bridge_ready)
             and all(camera.is_connected for camera in self.cameras.values())
         )
 
@@ -105,6 +121,8 @@ class Tron2Robot(Robot):
         sdk_config = Tron2Config(
             robot_ip=self.config.robot_ip,
             port=self.config.port,
+            init_joints=self.config.init_joints,
+            init_head=self.config.init_head,
             state_queue_maxlen=self.config.state_queue_maxlen,
             polling_rate=self.config.polling_rate,
             connection_timeout=self.config.connection_timeout,
@@ -115,8 +133,25 @@ class Tron2Robot(Robot):
             eta_default=1.0 / self.config.control_frequency,
         )
         try:
-            for camera in self.cameras.values():
-                camera.connect()
+            if self.config.observation_source == "bridge":
+                bridge_config = BridgeConfig(
+                    host=self.config.bridge_host,
+                    ws_path=self.config.bridge_ws_path,
+                    image_max_fps=self.config.bridge_image_max_fps,
+                    align_max_delay_ms=self.config.bridge_align_max_delay_ms,
+                    verify_tls=self.config.bridge_verify_tls,
+                    save_debug_images=False,
+                )
+                bridge_provider = BridgeObservationProvider(bridge_config)
+                self.bridge_provider = bridge_provider
+                bridge_provider.start()
+                self._bridge_initial_observation = bridge_provider.get_obs(
+                    timeout=self.config.bridge_connection_timeout
+                )
+                self._bridge_ready = True
+            else:
+                for camera in self.cameras.values():
+                    camera.connect()
             self.configure()
         except Exception:
             self.disconnect()
@@ -136,34 +171,52 @@ class Tron2Robot(Robot):
         if not self.is_connected or self.controller is None:
             raise ConnectionError(f"{self} is not connected")
 
-        state = np.asarray(
-            self.controller.get_joint_states(timeout=self.config.state_timeout)["states"],
-            dtype=np.float64,
-        )
+        bridge_images: dict[str, np.ndarray] = {}
+        if self.bridge_provider is not None:
+            bridge_observation = self._bridge_initial_observation
+            self._bridge_initial_observation = None
+            if bridge_observation is None:
+                bridge_observation = self.bridge_provider.get_latest_obs(timeout=self.config.bridge_timeout)
+            state = np.asarray(bridge_observation["state"], dtype=np.float64)
+            bridge_images = bridge_observation.get("images", {})
+        else:
+            state = np.asarray(
+                self.controller.get_joint_states(timeout=self.config.state_timeout)["states"],
+                dtype=np.float64,
+            )
         if state.shape != (len(TRON2_JOINTS),):
             raise RuntimeError(
                 f"Expected {len(TRON2_JOINTS)} TRON2 state values, received shape {state.shape}"
             )
 
         observation: RobotObservation = dict(zip(TRON2_JOINTS, state, strict=True))
-        for name, camera in self.cameras.items():
-            observation[name] = camera.read_latest()
+        if self.bridge_provider is not None:
+            missing_cameras = set(BRIDGE_CAMERAS).difference(bridge_images)
+            if missing_cameras:
+                raise RuntimeError(f"Bridge observation is missing cameras: {sorted(missing_cameras)}")
+            observation.update({name: bridge_images[name] for name in BRIDGE_CAMERAS})
+        else:
+            for name, camera in self.cameras.items():
+                observation[name] = camera.read_latest()
         return observation
 
     def send_action(self, action: RobotAction) -> RobotAction:
         if not self.is_connected or self.controller is None:
             raise ConnectionError(f"{self} is not connected")
 
-        missing = set(TRON2_JOINTS).difference(action)
-        unexpected = set(action).difference(TRON2_JOINTS)
+        missing = set(TRON2_ACTIONS).difference(action)
+        unexpected = set(action).difference(TRON2_ACTIONS)
         if missing or unexpected:
             raise ValueError(
                 f"TRON2 action keys do not match action_features; missing={sorted(missing)}, "
                 f"unexpected={sorted(unexpected)}"
             )
 
-        target = np.asarray([action[name] for name in TRON2_JOINTS], dtype=np.float64)
-        servo_target = np.concatenate((target[_LEFT_ARM], target[_RIGHT_ARM], target[_HEAD]))
+        target = np.asarray([action[name] for name in TRON2_ACTIONS], dtype=np.float64)
+        head_position = np.asarray(self.config.init_head, dtype=np.float64)
+        if head_position.shape != (2,):
+            raise RuntimeError(f"Expected 2 TRON2 head values, received shape {head_position.shape}")
+        servo_target = np.concatenate((target[_LEFT_ARM], target[_RIGHT_ARM], head_position))
         grippers = np.clip(
             target[[_LEFT_GRIPPER, _RIGHT_GRIPPER]] * 100.0,
             0.0,
@@ -171,9 +224,14 @@ class Tron2Robot(Robot):
         )
         self.controller.set_gripper(float(grippers[0]), float(grippers[1]))
         self.controller.command_joints(servo_target)
-        return dict(zip(TRON2_JOINTS, target, strict=True))
+        return dict(zip(TRON2_ACTIONS, target, strict=True))
 
     def disconnect(self) -> None:
+        self._bridge_ready = False
+        self._bridge_initial_observation = None
+        if self.bridge_provider is not None:
+            self.bridge_provider.stop()
+            self.bridge_provider = None
         for camera in self.cameras.values():
             if camera.is_connected:
                 camera.disconnect()
