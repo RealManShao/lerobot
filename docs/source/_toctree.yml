@@ -77,6 +77,8 @@
     title: EVO1
   - local: groot
     title: NVIDIA GR00T
+  - local: drifting
+    title: Drifting
   - local: xvla
     title: X-VLA
   - local: multi_task_dit

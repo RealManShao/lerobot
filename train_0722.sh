@@ -5,7 +5,7 @@
 # CUDA_VISIBLE_DEVICES=0,1,2 /usr/local/bin/torchrun --standalone --nproc_per_node=3 -m lerobot.scripts.lerobot_train \
 #   --dataset.repo_id=siemens-v3-disturb \
 #   --dataset.root=/mnt/workspace/ivanshao/lerobot/data/siemens-v3-disturb \
-#   --dataset.video_backend=pyav \
+#   --dataset.video_backend=torchcodec \
 #   --policy.type=drifting \
 #   --batch_size=96 \
 #   --steps=10000 \
