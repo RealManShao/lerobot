@@ -1,0 +1,8 @@
+lerobot-eval \
+    --policy.path=Xihe666/drifting_robomme \
+    --env.type=robomme \
+    --env.task=PickXtimes \
+    --env.dataset_split=test \
+    --env.task_ids=[0] \
+    --eval.batch_size=1 \
+    --eval.n_episodes=1

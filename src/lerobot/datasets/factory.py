@@ -16,6 +16,7 @@
 import logging
 import math
 from pprint import pformat
+from typing import Any
 
 import torch
 
@@ -29,6 +30,85 @@ from .dataset_metadata import LeRobotDatasetMetadata
 from .lerobot_dataset import LeRobotDataset
 from .multi_dataset import MultiLeRobotDataset
 from .streaming_dataset import StreamingLeRobotDataset
+
+
+class _RenamedDatasetMetadata:
+    def __init__(self, metadata: LeRobotDatasetMetadata, rename_map: dict[str, str]) -> None:
+        self._metadata = metadata
+        self._rename_map = rename_map
+
+    def _rename(self, values: dict[str, Any]) -> dict[str, Any]:
+        return {self._rename_map.get(key, key): value for key, value in values.items()}
+
+    @property
+    def features(self) -> dict[str, dict]:
+        return self._rename(self._metadata.features)
+
+    @property
+    def stats(self) -> dict[str, dict]:
+        return self._rename(self._metadata.stats)
+
+    @property
+    def camera_keys(self) -> list[str]:
+        return [self._rename_map.get(key, key) for key in self._metadata.camera_keys]
+
+    @property
+    def depth_keys(self) -> list[str]:
+        return [self._rename_map.get(key, key) for key in self._metadata.depth_keys]
+
+    @property
+    def has_language_columns(self) -> bool:
+        return self._metadata.has_language_columns
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._metadata, name)
+
+
+class _FeatureRenamedDataset(torch.utils.data.Dataset):
+    def __init__(self, dataset: LeRobotDataset, rename_map: dict[str, str]) -> None:
+        missing_keys = rename_map.keys() - dataset.meta.features.keys()
+        if missing_keys:
+            raise ValueError(f"Cannot rename missing dataset features: {sorted(missing_keys)}")
+        if len(set(rename_map.values())) != len(rename_map):
+            raise ValueError("Dataset feature rename destinations must be unique.")
+        collisions = (set(rename_map.values()) & dataset.meta.features.keys()) - rename_map.keys()
+        if collisions:
+            raise ValueError(f"Dataset feature rename destinations already exist: {sorted(collisions)}")
+
+        self.dataset = dataset
+        self.rename_map = rename_map
+        self.meta = _RenamedDatasetMetadata(dataset.meta, rename_map)
+
+    def __len__(self) -> int:
+        return len(self.dataset)
+
+    def __getitem__(self, index: int) -> dict[str, Any]:
+        item = self.dataset[index]
+        return {self.rename_map.get(key, key): value for key, value in item.items()}
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self.dataset, name)
+
+
+def _rename_dataset_features(dataset: LeRobotDataset, rename_map: dict[str, str]) -> LeRobotDataset:
+    return _FeatureRenamedDataset(dataset, rename_map) if rename_map else dataset
+
+
+def _resolve_source_delta_timestamps(
+    cfg: PreTrainedConfig | RewardModelConfig,
+    metadata: LeRobotDatasetMetadata,
+    rename_map: dict[str, str],
+) -> dict[str, list] | None:
+    if not rename_map:
+        return resolve_delta_timestamps(cfg, metadata)
+
+    renamed_metadata = _RenamedDatasetMetadata(metadata, rename_map)
+    delta_timestamps = resolve_delta_timestamps(cfg, renamed_metadata)
+    if delta_timestamps is None:
+        return None
+
+    source_keys = {destination: source for source, destination in rename_map.items()}
+    return {source_keys.get(key, key): timestamps for key, timestamps in delta_timestamps.items()}
 
 
 def resolve_delta_timestamps(
@@ -86,7 +166,9 @@ def make_dataset(cfg: TrainPipelineConfig) -> LeRobotDataset | MultiLeRobotDatas
         ds_meta = LeRobotDatasetMetadata(
             cfg.dataset.repo_id, root=cfg.dataset.root, revision=cfg.dataset.revision
         )
-        delta_timestamps = resolve_delta_timestamps(cfg.trainable_config, ds_meta)
+        delta_timestamps = _resolve_source_delta_timestamps(
+            cfg.trainable_config, ds_meta, cfg.dataset.feature_rename_map
+        )
         if not cfg.dataset.streaming:
             dataset = LeRobotDataset(
                 cfg.dataset.repo_id,
@@ -131,9 +213,9 @@ def make_dataset(cfg: TrainPipelineConfig) -> LeRobotDataset | MultiLeRobotDatas
             if key in dataset.meta.depth_keys:
                 continue  # Exclude depth keys from ImageNet stats
             for stats_type, stats in IMAGENET_STATS.items():
-                dataset.meta.stats[key][stats_type] = torch.tensor(stats, dtype=torch.float32)
+                dataset.meta.stats.setdefault(key, {})[stats_type] = torch.tensor(stats, dtype=torch.float32)
 
-    return dataset
+    return _rename_dataset_features(dataset, cfg.dataset.feature_rename_map)
 
 
 def make_train_eval_datasets(
@@ -175,7 +257,10 @@ def make_train_eval_datasets(
         f"(eval_split={cfg.dataset.eval_split}, {len(task_to_episodes)} tasks)"
     )
 
-    delta_timestamps = resolve_delta_timestamps(cfg.trainable_config, full_dataset.meta)
+    source_meta = full_dataset.dataset.meta if isinstance(full_dataset, _FeatureRenamedDataset) else full_dataset.meta
+    delta_timestamps = _resolve_source_delta_timestamps(
+        cfg.trainable_config, source_meta, cfg.dataset.feature_rename_map
+    )
 
     train_image_transforms = (
         ImageTransforms(cfg.dataset.image_transforms) if cfg.dataset.image_transforms.enable else None
@@ -209,6 +294,9 @@ def make_train_eval_datasets(
         for ds in (train_dataset, eval_dataset):
             for key in ds.meta.camera_keys:
                 for stats_type, stats in IMAGENET_STATS.items():
-                    ds.meta.stats[key][stats_type] = torch.tensor(stats, dtype=torch.float32)
+                    ds.meta.stats.setdefault(key, {})[stats_type] = torch.tensor(stats, dtype=torch.float32)
 
-    return train_dataset, eval_dataset
+    return (
+        _rename_dataset_features(train_dataset, cfg.dataset.feature_rename_map),
+        _rename_dataset_features(eval_dataset, cfg.dataset.feature_rename_map),
+    )
