@@ -43,12 +43,27 @@ USER user_lerobot
 # Install smolvla + av-dep via the PR's pyproject, then layer robomme on top
 # with gymnasium/numpy overrides. robomme isn't a pyproject extra because its
 # mani-skill pin conflicts with lerobot's base numpy>=2 (see pyproject.toml).
+#
+# scipy<1.18 is required: scipy 1.18 advertises a numpy>=1.25 floor but calls
+# numpy-2.0-only aliases (`np.long`/`np.ulong` in scipy/sparse/_sputils.py) at
+# import time. Since numpy is held at 1.26.4 for mani-skill, an unpinned scipy
+# makes *any* `import scipy` blow up with
+# `AttributeError: module 'numpy' has no attribute 'long'` — which lerobot-eval
+# hits immediately via transformers -> scipy.optimize.linear_sum_assignment.
+# It is listed both as an override and as an explicit requirement, because an
+# override alone does not downgrade a distribution the resolver already
+# considers satisfied.
+#
+# The trailing import check fails the build (rather than the first eval run) if
+# anything ever resolves to a numpy-2-only build while numpy is pinned to 1.x.
 COPY --chown=user_lerobot:user_lerobot setup.py pyproject.toml uv.lock README.md MANIFEST.in ./
-RUN printf 'gymnasium==0.29.1\nnumpy==1.26.4\n' > /tmp/robomme_override.txt \
+RUN printf 'gymnasium==0.29.1\nnumpy==1.26.4\nscipy<1.18\n' > /tmp/robomme_override.txt \
     && uv pip install --no-cache --override /tmp/robomme_override.txt \
          -e ".[smolvla,av-dep]" \
+         "scipy<1.18" \
          "robomme @ git+https://github.com/RoboMME/robomme_benchmark.git@main" \
-    && python -c "import robomme; print('robomme import OK')"
+    && python -c "import robomme; print('robomme import OK')" \
+    && python -c "import numpy, scipy, scipy.sparse, scipy.optimize, pandas, gymnasium, mani_skill; print('numpy-1.x compat OK:', numpy.__version__, scipy.__version__)"
 
 # Overlay the PR's source code on top of the nightly image.
 COPY --chown=user_lerobot:user_lerobot . .

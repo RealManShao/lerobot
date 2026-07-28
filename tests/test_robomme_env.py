@@ -44,7 +44,12 @@ def _install_robomme_stub():
                 "joint_state_list": [np.zeros(7, dtype=np.float32)],
                 "gripper_state_list": [np.zeros(2, dtype=np.float32)],
             }
-            env.reset.return_value = (obs, {"status": "ongoing", "task_goal": "pick the cube"})
+            # Real RoboMME returns `task_goal` as a list of equivalent paraphrases, and omits
+            # it entirely from later `step()` infos.
+            env.reset.return_value = (
+                obs,
+                {"status": "ongoing", "task_goal": ["pick the cube", "grab the cube"]},
+            )
             env.step.return_value = (obs, 0.0, False, False, {"status": "ongoing", "task_goal": ""})
             return env
 
@@ -170,6 +175,47 @@ def test_convert_obs_array_format():
         assert result["pixels"]["image"].shape == (256, 256, 3)
         assert result["pixels"]["wrist_image"].shape == (256, 256, 3)
         assert result["agent_pos"].shape == (8,)
+    finally:
+        _uninstall_robomme_stub()
+
+
+def test_task_description_is_exposed_and_normalized():
+    """`lerobot_eval` reads `task_description` off each sub-env to build the policy prompt.
+
+    RoboMME hands back a list of paraphrases, so the wrapper must expose a single string.
+    """
+    _install_robomme_stub()
+    try:
+        from lerobot.envs.robomme import RoboMMEGymEnv
+
+        env = RoboMMEGymEnv(task="PickXtimes", dataset="test", episode_idx=0, max_steps=10)
+        assert env.task_description == ""
+        assert env.task == "PickXtimes"
+
+        _, info = env.reset()
+        assert env.task_description == "pick the cube"
+        assert info["task_goal"] == "pick the cube"
+
+        # `step()` infos carry no goal, so the description must stay pinned to the reset value.
+        _, _, _, _, step_info = env.step(np.zeros(8, dtype=np.float32))
+        assert env.task_description == "pick the cube"
+        assert step_info["task_goal"] == ""
+    finally:
+        _uninstall_robomme_stub()
+
+
+def test_convert_info_handles_missing_and_empty_task_goal():
+    _install_robomme_stub()
+    try:
+        from lerobot.envs.robomme import RoboMMEGymEnv
+
+        env = RoboMMEGymEnv.__new__(RoboMMEGymEnv)
+        env._task_description = ""
+
+        assert env._convert_info({})["task_goal"] == ""
+        assert env._convert_info({"task_goal": []})["task_goal"] == ""
+        assert env._convert_info({"task_goal": "plain string"})["task_goal"] == "plain string"
+        assert env.task_description == "plain string"
     finally:
         _uninstall_robomme_stub()
 

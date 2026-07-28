@@ -78,6 +78,7 @@ class RoboMMEGymEnv(gym.Env):
         )
         self._env = None
         self._last_raw_obs: dict | None = None
+        self._task_description: str = ""
 
         action_dim = 8 if action_space_type == "joint_angle" else 7
         self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(action_dim,), dtype=np.float32)
@@ -96,6 +97,21 @@ class RoboMMEGymEnv(gym.Env):
                 "agent_pos": spaces.Box(-np.inf, np.inf, shape=(8,), dtype=np.float32),
             }
         )
+
+    @property
+    def task(self) -> str:
+        """RoboMME task name (e.g. "PickXtimes"). Probed by `check_env_attributes_and_types()`."""
+        return self._task
+
+    @property
+    def task_description(self) -> str:
+        """Natural-language goal of the current episode.
+
+        `lerobot_eval` probes every sub-env for this attribute (via `env.call()`) to build the
+        policy's `observation["task"]`. Without it the probe raises `AttributeError` and
+        language-conditioned policies silently receive an empty instruction.
+        """
+        return self._task_description
 
     def reset(self, *, seed=None, options=None):
         super().reset(seed=seed)
@@ -161,9 +177,18 @@ class RoboMMEGymEnv(gym.Env):
         }
 
     def _convert_info(self, info: dict) -> dict:
+        # RoboMME returns `task_goal` as a list of equivalent paraphrases; keep the first one so
+        # downstream consumers (policy prompt, episode recording) always receive a plain string.
+        task_goal = info.get("task_goal", "")
+        if isinstance(task_goal, (list, tuple)):
+            task_goal = str(task_goal[0]) if len(task_goal) > 0 else ""
+        else:
+            task_goal = str(task_goal)
+        if task_goal:
+            self._task_description = task_goal
         return {
             "status": info.get("status", "ongoing"),
-            "task_goal": info.get("task_goal", ""),
+            "task_goal": task_goal,
         }
 
 
