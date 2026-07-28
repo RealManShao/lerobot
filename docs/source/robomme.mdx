@@ -25,12 +25,21 @@
 ### Native (Linux)
 
 ```bash
-pip install --override <(printf 'gymnasium==0.29.1\nnumpy==1.26.4\n') \
-  -e '.[smolvla,av-dep]' \
+pip install --override <(printf 'gymnasium==0.29.1\nnumpy==1.26.4\nscipy<1.18\n') \
+  -e '.[smolvla,av-dep]' 'scipy<1.18' \
   'robomme @ git+https://github.com/RoboMME/robomme_benchmark.git@main'
 ```
 
 > **Dependency note**: `mani-skill` (pulled by `robomme`) pins `gymnasium==0.29.1` and `numpy<2.0.0`, which conflict with lerobot's base `numpy>=2.0.0`. That's why `robomme` is not a pyproject extra — use the override install above, or the Docker approach below to avoid conflicts entirely.
+
+> **`scipy<1.18` is required.** scipy 1.18 advertises a `numpy>=1.25` floor but dereferences the
+> numpy-2.0-only `np.long` / `np.ulong` aliases at import time (`scipy/sparse/_sputils.py`). With
+> numpy held at 1.26.4 for mani-skill, *any* `import scipy` then fails with
+> `AttributeError: module 'numpy' has no attribute 'long'` — and `lerobot-eval` trips over it
+> immediately via `transformers -> scipy.optimize.linear_sum_assignment`, before a single
+> rollout step runs. Note that `scipy` is passed both as an override *and* as an explicit
+> requirement: an override alone will not downgrade a distribution the resolver already
+> considers satisfied.
 
 ### Docker (recommended)
 
@@ -38,11 +47,17 @@ pip install --override <(printf 'gymnasium==0.29.1\nnumpy==1.26.4\n') \
 # Build base image first (from repo root)
 docker build -f docker/Dockerfile.eval-base -t lerobot-eval-base .
 
-# Build RoboMME eval image (applies gymnasium + numpy pin overrides)
+# Build RoboMME eval image (applies gymnasium + numpy + scipy pin overrides)
 docker build -f docker/Dockerfile.benchmark.robomme -t lerobot-robomme .
 ```
 
-The `docker/Dockerfile.benchmark.robomme` image overrides `gymnasium==0.29.1` and `numpy==1.26.4` after lerobot's install. Both versions are runtime-safe for lerobot's actual API usage.
+The `docker/Dockerfile.benchmark.robomme` image overrides `gymnasium==0.29.1`, `numpy==1.26.4` and `scipy<1.18` after lerobot's install. These versions are runtime-safe for lerobot's actual API usage. The build ends with an import check, so a bad resolution fails the build rather than the first eval run.
+
+If you are using an image built before the `scipy<1.18` pin was added, repair it in place instead of rebuilding:
+
+```bash
+uv pip install --no-cache 'scipy<1.18'
+```
 
 ## Running Evaluation
 
@@ -61,7 +76,7 @@ lerobot-eval \
 
 ### Multi-task evaluation
 
-Evaluate multiple tasks in one run by comma-separating task names. Use `task_ids` to control which episodes are evaluated per task. Recommended: 50 episodes per task for the test split.
+Evaluate multiple tasks in one run by comma-separating task names.
 
 ```bash
 lerobot-eval \
@@ -69,10 +84,61 @@ lerobot-eval \
     --env.type=robomme \
     --env.task=PickXtimes,BinFill,StopCube,MoveCube,InsertPeg \
     --env.dataset_split=test \
-    --env.task_ids=[0,1,2,3,4,5,6,7,8,9] \
-    --eval.batch_size=1 \
-    --eval.n_episodes=50
+    --env.task_ids=[0,10,20,30,40] \
+    --eval.batch_size=10 \
+    --eval.n_episodes=10
 ```
+
+### How `task_ids`, `batch_size` and `n_episodes` interact
+
+This is easy to get wrong, and getting it wrong silently produces a score over the *same few
+episodes measured repeatedly* rather than over the test split.
+
+- `task_ids` are **episode indices**, not task identifiers.
+- The vec env built for `task_ids=[t]` binds its `batch_size` sub-envs to episodes
+  `t, t+1, ..., t+batch_size-1`.
+- `n_episodes` controls how many rollout *batches* are run per id
+  (`n_batches = ceil(n_episodes / batch_size)`), and every batch resets the same episodes.
+
+So to cover episodes `0..49` exactly once, stride the ids by `batch_size` and set
+`n_episodes == batch_size`:
+
+| `batch_size` | `task_ids`             | `n_episodes` | episodes evaluated |
+| ------------ | ---------------------- | ------------ | ------------------ |
+| 10           | `[0,10,20,30,40]`      | 10           | 0–49, once each    |
+| 5            | `[0,5,10,...,45]`      | 5            | 0–49, once each    |
+| 1            | `[0,1,2,...,49]`       | 1            | 0–49, once each    |
+
+By contrast `--env.task_ids=[0,1,...,9] --eval.batch_size=1 --eval.n_episodes=50` evaluates only
+episodes 0–9, fifty times each.
+
+### Full benchmark (all 16 tasks x 50 test episodes)
+
+`eval_robomme_all.sh` in the repo root runs the complete benchmark inside the Docker image and
+writes per-task and aggregate results:
+
+```bash
+./eval_robomme_all.sh                              # 16 tasks x 50 episodes (~3 h on one RTX 4090)
+BATCH_SIZE=10 ./eval_robomme_all.sh                # parallel envs per rollout batch
+TASKS="PickXtimes BinFill" ./eval_robomme_all.sh   # subset of tasks
+N_EPISODES=10 ./eval_robomme_all.sh                # quick smoke run
+POLICY=<your_policy_repo> ./eval_robomme_all.sh
+```
+
+It runs one `lerobot-eval` per task, so one failing task cannot discard the whole run, and it
+skips tasks that already have results — an interrupted run can simply be restarted. It also
+derives `task_ids` from `BATCH_SIZE` using the striding rule above, and refuses to start if
+`N_EPISODES` is not divisible by `BATCH_SIZE` (which would double-count episodes).
+
+Output layout under `outputs/robomme_eval/<timestamp>/`:
+
+| Path                  | Contents                                             |
+| --------------------- | ---------------------------------------------------- |
+| `results/<task>.json` | Raw `eval_info.json` per task                        |
+| `logs/<task>.log`     | Full `lerobot-eval` output per task                  |
+| `runs/<task>/videos/` | Rollout videos                                       |
+| `summary.json`        | Per-task and episode-weighted overall success rate   |
+| `summary.txt`         | The same summary as a plain-text table               |
 
 ### Key CLI options for `env.type=robomme`
 
@@ -113,6 +179,19 @@ The env wrapper exposes `pixels/image` and `pixels/wrist_image` as observation k
 
 The dataset's `image` and `wrist_image` columns already align with the policy input keys, so no renaming is needed when fine-tuning.
 
+### Language instructions
+
+Each RoboMME episode carries a natural-language goal (RoboMME returns several equivalent
+paraphrases; the wrapper keeps the first). The goal varies *per episode*, not just per task — for
+`PickXtimes`, episode 0 is "pick up the green cube ... three times" while episode 5 is "pick up the
+red cube ... two times" — so a language-conditioned policy that never receives it cannot
+distinguish the two.
+
+`lerobot-eval` reads this off each sub-env via the `task_description` attribute to build
+`observation["task"]`. `RoboMMEGymEnv` exposes `task_description` (and `task`) for exactly this
+purpose. If they are missing, the probe's `AttributeError` is swallowed and the policy is
+silently evaluated with an empty prompt.
+
 ## Action Spaces
 
 | Type          | Dim | Description                                               |
@@ -126,5 +205,5 @@ Set via `--env.action_space=joint_angle` (default) or `--env.action_space=ee_pos
 
 - **Linux only**: ManiSkill requires SAPIEN/Vulkan. macOS and Windows are not supported.
 - **GPU recommended**: Rendering is CPU-capable but slow; CUDA + Vulkan gives full speed.
-- **gymnasium / numpy conflict**: See installation note above. Docker image handles this automatically.
+- **gymnasium / numpy / scipy conflict**: See installation note above. Docker image handles this automatically.
 - **ManiSkill fork**: `robomme` depends on a specific ManiSkill fork (`YinpeiDai/ManiSkill`), pulled in automatically via the `robomme` package.
