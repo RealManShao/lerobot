@@ -140,6 +140,41 @@ Output layout under `outputs/robomme_eval/<timestamp>/`:
 | `summary.json`        | Per-task and episode-weighted overall success rate   |
 | `summary.txt`         | The same summary as a plain-text table               |
 
+### Reference results
+
+[`Xihe666/drifting_robomme`](https://huggingface.co/Xihe666/drifting_robomme) (a GR00T-N1.7-3B
+fine-tune) on the full test split — 16 tasks x 50 episodes = 800 episodes, `episode_length=300`,
+`action_space=joint_angle`. Produced by `BATCH_SIZE=10 ./eval_robomme_all.sh` on a single
+RTX 4090 in ~3.2 h.
+
+| Suite | Task | Success % |
+| ----- | ---- | --------- |
+| **Counting** _(avg 6.0)_ | BinFill | 8.0 |
+|  | PickXtimes | 8.0 |
+|  | StopCube | 6.0 |
+|  | SwingXtimes | 2.0 |
+| **Permanence** _(avg 7.5)_ | VideoUnmask | 16.0 |
+|  | ButtonUnmask | 8.0 |
+|  | VideoUnmaskSwap | 6.0 |
+|  | ButtonUnmaskSwap | 0.0 |
+| **Reference** _(avg 0.5)_ | VideoPlaceOrder | 2.0 |
+|  | PickHighlight | 0.0 |
+|  | VideoRepick | 0.0 |
+|  | VideoPlaceButton | 0.0 |
+| **Imitation** _(avg 3.5)_ | MoveCube | 12.0 |
+|  | RouteStick | 2.0 |
+|  | InsertPeg | 0.0 |
+|  | PatternLock | 0.0 |
+| | **Overall (800 episodes)** | **4.4** |
+
+Each task is 50 episodes, so a single episode moves a per-task number by 2 percentage points;
+treat small per-task gaps as noise. The same policy scored 0% on a 10-episode `PickXtimes`
+sample and 8% over the full 50.
+
+Two patterns are worth noting. The Reference suite is weakest (three of four tasks at zero).
+And each `...Swap` variant scores below its base task — `VideoUnmask` 16.0 -> `VideoUnmaskSwap`
+6.0, `ButtonUnmask` 8.0 -> `ButtonUnmaskSwap` 0.0 — which is consistent with the policy
+tracking objects but failing to re-bind them once they are swapped.
 ### Key CLI options for `env.type=robomme`
 
 | Option               | Default       | Description                                        |
