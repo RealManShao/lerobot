@@ -45,6 +45,7 @@ from lerobot.utils.constants import (
 )
 from lerobot.utils.feature_utils import dataset_to_policy_features
 
+from .drif_ov.configuration_drif_ov import DrifOvConfig
 from .drifting.configuration_drifting import DriftingConfig
 from .evo1.configuration_evo1 import Evo1Config
 from .groot.configuration_groot import GrootConfig
@@ -172,7 +173,7 @@ def make_pre_post_processors(
         ValueError: If no processor factory exists for the given policy configuration type.
     """
     if pretrained_path:
-        if isinstance(policy_cfg, (DriftingConfig, GrootConfig)):
+        if isinstance(policy_cfg, (DrifOvConfig, DriftingConfig, GrootConfig)):
             from .groot.processor_groot import make_groot_pre_post_processors_from_pretrained
 
             return make_groot_pre_post_processors_from_pretrained(

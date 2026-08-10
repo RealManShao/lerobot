@@ -1,0 +1,208 @@
+# DrifOv Policy
+
+DrifOv (`drif_ov`) is an overlap-conditioned, one-step vision-language-action
+policy based on [Drifting](./drifting) and NVIDIA GR00T N1.7. It keeps the same
+Cosmos-Reason2/Qwen3-VL backbone and inherited Implicit Drifting Policy (IDP)
+potential, while adding an explicit action-prefix interface for continuous
+successor-chunk generation.
+
+The original `drifting` policy remains available as the unconditioned ablation
+baseline. DrifOv checkpoints are separate and cannot be loaded as Drifting
+checkpoints.
+
+> [!IMPORTANT]
+> DrifOv does not reuse GR00T flow-head weights. Its action head and
+> overlap-conditioning modules must be trained on robot demonstrations before
+> deployment.
+
+## Method
+
+At replan time, the policy may receive the unexecuted prefix
+\(\mathbf{a}_{1:k}\) of the current action chunk and a per-coordinate validity
+mask \(\mathbf{m}_{p}\). The action seed contains the prefix and zeros elsewhere:
+
+$$
+\mathbf{z}
+=
+\mathbf{m}_{p}\odot\mathbf{a}_{1:k}.
+$$
+
+The action head embeds the seed, prefix-valid mask, overlap length, and estimated
+execution offset. It then predicts a complete successor chunk in one network
+evaluation:
+
+$$
+\tilde{\mathbf{a}}
+=
+f_\theta(\mathbf{z}, \mathbf{m}_{p}, k, d \mid \mathbf{o}).
+$$
+
+Valid prefix values are restored exactly rather than merely encouraged by a
+soft loss:
+
+$$
+\hat{\mathbf{a}}
+=
+\mathbf{m}_{p}\odot\mathbf{a}_{1:k}
++
+(1-\mathbf{m}_{p})\odot\tilde{\mathbf{a}}.
+$$
+
+With no prefix, the seed and mask are zero and DrifOv reduces to unconditioned
+one-step generation.
+
+### Training
+
+The standard LeRobot dataset already provides the expert action window beginning
+at the current observation. DrifOv samples a prefix length from that window,
+keeps at least one valid suffix step, and optionally adds bounded noise to the
+prefix. This represents an aligned expert leftover without reading actions from
+another episode or crossing an episode boundary.
+
+Proposal and proximal potential losses are evaluated only on the unknown
+suffix. Optional boundary losses supervise the first suffix action and its
+velocity and acceleration relative to the known prefix. Geometry weighting can
+be computed on the suffix only or on the full valid chunk.
+
+The following settings provide matched ablations without changing policy code:
+
+| Variant                       | Configuration                                                                                              |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Endpoint-only                 | `use_proximal_loss=false`, `use_geometry_weighting=false`                                                  |
+| Proximal, no geometry         | `use_proximal_loss=true`, `use_geometry_weighting=false`                                                   |
+| Unconditioned DrifOv head     | `use_prefix_conditioning=false`                                                                            |
+| Clean expert prefixes         | `prefix_corruption_probability=0`                                                                          |
+| No boundary objective         | Set all three `boundary_*_loss_weight` values to `0`                                                       |
+| No prefix/offset embeddings   | Disable `use_prefix_mask_embedding`, `use_overlap_length_embedding`, or `use_execution_offset_embedding`   |
+| Full DrifOv                   | Keep the defaults                                                                                          |
+
+For the strict inherited IDP baseline, use `--policy.type=drifting` rather than
+disabling DrifOv modules.
+
+## Training
+
+```bash
+export DATASET=your_hf_username/your_dataset
+export REPO_ID=your_hf_username/your_drif_ov_checkpoint
+export OUTPUT_DIR=outputs/train/drif_ov
+
+lerobot-train \
+  --dataset.repo_id=$DATASET \
+  --dataset.image_transforms.enable=true \
+  --policy.type=drif_ov \
+  --policy.base_model_path=nvidia/GR00T-N1.7-3B \
+  --policy.embodiment_tag=new_embodiment \
+  --policy.device=cuda \
+  --policy.chunk_size=40 \
+  --policy.n_action_steps=40 \
+  --policy.max_overlap_steps=10 \
+  --policy.prefix_corruption_probability=0.5 \
+  --policy.prefix_corruption_std=0.02 \
+  --policy.use_relative_actions=true \
+  --policy.relative_exclude_joints='["gripper"]' \
+  --policy.use_bf16=true \
+  --policy.push_to_hub=true \
+  --policy.repo_id=$REPO_ID \
+  --batch_size=64 \
+  --steps=20000 \
+  --save_checkpoint=true \
+  --save_freq=5000 \
+  --use_policy_training_preset=true \
+  --output_dir=$OUTPUT_DIR \
+  --job_name=drif_ov \
+  --wandb.enable=true
+```
+
+`max_overlap_steps` must be smaller than `chunk_size`. Set it to the overlap
+horizon expected during deployment. Zero-prefix examples remain in the training
+distribution according to `zero_overlap_probability`. Inference rejects a
+prefix longer than the checkpoint's configured maximum rather than silently
+entering an unseen overlap-length regime.
+
+## Inference
+
+Standard synchronous evaluation uses a zero prefix:
+
+```bash
+lerobot-eval \
+  --policy.path=your_hf_username/your_drif_ov_checkpoint \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --eval.n_episodes=50
+```
+
+For overlap-conditioned real-robot deployment, use the asynchronous RTC
+inference engine:
+
+```bash
+lerobot-rollout \
+  --strategy.type=base \
+  --policy.path=your_hf_username/your_drif_ov_checkpoint \
+  --inference.type=rtc \
+  --inference.rtc.enabled=true \
+  --inference.rtc.execution_horizon=10 \
+  --inference.queue_threshold=10 \
+  --robot.type=so101_follower \
+  --robot.port=/dev/ttyACM0 \
+  --task="pick up the object and place it in the target"
+```
+
+The engine passes the remaining normalized action rows, their true length before
+fixed-shape padding, and the estimated inference delay to DrifOv. Generic
+relative-action pipelines re-anchor the leftover prefix before it reaches the
+policy. A request is rejected explicitly when its estimated delay exceeds the
+valid overlap instead of executing a suffix conditioned on an already expired
+prefix.
+
+Set `inference.queue_threshold` to at least the intended overlap horizon so the
+background inference request starts before the current queue is exhausted.
+
+DrifOv uses the RTC engine for asynchronous scheduling and queue replacement,
+but it does **not** run flow-matching RTC guidance. Prefix conditioning is learned
+during training, the supplied prefix is preserved exactly, and the successor
+chunk still requires one action-head evaluation.
+
+## Important Configuration
+
+| Option                              | Default | Description                                                        |
+| ----------------------------------- | ------: | ------------------------------------------------------------------ |
+| `min_overlap_steps`                 |     `0` | Minimum sampled training-prefix length.                            |
+| `max_overlap_steps`                 |  `None` | Maximum prefix length; `None` means `chunk_size - 1`.              |
+| `zero_overlap_probability`          |   `0.2` | Probability of a zero-prefix training example.                     |
+| `prefix_corruption_probability`     |   `0.5` | Probability of corrupting a non-empty expert prefix.               |
+| `prefix_corruption_std`             |  `0.02` | Standard deviation of prefix noise.                                |
+| `prefix_corruption_clip`            |  `0.05` | Absolute bound applied to prefix noise.                            |
+| `use_geometry_weighting`            |  `true` | Apply inherited detached IDP geometry weighting.                   |
+| `geometry_on_suffix_only`           |  `true` | Estimate geometry using coordinates optimized as the suffix.       |
+| `boundary_action_loss_weight`       |   `1.0` | Weight on the first suffix action error.                            |
+| `boundary_velocity_loss_weight`     |   `0.1` | Weight on boundary velocity error.                                 |
+| `boundary_acceleration_loss_weight` |   `0.0` | Weight on boundary acceleration error.                             |
+
+Training logs include proposal, proximal, and boundary losses; mean overlap and
+execution offset; expert-prefix and corruption fractions; input-prefix error
+against the expert window; hard-preservation error; suffix horizon; and boundary
+discontinuity diagnostics.
+
+## Current Limitations
+
+- The built-in sampler uses clean expert prefixes from the current aligned
+  demonstration window, optionally with bounded corruption. Model-generated
+  prefix replay is not implemented.
+- Planned-start timestamps and command-age scalars are not yet action-head
+  inputs. The current timing condition is the execution offset estimated by the
+  asynchronous inference engine.
+- Native GR00T relative-action checkpoints do not expose the generic
+  re-anchoring step required for safe prefix reuse. DrifOv rejects overlap
+  conditioning for that combination instead of applying a stale relative prefix.
+- Queue replacement drops elapsed rows, but publication-grade request IDs,
+  configurable stale-result thresholds beyond the current overlap-expiry guard,
+  and raw rollout-event logging remain future runtime work.
+- A deterministic one-step head does not represent balanced multimodal action
+  distributions without an additional latent or mode mechanism.
+
+## Related Resources
+
+- [Drifting policy](./drifting)
+- [NVIDIA GR00T policy](./groot)
+- [Policy deployment](./inference)
+- [Real-Time Chunking](./rtc)

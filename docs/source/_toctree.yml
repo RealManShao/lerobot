@@ -79,6 +79,8 @@
     title: NVIDIA GR00T
   - local: drifting
     title: Drifting
+  - local: drif_ov
+    title: DrifOv
   - local: xvla
     title: X-VLA
   - local: multi_task_dit

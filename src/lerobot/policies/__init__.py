@@ -16,6 +16,7 @@ from lerobot.utils.action_interpolator import ActionInterpolator as ActionInterp
 
 from .act.configuration_act import ACTConfig as ACTConfig
 from .diffusion.configuration_diffusion import DiffusionConfig as DiffusionConfig
+from .drif_ov.configuration_drif_ov import DrifOvConfig as DrifOvConfig
 from .drifting.configuration_drifting import DriftingConfig as DriftingConfig
 from .eo1.configuration_eo1 import EO1Config as EO1Config
 from .evo1.configuration_evo1 import Evo1Config as Evo1Config
@@ -46,6 +47,7 @@ __all__ = [
     # Configuration classes
     "ACTConfig",
     "DiffusionConfig",
+    "DrifOvConfig",
     "DriftingConfig",
     "EO1Config",
     "FastWAMConfig",

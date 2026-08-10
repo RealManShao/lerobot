@@ -33,6 +33,7 @@ SUPPORTED_POLICIES = [
     "pi05",
     "groot",
     "drifting",
+    "drif_ov",
 ]
 
 # TODO: Add all other robots

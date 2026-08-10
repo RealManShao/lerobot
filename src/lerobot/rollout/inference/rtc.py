@@ -272,6 +272,8 @@ class RTCInferenceEngine(InferenceEngine):
                         current_time = time.perf_counter()
                         idx_before = queue.get_action_index()
                         prev_actions = queue.get_left_over() if self._rtc_config.enabled else None
+                        if prev_actions is not None and prev_actions.numel() == 0:
+                            prev_actions = None
 
                         latency = latency_tracker.max()
                         delay = math.ceil(latency / time_per_chunk) if latency else 0
@@ -284,6 +286,9 @@ class RTCInferenceEngine(InferenceEngine):
 
                         preprocessed = self._preprocessor(obs_batch)
 
+                        prefix_is_reanchored = not bool(
+                            getattr(self._policy.config, "use_relative_actions", False)
+                        )
                         if prev_actions is not None and self._relative_step is not None:
                             # Rebase against the raw cached state so the leftover tail stays in
                             # the training-time coordinate frame.
@@ -298,14 +303,24 @@ class RTCInferenceEngine(InferenceEngine):
                                         normalizer_step=self._normalizer_step,
                                         policy_device=policy_device,
                                     )
+                                    prefix_is_reanchored = True
 
+                        prefix_valid_steps = None
                         if prev_actions is not None:
+                            prefix_valid_steps = min(
+                                int(prev_actions.shape[0]),
+                                self._rtc_config.execution_horizon,
+                            )
                             prev_actions = _normalize_prev_actions_length(
                                 prev_actions, target_steps=self._rtc_config.execution_horizon
                             )
 
                         actions = self._policy.predict_action_chunk(
-                            preprocessed, inference_delay=delay, prev_chunk_left_over=prev_actions
+                            preprocessed,
+                            inference_delay=delay,
+                            prev_chunk_left_over=prev_actions,
+                            prefix_valid_steps=prefix_valid_steps,
+                            prefix_is_reanchored=prefix_is_reanchored,
                         )
 
                         original = actions.squeeze(0).clone()

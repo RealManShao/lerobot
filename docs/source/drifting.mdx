@@ -161,6 +161,8 @@ The example assumes the checkpoint was trained for the selected LIBERO embodimen
 
 > [!WARNING]
 > Drifting currently rejects native Real-Time Chunking (RTC) overlap guidance. Disable RTC for rollout instead of supplying a previous action-chunk prefix.
+> Use the separately trained [DrifOv policy](./drif_ov) when the successor chunk
+> must condition on and preserve an unexecuted prefix.
 
 ### Measured Inference Latency
 
@@ -227,6 +229,7 @@ The inherited defaults use an action chunk size of 40, one state observation, ma
 
 ## Related Resources
 
+- [DrifOv overlap-conditioned policy](./drif_ov)
 - [GR00T policy documentation](./groot)
 - [GR00T N1 technical report](https://arxiv.org/abs/2503.14734)
 - [NVIDIA GR00T N1.7 model card](https://huggingface.co/nvidia/GR00T-N1.7-3B)
