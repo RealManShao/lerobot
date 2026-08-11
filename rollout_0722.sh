@@ -25,3 +25,11 @@ export CUDA_VISIBLE_DEVICES=0
   --device=cuda \
   --task="pick up a package then put it into box" \
   --duration=60
+
+lerobot-eval \
+  --policy.path="outputs/train/libero/0731/try1/checkpoints/last/pretrained_model" \
+  --env.type=libero \
+  --env.task=libero_spatial,libero_object,libero_goal,libero_10 \
+  --eval.batch_size=1 \
+  --eval.n_episodes=10 \
+  --env.max_parallel_tasks=1
