@@ -44,6 +44,21 @@ import numpy as np
 _DEFAULT_RENAME_MAP: str = (
     '{"observation.images.image2": "observation.images.wrist_image"}'
 )
+_ANSI_ESCAPE_RE = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
+
+
+def _is_progress_line(line: str) -> bool:
+    """Return True for noisy tqdm/progress output lines."""
+    clean = _ANSI_ESCAPE_RE.sub("", line)
+    if "\r" in line:
+        return True
+    if "running_success_rate=" in clean:
+        return True
+    if "Stepping through eval batches:" in clean:
+        return True
+    if "Running rollout with at most" in clean:
+        return True
+    return bool(re.search(r"\b\d+%\|", clean) and ("it/s" in clean or "s/it" in clean))
 
 
 # ── Evaluation runner ─────────────────────────────────────────────────────────
@@ -89,10 +104,8 @@ def _run_eval(
     ) as proc:
         assert proc.stdout is not None
         for line in proc.stdout:
-            # Keep live progress in terminal but avoid filling logs with tqdm bars.
-            print(line, end="")
-            if "Stepping through eval batches:" not in line:
-                fh.write(line)
+            if not _is_progress_line(line):
+                fh.write(_ANSI_ESCAPE_RE.sub("", line))
         returncode = proc.wait()
 
     return {"returncode": returncode, "success_rate": _parse_success_rate(log_path)}
