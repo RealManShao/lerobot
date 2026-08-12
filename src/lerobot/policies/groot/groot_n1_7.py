@@ -17,8 +17,11 @@
 from __future__ import annotations
 
 import logging
+import os
 from contextlib import suppress
 from copy import deepcopy
+from pathlib import Path
+from time import perf_counter
 from typing import TYPE_CHECKING, Any
 
 import torch
@@ -873,8 +876,30 @@ class GR00TN17(PreTrainedModel):
 
     def get_action(self, inputs: dict[str, Any], options: dict[str, Any] | None = None) -> BatchFeature:
         backbone_inputs, action_inputs = self.prepare_input(inputs)
+        _csv = os.environ.get("LEROBOT_PROFILE_INFERENCE_TIMINGS")
+        if _csv:
+            if self.device.type == "cuda":
+                torch.cuda.synchronize(self.device)
+            _t0 = perf_counter()
         backbone_outputs = self.backbone(backbone_inputs)
-        return self.action_head.get_action(backbone_outputs, action_inputs, options)
+        if _csv:
+            if self.device.type == "cuda":
+                torch.cuda.synchronize(self.device)
+            _backbone_s = perf_counter() - _t0
+            _t1 = perf_counter()
+        result = self.action_head.get_action(backbone_outputs, action_inputs, options)
+        if _csv:
+            if self.device.type == "cuda":
+                torch.cuda.synchronize(self.device)
+            _head_s = perf_counter() - _t1
+            _p = Path(_csv)
+            _p.parent.mkdir(parents=True, exist_ok=True)
+            _line = f"groot,{_backbone_s*1000:.3f},{_head_s*1000:.3f},{(_backbone_s+_head_s)*1000:.3f}\n"
+            if not _p.exists():
+                _p.write_text("model,backbone_ms,action_head_ms,total_ms\n" + _line)
+            else:
+                _p.open("a").write(_line)
+        return result
 
     @property
     def device(self) -> torch.device:
