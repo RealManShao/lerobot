@@ -79,10 +79,23 @@ def _run_eval(
 
     print(f"[bench] {policy_path}  task={task}  n_episodes={n_episodes}")
     print(f"[bench] log → {log_path}")
-    with log_path.open("w") as fh:
-        proc = subprocess.run(cmd, env=env, stdout=fh, stderr=subprocess.STDOUT)
+    with log_path.open("w") as fh, subprocess.Popen(
+        cmd,
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        bufsize=1,
+    ) as proc:
+        assert proc.stdout is not None
+        for line in proc.stdout:
+            # Keep live progress in terminal but avoid filling logs with tqdm bars.
+            print(line, end="")
+            if "Stepping through eval batches:" not in line:
+                fh.write(line)
+        returncode = proc.wait()
 
-    return {"returncode": proc.returncode, "success_rate": _parse_success_rate(log_path)}
+    return {"returncode": returncode, "success_rate": _parse_success_rate(log_path)}
 
 
 def _parse_success_rate(log_path: Path) -> float | None:
