@@ -32,20 +32,18 @@ import argparse
 import csv
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Policies that require a camera key rename for LIBERO evaluation
-_DEFAULT_RENAME_MAP: dict[str, str] = {
-    "nvidia/gr00t17-lerobot-libero_10-640": (
-        '{"observation.images.image2": "observation.images.wrist_image"}'
-    ),
-}
+# Camera key rename applied to every policy for LIBERO evaluation
+_DEFAULT_RENAME_MAP: str = (
+    '{"observation.images.image2": "observation.images.wrist_image"}'
+)
 
 
 # ── Evaluation runner ─────────────────────────────────────────────────────────
@@ -57,15 +55,15 @@ def _run_eval(
     n_episodes: int,
     csv_path: Path,
     log_path: Path,
-    rename_map: Optional[str],
-    extra_env: Optional[dict],
+    rename_map: str | None,
+    extra_env: dict | None,
 ) -> dict:
     env = {**os.environ, "LEROBOT_PROFILE_INFERENCE_TIMINGS": str(csv_path)}
     if extra_env:
         env.update(extra_env)
 
     if rename_map is None:
-        rename_map = _DEFAULT_RENAME_MAP.get(policy_path)
+        rename_map = _DEFAULT_RENAME_MAP
 
     cmd = [
         "lerobot-eval",
@@ -87,15 +85,16 @@ def _run_eval(
     return {"returncode": proc.returncode, "success_rate": _parse_success_rate(log_path)}
 
 
-def _parse_success_rate(log_path: Path) -> Optional[float]:
+def _parse_success_rate(log_path: Path) -> float | None:
     if not log_path.exists():
         return None
+    pattern = re.compile(r"['\"]?pc_success['\"]?\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)")
     for line in reversed(log_path.read_text(errors="replace").splitlines()):
-        if "pc_success" in line:
-            tail = line.split("pc_success")[-1].lstrip(" :=")
+        match = pattern.search(line)
+        if match:
             try:
-                return float(tail.split()[0].rstrip(",}"))
-            except (ValueError, IndexError):
+                return float(match.group(1))
+            except ValueError:
                 continue
     return None
 
@@ -193,8 +192,8 @@ def main() -> None:
         choices=["libero_10", "libero_spatial", "libero_goal", "libero_object"],
     )
     parser.add_argument(
-        "--n-episodes", type=int, default=1, metavar="N",
-        help="Episodes per sub-task (default: 1).",
+        "--n-episodes", type=int, default=5, metavar="N",
+        help="Episodes per sub-task (default: 5).",
     )
     parser.add_argument(
         "--output-dir", default="outputs/latency_bench", metavar="DIR",
@@ -244,7 +243,12 @@ def main() -> None:
             )
 
         backbone_ms, action_head_ms, n_calls = _read_timing_csv(csv_path)
-        success = meta["success_rate"] or 0.0
+        success = meta["success_rate"] if meta["success_rate"] is not None else 0.0
+        if meta["success_rate"] is None:
+            print(
+                f"[bench] WARNING: could not parse pc_success from {log_path}",
+                file=sys.stderr,
+            )
         print(
             f"[bench] {policy}: backbone={backbone_ms:.1f} ms  "
             f"head={action_head_ms:.1f} ms  total={backbone_ms + action_head_ms:.1f} ms  "
