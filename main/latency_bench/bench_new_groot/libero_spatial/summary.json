@@ -1,0 +1,10 @@
+{
+  "Xihe666/gr00t_n17_libero": {
+    "backbone_ms": 24.8406682464455,
+    "action_head_ms": 45.431639810426546,
+    "total_ms": 70.27230805687205,
+    "success_rate": 80.0,
+    "n_timing_calls": 211,
+    "eval_returncode": 0
+  }
+}

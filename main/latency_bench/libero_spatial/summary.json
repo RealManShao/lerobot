@@ -1,0 +1,26 @@
+{
+  "Xihe666/drifting_libero_full": {
+    "backbone_ms": 24.67339512195122,
+    "action_head_ms": 4.80510243902439,
+    "total_ms": 29.47849756097561,
+    "success_rate": 78.0,
+    "n_timing_calls": 205,
+    "eval_returncode": 0
+  },
+  "Xihe666/gr00t_n17_libero_1A800_0811": {
+    "backbone_ms": 25.189013636363633,
+    "action_head_ms": 45.171504545454546,
+    "total_ms": 70.36051818181818,
+    "success_rate": 70.0,
+    "n_timing_calls": 220,
+    "eval_returncode": 0
+  },
+  "Xihe666/drif_ov_libero0809": {
+    "backbone_ms": 24.345136363636364,
+    "action_head_ms": 4.903731818181818,
+    "total_ms": 29.24886818181818,
+    "success_rate": 72.0,
+    "n_timing_calls": 220,
+    "eval_returncode": 0
+  }
+}
