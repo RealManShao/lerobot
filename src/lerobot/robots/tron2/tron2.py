@@ -176,7 +176,7 @@ class Tron2Robot(Robot):
             bridge_observation = self._bridge_initial_observation
             self._bridge_initial_observation = None
             if bridge_observation is None:
-                bridge_observation = self.bridge_provider.get_latest_obs(timeout=self.config.bridge_timeout)
+                bridge_observation = self.bridge_provider.get_obs(timeout=self.config.bridge_timeout)
             state = np.asarray(bridge_observation["state"], dtype=np.float64)
             bridge_images = bridge_observation.get("images", {})
         else:

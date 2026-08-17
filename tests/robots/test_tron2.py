@@ -20,7 +20,6 @@ def test_bridge_observation_uses_remote_cameras_and_state():
             "cam_right_wrist": np.full((480, 640, 3), 2, dtype=np.uint8),
         },
     }
-    provider.get_latest_obs.return_value = provider.get_obs.return_value
 
     with (
         patch(f"{_MODULE}.require_package"),
@@ -48,8 +47,9 @@ def test_bridge_observation_uses_remote_cameras_and_state():
     assert sdk_config.init_joints == config.init_joints
     assert sdk_config.init_head == config.init_head
     provider.start.assert_called_once()
-    provider.get_obs.assert_called_once()
-    provider.get_latest_obs.assert_called_once_with(timeout=config.bridge_timeout)
+    assert provider.get_obs.call_count == 2
+    provider.get_obs.assert_any_call(timeout=config.bridge_connection_timeout)
+    provider.get_obs.assert_any_call(timeout=config.bridge_timeout)
 
     robot.disconnect()
     provider.stop.assert_called_once()
