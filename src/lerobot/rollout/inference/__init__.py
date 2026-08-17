@@ -19,7 +19,9 @@ rollout strategies never branch on which backend is in use.
 """
 
 from .base import InferenceEngine
+from .drifov_overlap import DrifOvOverlapInferenceEngine
 from .factory import (
+    DrifOvOverlapInferenceConfig,
     InferenceEngineConfig,
     RTCInferenceConfig,
     SyncInferenceConfig,
@@ -31,6 +33,8 @@ from .sync import SyncInferenceEngine
 __all__ = [
     "InferenceEngine",
     "InferenceEngineConfig",
+    "DrifOvOverlapInferenceConfig",
+    "DrifOvOverlapInferenceEngine",
     "RTCInferenceConfig",
     "RTCInferenceEngine",
     "SyncInferenceConfig",

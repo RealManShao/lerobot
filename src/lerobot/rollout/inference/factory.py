@@ -34,6 +34,7 @@ from lerobot.processor import PolicyProcessorPipeline
 
 from ..robot_wrapper import ThreadSafeRobot
 from .base import InferenceEngine
+from .drifov_overlap import DrifOvOverlapInferenceEngine
 from .rtc import RTCInferenceEngine
 from .sync import SyncInferenceEngine
 
@@ -72,6 +73,14 @@ class RTCInferenceConfig(InferenceEngineConfig):
     # (e.g. ``--inference.rtc.execution_horizon=...``).
     rtc: RTCConfig = field(default_factory=RTCConfig)
     queue_threshold: int = 30
+
+
+@InferenceEngineConfig.register_subclass("drifov_overlap")
+@dataclass
+class DrifOvOverlapInferenceConfig(InferenceEngineConfig):
+    """Single-thread drif_ov overlap execution (no RTC background thread)."""
+
+    overlap_steps: int = 8
 
 
 # ---------------------------------------------------------------------------
@@ -124,5 +133,17 @@ def create_inference_engine(
             compile_warmup_inferences=compile_warmup_inferences,
             rtc_queue_threshold=config.queue_threshold,
             shutdown_event=shutdown_event,
+        )
+    if isinstance(config, DrifOvOverlapInferenceConfig):
+        return DrifOvOverlapInferenceEngine(
+            policy=policy,
+            preprocessor=preprocessor,
+            postprocessor=postprocessor,
+            dataset_features=dataset_features,
+            ordered_action_keys=ordered_action_keys,
+            task=task,
+            device=device,
+            robot_type=robot_wrapper.robot_type,
+            overlap_steps=config.overlap_steps,
         )
     raise ValueError(f"Unknown inference engine type: {type(config).__name__}")
