@@ -14,7 +14,6 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 torchrun \
   --job_name=drif_ov_libero \
   --policy.device=cuda \
   --wandb.enable=true \
-  --RE
   --policy.repo_id="Xihe666/drif_ov_libero0809"
 
 # Finetune drifting on LIBERO 10

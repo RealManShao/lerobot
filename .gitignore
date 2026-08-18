@@ -91,6 +91,7 @@ celerybeat.pid
 # VS Code
 .vscode/
 .devcontainer/
+.github/
 
 # JetBrains / PyCharm
 .idea/
@@ -165,6 +166,7 @@ wandb/
 # Data folders
 data/
 outputs/
+paper/
 
 # Translations
 *.mo

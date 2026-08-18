@@ -7,12 +7,12 @@
     "n_timing_calls": 205,
     "eval_returncode": 0
   },
-  "Xihe666/gr00t_n17_libero_1A800_0811": {
-    "backbone_ms": 25.189013636363633,
-    "action_head_ms": 45.171504545454546,
-    "total_ms": 70.36051818181818,
-    "success_rate": 70.0,
-    "n_timing_calls": 220,
+  "Xihe666/gr00t_n17_libero": {
+    "backbone_ms": 24.8406682464455,
+    "action_head_ms": 45.431639810426546,
+    "total_ms": 70.27230805687205,
+    "success_rate": 80.0,
+    "n_timing_calls": 211,
     "eval_returncode": 0
   },
   "Xihe666/drif_ov_libero0809": {
