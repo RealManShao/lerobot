@@ -89,6 +89,12 @@ def _plot(summaries: dict[str, dict], policies: list[str], output_path: Path) ->
             bx, success_vals, marker="D", markersize=7, linestyle="none",
             color=theme["backbone"], markeredgecolor="white", markeredgewidth=1, zorder=5,
         )
+        for xi, succ in zip(bx, success_vals):
+            if not np.isnan(succ):
+                ax_success.text(
+                    xi, succ + 3, f"{succ:.0f}%", ha="center", va="bottom",
+                    fontsize=8, color=theme["backbone"], fontweight="bold", zorder=5,
+                )
 
     # Success-rate delta annotation: a bracket spanning the two markers, "-|-" style
     if n_policies == 2:
