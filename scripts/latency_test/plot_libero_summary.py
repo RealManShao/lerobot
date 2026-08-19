@@ -127,7 +127,7 @@ def _plot(summaries: dict[str, dict], policies: list[str], output_path: Path) ->
     ax_success.set_ylim(0, 115)
     ax_success.spines[["top"]].set_visible(False)
 
-    ax.set_title("LIBERO Inference Latency vs. Success Rate — All Task Suites", fontsize=15, pad=14)
+    ax.set_title("LIBERO Inference Latency vs. Success Rate", fontsize=12, pad=14)
     ax.legend(loc="upper left", fontsize=9, ncol=1)
 
     fig.savefig(output_path, dpi=180, bbox_inches="tight", facecolor="white")
