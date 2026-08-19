@@ -1,0 +1,18 @@
+{
+  "Xihe666/gr00t_n17_libero": {
+    "backbone_ms": 27.770163636363634,
+    "action_head_ms": 45.924581818181814,
+    "total_ms": 73.69474545454545,
+    "success_rate": 88.0,
+    "n_timing_calls": 220,
+    "eval_returncode": 0
+  },
+  "Xihe666/drif_ov_libero0809": {
+    "backbone_ms": 24.559788381742738,
+    "action_head_ms": 4.996497925311203,
+    "total_ms": 29.55628630705394,
+    "success_rate": 74.0,
+    "n_timing_calls": 241,
+    "eval_returncode": 0
+  }
+}
