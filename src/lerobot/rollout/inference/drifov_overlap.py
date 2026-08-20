@@ -12,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Single-thread chunk-overlap inference for drif_ov-style deployment.
+"""Async chunk-overlap inference for drif_ov-style deployment.
 
-Unlike RTC, this backend runs fully inline on the control thread. It re-plans
-before the current chunk is exhausted and conditions the next chunk on the
-remaining tail via ``prev_chunk_left_over``.
+This backend keeps execution on the main control thread but offloads next-chunk
+planning to a background thread. The worker prefetches the next chunk while the
+current chunk is still being executed, and conditions that plan on the current
+leftover prefix via ``prev_chunk_left_over``.
 """
 
 from __future__ import annotations
@@ -24,6 +25,7 @@ from __future__ import annotations
 import logging
 from contextlib import nullcontext
 from copy import copy
+from threading import Event, Lock, Thread
 from typing import Any
 
 import torch
@@ -38,11 +40,12 @@ logger = logging.getLogger(__name__)
 
 
 class DrifOvOverlapInferenceEngine(InferenceEngine):
-    """Inline chunk-overlap inference with prefix-conditioned re-planning.
+    """Async prefetch chunk-overlap inference with prefix-conditioned re-planning.
 
-    The engine keeps an internal action chunk queue. When remaining actions are
-    below ``overlap_steps``, it predicts a new chunk conditioned on the unconsumed
-    tail of the previous chunk and atomically swaps to the new chunk.
+    The engine keeps an internal action chunk queue. When remaining actions reach
+    ``overlap_steps``, it schedules a background re-plan conditioned on the
+    unconsumed tail. At chunk boundary, prefetched actions are swapped in
+    atomically.
     """
 
     def __init__(
@@ -80,6 +83,14 @@ class DrifOvOverlapInferenceEngine(InferenceEngine):
         self._processed_queue: torch.Tensor | None = None
         self._original_queue: torch.Tensor | None = None
         self._cursor: int = 0
+        self._next_chunk: tuple[torch.Tensor, torch.Tensor] | None = None
+
+        self._lock = Lock()
+        self._shutdown_event = Event()
+        self._job_event = Event()
+        self._worker: Thread | None = None
+        self._pending_job: dict[str, Any] | None = None
+        self._planning = False
 
         logger.info(
             "DrifOvOverlapInferenceEngine initialized "
@@ -90,9 +101,18 @@ class DrifOvOverlapInferenceEngine(InferenceEngine):
         )
 
     def start(self) -> None:
-        logger.info("DrifOvOverlapInferenceEngine started (inline mode)")
+        self._shutdown_event.clear()
+        self._job_event.clear()
+        self._worker = Thread(target=self._planning_loop, daemon=True, name="DrifOvOverlapPlanner")
+        self._worker.start()
+        logger.info("DrifOvOverlapInferenceEngine started (async prefetch mode)")
 
     def stop(self) -> None:
+        self._shutdown_event.set()
+        self._job_event.set()
+        if self._worker is not None and self._worker.is_alive():
+            self._worker.join(timeout=2.0)
+        self._worker = None
         logger.info("DrifOvOverlapInferenceEngine stopped")
 
     def reset(self) -> None:
@@ -100,22 +120,26 @@ class DrifOvOverlapInferenceEngine(InferenceEngine):
         self._policy.reset()
         self._preprocessor.reset()
         self._postprocessor.reset()
-        self._processed_queue = None
-        self._original_queue = None
-        self._cursor = 0
+        with self._lock:
+            self._processed_queue = None
+            self._original_queue = None
+            self._cursor = 0
+            self._next_chunk = None
+            self._pending_job = None
+            self._planning = False
+            self._job_event.clear()
 
-    def _remaining_steps(self) -> int:
-        if self._processed_queue is None:
+    @staticmethod
+    def _remaining_steps(queue: torch.Tensor | None, cursor: int) -> int:
+        if queue is None:
             return 0
-        return max(0, int(self._processed_queue.shape[0]) - self._cursor)
+        return max(0, int(queue.shape[0]) - cursor)
 
-    def _replan_chunk(self, observation: dict, *, use_prefix: bool) -> None:
+    def _plan_chunk(self, observation: dict, *, use_prefix: bool, left_over: torch.Tensor | None) -> tuple[torch.Tensor, torch.Tensor]:
         preprocessed = self._preprocessor(observation)
 
         kwargs: dict[str, Any] = {}
-        if use_prefix and self._original_queue is not None and self._remaining_steps() > 0:
-            left_over = self._original_queue[self._cursor :].clone()
-            if left_over.numel() > 0:
+        if use_prefix and left_over is not None and left_over.numel() > 0:
                 prefix_valid_steps = (
                     min(int(left_over.shape[0]), self._overlap_steps)
                     if self._overlap_steps > 0
@@ -131,36 +155,133 @@ class DrifOvOverlapInferenceEngine(InferenceEngine):
         actions = self._policy.predict_action_chunk(preprocessed, **kwargs)
         original = actions.squeeze(0).clone()
         processed = self._postprocessor(actions).squeeze(0)
+        return original, processed
 
-        self._original_queue = original
-        self._processed_queue = processed
+    def _submit_job(self, observation: dict, *, use_prefix: bool, left_over: torch.Tensor | None) -> None:
+        with self._lock:
+            if self._planning or self._next_chunk is not None:
+                return
+            self._pending_job = {
+                "observation": observation,
+                "use_prefix": use_prefix,
+                "left_over": left_over,
+            }
+            self._planning = True
+            self._job_event.set()
+
+    def _planning_loop(self) -> None:
+        while not self._shutdown_event.is_set():
+            if not self._job_event.wait(timeout=0.02):
+                continue
+            self._job_event.clear()
+            if self._shutdown_event.is_set():
+                break
+
+            with self._lock:
+                job = self._pending_job
+                self._pending_job = None
+
+            if job is None:
+                continue
+
+            try:
+                autocast_ctx = (
+                    torch.autocast(device_type=self._device.type)
+                    if self._device.type == "cuda" and self._policy.config.use_amp
+                    else nullcontext()
+                )
+                with torch.inference_mode(), autocast_ctx:
+                    planned = self._plan_chunk(
+                        job["observation"],
+                        use_prefix=bool(job["use_prefix"]),
+                        left_over=job["left_over"],
+                    )
+                with self._lock:
+                    self._next_chunk = planned
+            except Exception as exc:  # noqa: BLE001
+                logger.error("drifov_overlap async planning failed: %s", exc)
+            finally:
+                with self._lock:
+                    self._planning = False
+
+    def _swap_in_next_chunk_locked(self) -> bool:
+        if self._next_chunk is None:
+            return False
+        self._original_queue, self._processed_queue = self._next_chunk
         self._cursor = 0
+        self._next_chunk = None
+        return True
 
-    def get_action(self, obs_frame: dict | None) -> torch.Tensor | None:
-        if obs_frame is None:
-            return None
+    def _maybe_schedule_prefetch(self, observation: dict) -> None:
+        with self._lock:
+            queue = self._processed_queue
+            original = self._original_queue
+            cursor = self._cursor
+            planning = self._planning
+            has_next = self._next_chunk is not None
 
-        observation = copy(obs_frame)
+        remaining = self._remaining_steps(queue, cursor)
+        if remaining <= 0 or self._overlap_steps <= 0 or planning or has_next:
+            return
+
+        if remaining <= self._overlap_steps and original is not None:
+            left_over = original[cursor:].clone()
+            obs_copy = copy(observation)
+            self._submit_job(obs_copy, use_prefix=True, left_over=left_over)
+
+    def _sync_bootstrap_if_needed(self, observation: dict) -> None:
+        with self._lock:
+            has_active = self._remaining_steps(self._processed_queue, self._cursor) > 0
+            has_next = self._next_chunk is not None
+
+        if has_active:
+            return
+        if has_next:
+            with self._lock:
+                self._swap_in_next_chunk_locked()
+            return
+
+        # First chunk is synchronous to avoid an empty start window.
         autocast_ctx = (
             torch.autocast(device_type=self._device.type)
             if self._device.type == "cuda" and self._policy.config.use_amp
             else nullcontext()
         )
         with torch.inference_mode(), autocast_ctx:
-            observation = prepare_observation_for_inference(
-                observation, self._device, self._task, self._robot_type
-            )
+            original, processed = self._plan_chunk(observation, use_prefix=False, left_over=None)
+        with self._lock:
+            self._original_queue = original
+            self._processed_queue = processed
+            self._cursor = 0
 
-            if self._processed_queue is None or self._remaining_steps() == 0:
-                self._replan_chunk(observation, use_prefix=False)
-            elif self._overlap_steps > 0 and self._remaining_steps() == self._overlap_steps:
-                self._replan_chunk(observation, use_prefix=True)
-
-        if self._processed_queue is None or self._remaining_steps() == 0:
+    def get_action(self, obs_frame: dict | None) -> torch.Tensor | None:
+        if obs_frame is None:
             return None
 
-        action_tensor = self._processed_queue[self._cursor].clone().cpu()
-        self._cursor += 1
+        observation = copy(obs_frame)
+        observation = prepare_observation_for_inference(
+            observation, self._device, self._task, self._robot_type
+        )
+
+        self._sync_bootstrap_if_needed(observation)
+        self._maybe_schedule_prefetch(observation)
+
+        with self._lock:
+            if self._remaining_steps(self._processed_queue, self._cursor) <= 0:
+                self._swap_in_next_chunk_locked()
+
+            if self._remaining_steps(self._processed_queue, self._cursor) <= 0:
+                return None
+
+            queue = self._processed_queue
+            if queue is None:
+                return None
+            action_tensor = queue[self._cursor].clone().cpu()
+            self._cursor += 1
+
+            # If current chunk has just been exhausted, swap immediately if ready.
+            if self._remaining_steps(self._processed_queue, self._cursor) <= 0:
+                self._swap_in_next_chunk_locked()
 
         action_dict = make_robot_action(action_tensor, self._dataset_features)
         return torch.tensor([action_dict[k] for k in self._ordered_action_keys])
