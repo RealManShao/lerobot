@@ -8,12 +8,12 @@ renders a single grouped bar chart:
   - x-axis is grouped by task suite (libero_spatial, libero_object, ...)
   - within each group, one stacked bar (backbone + action-head) per policy,
     each policy using its own color theme
-  - success-rate delta between the two policies is annotated above each group
+  - success-rate delta between the best and worst policy is annotated above each group
 
 Usage
 -----
-    python scripts/latency_test/plot_libero_summary.py \\
-        --stats-dir Experiment-result/LIBERO_latency_stats \\
+    python scripts/latency_test/plot_libero_summary.py \
+        --stats-dir Experiment-result/LIBERO_latency_stats \
         --output outputs/latency_bench/libero_summary.png
 """
 
@@ -28,6 +28,7 @@ import numpy as np
 
 # Fixed policy order + color theme (dark = backbone, light = action head)
 _POLICY_THEMES: dict[str, dict[str, str]] = {
+    "Xihe666/pi05_libero_full_2A800_bs32_20k": {"backbone": "#38761D", "head": "#93C47D"},
     "Xihe666/gr00t_n17_libero": {"backbone": "#1F4E79", "head": "#6FA8DC"},
     "Xihe666/drif_ov_libero0809": {"backbone": "#B45F06", "head": "#F6B26B"},
 }
@@ -60,7 +61,7 @@ def _plot(summaries: dict[str, dict], policies: list[str], output_path: Path) ->
     bar_width = group_width / n_policies
     x = np.arange(n_tasks)
 
-    fig, ax = plt.subplots(figsize=(max(9, n_tasks * 3.2), 7.5), constrained_layout=True)
+    fig, ax = plt.subplots(figsize=(12.8, 7.2), dpi=100, constrained_layout=True)
     ax_success = ax.twinx()
 
     for p_idx, policy in enumerate(policies):
@@ -83,7 +84,7 @@ def _plot(summaries: dict[str, dict], policies: list[str], output_path: Path) ->
             if head >= 3.0:
                 ax.text(xi, backbone + head / 2, f"{head:.1f}", ha="center", va="center", color="black", fontsize=8)
             if total > 0:
-                ax.text(xi, total + 1.2, f"{total:.1f} ms", ha="center", va="bottom", fontsize=8.5)
+                ax.text(xi, total + 1.2, f"{total:.1f} ms", ha="center", va="bottom", fontsize=8)
 
         ax_success.plot(
             bx, success_vals, marker="D", markersize=7, linestyle="none",
@@ -96,19 +97,18 @@ def _plot(summaries: dict[str, dict], policies: list[str], output_path: Path) ->
                     fontsize=8, color=theme["backbone"], fontweight="bold", zorder=5,
                 )
 
-    # Success-rate delta annotation: a bracket spanning the two markers, "-|-" style
-    if n_policies == 2:
-        p_a, p_b = policies
-        bracket_x_offset = bar_width * 0.75
+    # Success-rate delta annotation: bracket between gr00t and drif_ov only, "-|-" style
+    _delta_a, _delta_b = "Xihe666/gr00t_n17_libero", "Xihe666/drif_ov_libero0809"
+    if _delta_a in policies and _delta_b in policies:
+        bracket_x_offset = bar_width * ((n_policies - 1) / 2 + 0.75)
         for xi, task in zip(x, tasks):
-            succ_a = summaries[task].get(p_a, {}).get("success_rate", np.nan)
-            succ_b = summaries[task].get(p_b, {}).get("success_rate", np.nan)
+            succ_a = summaries[task].get(_delta_a, {}).get("success_rate", np.nan)
+            succ_b = summaries[task].get(_delta_b, {}).get("success_rate", np.nan)
             if np.isnan(succ_a) or np.isnan(succ_b):
                 continue
-            delta = succ_b - succ_a
             top, bottom = max(succ_a, succ_b), min(succ_a, succ_b)
-            color = "#2E7D32" if delta >= 0 else "#C62828"
-            sign = "+" if delta >= 0 else ""
+            delta = top - bottom
+            color = "#2E7D32"
             bx = xi + bracket_x_offset
             cap = 0.045 * bar_width
             ax_success.plot(
@@ -117,8 +117,8 @@ def _plot(summaries: dict[str, dict], policies: list[str], output_path: Path) ->
                 color=color, linewidth=1.4, zorder=6, solid_capstyle="butt",
             )
             ax_success.text(
-                bx + cap * 1.8, (top + bottom) / 2, f"Δ {sign}{delta:.0f}%",
-                ha="left", va="center", fontsize=9.5, fontweight="bold", color=color,
+                bx + cap * 1.8, (top + bottom) / 2, f"Δ {delta:.0f}%",
+                ha="left", va="center", fontsize=8, fontweight="bold", color=color,
             )
 
     ax.set_ylabel("Inference Time per Call (ms)")
@@ -133,10 +133,10 @@ def _plot(summaries: dict[str, dict], policies: list[str], output_path: Path) ->
     ax_success.set_ylim(0, 115)
     ax_success.spines[["top"]].set_visible(False)
 
-    ax.set_title("LIBERO Inference Latency vs. Success Rate", fontsize=12, pad=14)
-    ax.legend(loc="upper left", fontsize=9, ncol=1)
+    ax.set_title("LIBERO Inference Latency and Success Rate", fontsize=12, pad=14)
+    ax.legend(loc="upper left", fontsize=8, ncol=1)
 
-    fig.savefig(output_path, dpi=180, bbox_inches="tight", facecolor="white")
+    fig.savefig(output_path, dpi=100, facecolor="white")
     print(f"[plot] saved → {output_path}")
 
 
@@ -146,7 +146,8 @@ def main() -> None:
     parser.add_argument("--output", default="outputs/latency_bench/libero_summary.png", metavar="PNG")
     parser.add_argument(
         "--policies", nargs="+", default=list(_POLICY_THEMES.keys()), metavar="HF_REPO",
-        help="Policies to include, in display order (default: gr00t_n17_libero, drif_ov_libero0809).",
+        help="Policies to include, in display order (default: pi05_libero_full_2A800_bs32_20k, "
+        "gr00t_n17_libero, drif_ov_libero0809).",
     )
     args = parser.parse_args()
 
