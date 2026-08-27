@@ -1,0 +1,26 @@
+{
+    "Xihe666/pi05_libero_full_2A800_bs32_20k": {
+    "backbone_ms": 34.209,
+    "action_head_ms": 68.101,
+    "total_ms": 102.310,
+    "success_rate": 0.0,
+    "n_timing_calls": 60,
+    "eval_returncode": 0
+  },
+  "Xihe666/gr00t_n17_libero": {
+    "backbone_ms": 24.446424821002385,
+    "action_head_ms": 45.13377804295943,
+    "total_ms": 69.58020286396182,
+    "success_rate": 82.0,
+    "n_timing_calls": 419,
+    "eval_returncode": 0
+  },
+  "Xihe666/drif_ov_libero0809": {
+    "backbone_ms": 24.248552208835342,
+    "action_head_ms": 5.029359437751004,
+    "total_ms": 29.277911646586347,
+    "success_rate": 46.0,
+    "n_timing_calls": 498,
+    "eval_returncode": 0
+  }
+}

@@ -14,17 +14,16 @@ parses the final ``pc_success`` from the eval log, and saves:
 Usage
 -----
     # Three-policy comparison on libero_10:
-    python scripts/latency_test/benchmark_libero_latency.py \\
+    conda run -n lerobot python scripts/latency_test/benchmark_libero_latency.py \\
         --policies Xihe666/drifting_libero_full \\
                    nvidia/gr00t17-lerobot-libero_10-640 \\
                    Xihe666/drif_ov_libero0809 \\
         --task libero_10 --n-episodes 1
 
     # Spatial suite with stable averages:
-    python scripts/latency_test/benchmark_libero_latency.py \
-        --policies Xihe666/gr00t_n17_libero \
-        --task libero_spatial --n-episodes 5 --output-dir outputs/bench_new_groot \
-        --policy.pretrained_revision 020000
+    conda run -n lerobot python scripts/latency_test/benchmark_libero_latency.py \\
+        --policies Xihe666/drifting_libero_full Xihe666/drif_ov_libero0809 \\
+        --task libero_spatial --n-episodes 5 --output-dir outputs/bench_stable
 """
 
 from __future__ import annotations
@@ -67,7 +66,6 @@ def _is_progress_line(line: str) -> bool:
 def _run_eval(
     *,
     policy_path: str,
-    policy_pretrained_revision: str | None,
     task: str,
     n_episodes: int,
     csv_path: Path,
@@ -91,8 +89,6 @@ def _run_eval(
         f"--eval.n_episodes={n_episodes}",
         "--env.max_parallel_tasks=1",
     ]
-    if policy_pretrained_revision:
-        cmd.append(f"--policy.pretrained_revision={policy_pretrained_revision}")
     if rename_map:
         cmd.append(f"--rename_map={rename_map}")
 
@@ -218,10 +214,6 @@ def main() -> None:
         help="One or more HuggingFace policy repo paths.",
     )
     parser.add_argument(
-        "--policy.pretrained_revision", dest="policy_pretrained_revision", default=None, metavar="REV",
-        help="Optional policy pretrained revision passed to lerobot-eval.",
-    )
-    parser.add_argument(
         "--task", default="libero_10",
         choices=["libero_10", "libero_spatial", "libero_goal", "libero_object"],
     )
@@ -263,7 +255,6 @@ def main() -> None:
 
         meta = _run_eval(
             policy_path=policy,
-            policy_pretrained_revision=args.policy_pretrained_revision,
             task=args.task,
             n_episodes=args.n_episodes,
             csv_path=csv_path,
