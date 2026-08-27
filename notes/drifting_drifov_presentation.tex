@@ -1,0 +1,539 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+\usetheme{metropolis}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\title{Drifting: One-Step Robot Action Generation}
+\subtitle{Extending low-latency inference with overlap-aware replanning in DrifOv}
+\date{\today}
+
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\sg}[1]{\operatorname{sg}\!\left[#1\right]}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Road Map: from inference latency to continuous control}
+  \begin{enumerate}
+    \item \textbf{Pain point I: slow action generation}\\
+          Diffusion/flow heads require repeated refinement
+          $\rightarrow$ \textbf{Drifting: one-step generation}.
+    \item \textbf{Pain point II: queue-refill stalls}\\
+          Lower model latency does not remove scheduling and communication delay
+          $\rightarrow$ \textbf{overlap actions while replanning}.
+    \item \textbf{Proposed extension: DrifOv}\\
+          Learned overlap conditioning with exact prefix preservation.
+    \item \textbf{Evidence and tradeoffs}\\
+          Model-forward latency, synchronous success, limitations, and the
+          asynchronous evaluation still required.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Pain point I: iterative action heads are expensive}
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+      \textbf{Diffusion / flow-style generation}
+      \begin{itemize}
+        \item Starts from a source action chunk.
+        \item Re-evaluates the action head while denoising or integrating a flow.
+        \item Gains progressive correction, but pays for multiple sequential
+              network evaluations at every control query.
+      \end{itemize}
+    \column{0.48\textwidth}
+      \textbf{Engineering objective}
+      \begin{itemize}
+        \item Retain a generative, geometry-aware training objective.
+        \item Move the corrective supervision into training.
+        \item Emit the complete action chunk with one action-head evaluation.
+      \end{itemize}
+  \end{columns}
+
+  \vspace{0.5em}
+  \begin{block}{Why distribution matching matters here}
+    It is not the presentation's endpoint: it motivates learning the target
+    action distribution during training so deployment no longer traverses a
+    multi-step generative path.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Drifting principle: attraction $V^{+}$ and repulsion $V^{-}$}
+  \small
+  Let $p_{\mathrm{data}}$ be the expert-action distribution, $q_\theta$ the
+  current generated distribution, and $k(\vect{x},\vect{y})$ a local similarity
+  kernel. For a generated action $\vect{x}$, explicit Drifting defines
+  \begin{align*}
+    V_{p}^{+}(\vect{x})
+      &=
+      \frac{
+        \mathbb{E}_{\vect{y}\sim p_{\mathrm{data}}}
+        [k(\vect{x},\vect{y})(\vect{y}-\vect{x})]
+      }{
+        \mathbb{E}_{\vect{y}\sim p_{\mathrm{data}}}
+        [k(\vect{x},\vect{y})]
+      },\\
+    V_{q}^{-}(\vect{x})
+      &=
+      \frac{
+        \mathbb{E}_{\vect{y}\sim q_\theta}
+        [k(\vect{x},\vect{y})(\vect{y}-\vect{x})]
+      }{
+        \mathbb{E}_{\vect{y}\sim q_\theta}
+        [k(\vect{x},\vect{y})]
+      },\\
+    V_{p,q}(\vect{x})
+      &=V_p^{+}(\vect{x})-V_q^{-}(\vect{x}).
+  \end{align*}
+
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+      \textbf{$V_p^{+}$: attraction to expert support}
+      \begin{itemize}
+        \item Points from $\vect{x}$ toward nearby expert actions.
+        \item Moves generated samples into regions supported by demonstrations.
+      \end{itemize}
+    \column{0.48\textwidth}
+      \textbf{$-V_q^{-}$: repulsion from generated density}
+      \begin{itemize}
+        \item $V_q^{-}$ points toward nearby generated samples; subtracting it
+              pushes away from over-populated generated regions.
+        \item This counteracts mode collapse and corrects local density.
+      \end{itemize}
+  \end{columns}
+
+  \begin{block}{Balance and relation to this implementation}
+    When $q_\theta=p_{\mathrm{data}}$, attraction and repulsion cancel and
+    $V_{p,q}=\vect{0}$. In conditional behavior cloning, one expert target and
+    one prediction per observation reduce the empirical distributions to point
+    masses, giving $V_{p,q}(\vect{x})=\vect{a}^{*}-\vect{x}$: the ordinary MSE
+    correction direction. The implementation therefore replaces explicit field
+    estimation with proposal/proximal predictions and a detached,
+    geometry-weighted potential.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Drifting in one sentence}
+  \begin{block}{Engineering definition}
+    The implemented Drifting policy transfers the $V^{+}/V^{-}$ correction idea
+    into a geometry-weighted training objective, then trains one conditional
+    transformer to map an all-zero action-shaped placeholder directly to the
+    demonstrated action chunk.
+  \end{block}
+
+  \vspace{0.5em}
+  For observation condition $\vect{o}$, the implemented deployment path is
+  \[
+    \hat{\vect{a}}
+    =
+    f_\theta(\vect{s}, 0 \mid \vect{o}),
+  \]
+  where $\vect{o}$ contains vision-language features, robot state, and the
+  embodiment identifier.
+
+  \begin{itemize}
+    \item The action seed $\vect{s}$ is zero over the full configured horizon.
+    \item Time is fixed to $t=0$ and discretized by the action encoder.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Architecture: retain the VLA backbone, replace the action head}
+  \small
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+      \textbf{Conditioning path}
+      \begin{itemize}
+        \item Cosmos-Reason2/Qwen3-VL encodes images and language.
+        \item Layer normalization and a learned projection produce
+              vision-language memory.
+        \item An embodiment-specific MLP encodes the current robot state.
+      \end{itemize}
+    \column{0.48\textwidth}
+      \textbf{Action path}
+      \begin{itemize}
+        \item An embodiment-specific encoder embeds the action seed and time bucket.
+        \item A conditional transformer processes state/action tokens while
+              cross-attending to the VLM memory.
+        \item An embodiment-specific decoder emits the full continuous chunk.
+      \end{itemize}
+  \end{columns}
+
+  \vspace{0.7em}
+  \[
+    \underbrace{(\text{images},\text{language})}_{\text{VLM memory}},
+    \quad
+    \underbrace{(\text{state},\text{seed},t,\text{embodiment})}_{\text{action tokens}}
+    \;\longrightarrow\;
+    \text{conditional transformer}
+    \;\longrightarrow\;
+    \hat{\vect{a}}_{1:H}.
+  \]
+\end{frame}
+
+\begin{frame}{Training Drifting: deployment proposal and local probe}
+  \small
+  For each demonstrated chunk $\vect{a}_i$ with validity mask $\vect{m}_i$:
+  \begin{align*}
+    \text{Proposal:}\qquad
+      \vect{y}_i
+      &= f_\theta(\vect{s},0\mid\vect{o}_i),\\
+    \text{Masked noise:}\qquad
+      \boldsymbol{\epsilon}_i^{m}
+      &= \vect{m}_i\odot\boldsymbol{\epsilon}_i,
+      \quad \boldsymbol{\epsilon}_i\sim\mathcal{N}(\vect{0},\vect{I}),\\
+    \text{Proximal seed:}\qquad
+      \tilde{\vect{a}}_i
+      &= \vect{a}_i+(1-t_p)\boldsymbol{\epsilon}_i^{m},\\
+    \text{Proximal prediction:}\qquad
+      \vect{z}_i
+      &=f_\theta(\tilde{\vect{a}}_i,t_p\mid\vect{o}_i).
+  \end{align*}
+
+  \begin{itemize}
+    \item $t_p$ is a \textbf{fixed configuration value}:
+          $t_p\in(0,1)$ and the default is $0.9$.
+    \item Thus the default perturbation has standard deviation $1-t_p=0.1$ on
+          valid coordinates in the model action space. The Gaussian is unbounded;
+          the implementation does not clip this proximal noise.
+    \item The factor $(1-t_p)$ makes the probe increasingly local as $t_p$
+          approaches the demonstrated endpoint at $1$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Implemented objective: masked geometry-weighted potential}
+  \small
+  For prediction $\hat{\vect{a}}_i$, target $\vect{a}_i$, mask $\vect{m}_i$,
+  and detached geometry excess $\vect{g}_i$:
+  \[
+    \mathcal{L}_{\mathrm{pot}}(\hat{\vect{a}})
+    =
+    \frac{1}{B}\sum_{i=1}^{B}
+    \frac{
+      \sum_{h,d}
+      \frac{1}{2}(1+g_{i,h,d})
+      (\hat a_{i,h,d}-a_{i,h,d})^2m_{i,h,d}
+    }{
+      \sum_{h,d}m_{i,h,d}
+    }.
+  \]
+  The training loss is
+  \[
+    \mathcal{L}_{\mathrm{Drift}}
+    =
+    \mathcal{L}_{\mathrm{pot}}(\vect{y})
+    +
+    \lambda_{\mathrm{prox}}\mathcal{L}_{\mathrm{pot}}(\vect{z}),
+    \qquad
+    \lambda_{\mathrm{prox}}=81\ \text{by default}.
+  \]
+
+  \begin{itemize}
+    \item The constant $1$ retains the ordinary isotropic squared-error penalty.
+    \item $\vect{g}$ adds stronger penalties only to coordinates inferred to be
+          locally more constrained than their global reference scale.
+    \item Proposal and proximal predictions share the same network and objective;
+          only the proposal path is used at deployment.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Geometry excess: local constraints from the training batch}
+  \small
+  Let $\vect{e}_i$ be the pooled observation embedding. The implementation first
+  builds a detached, observation-conditioned neighborhood:
+  \[
+    \vect{h}_i
+      = \operatorname{normalize}(\sg{\vect{e}_i}),
+    \qquad
+    w_{ij}
+      = \operatorname{softmax}_{j}
+        \left(
+          \frac{\vect{h}_i^\top\vect{h}_j-\mu_i}{\sigma_i+\varepsilon}
+        \right).
+  \]
+  These weights estimate coordinate-wise local action variance from
+  $(\vect{a}_j-\vect{a}_i)^2$. The implementation then:
+  \begin{enumerate}
+    \item converts local and batch-reference variances to inverse-square-root
+          precisions;
+    \item normalizes each precision field by its mean over valid coordinates;
+    \item retains only positive local precision excess:
+  \end{enumerate}
+  \[
+    \vect{g}_i
+    =
+    \sg{
+      \operatorname{ReLU}
+      \left(
+        \frac{\vect{s}^{\,\mathrm{cond}}_i}
+             {\vect{s}^{\,\mathrm{ref}}+\varepsilon}
+        -1
+      \right)
+      \odot\vect{m}_i
+    }.
+  \]
+
+  \textbf{Intuition:} similar observations define a soft local neighborhood.
+  Low action variation in that neighborhood indicates a tightly constrained
+  direction, which receives a larger loss weight. Geometry is detached, so it
+  supplies weights rather than a gradient path through the density estimate.
+\end{frame}
+
+\begin{frame}{Pain point II: one network evaluation does not prevent a stall}
+  \begin{columns}[T]
+    \column{0.47\textwidth}
+      \textbf{What Drifting reduces}
+      \begin{itemize}
+        \item Action-head computation
+        \item Sequential generative refinement
+        \item Per-query model-forward time
+      \end{itemize}
+    \column{0.47\textwidth}
+      \textbf{What can remain}
+      \begin{itemize}
+        \item VLM backbone computation
+        \item Request scheduling and queue replacement
+        \item Communication and preprocessing
+      \end{itemize}
+  \end{columns}
+
+  \vspace{0.5em}
+  If the remaining queue is shorter than the complete request latency, the robot
+  can still exhaust its commands before the successor chunk arrives.
+
+  \begin{block}{Real-Time Chunking (RTC)}
+    RTC starts the next inference request while the current chunk is still being
+    executed. Conventional flow-matching RTC also applies soft inference-time
+    guidance to align the overlap. DrifOv reuses the RTC engine for asynchronous
+    scheduling, but replaces that multi-step guidance with learned prefix
+    conditioning and exact prefix preservation.
+  \end{block}
+\end{frame}
+
+\begin{frame}{DrifOv: one-step generation conditioned on the overlap}
+  \small
+  Let $\vect{a}^{p}$ be the leftover action chunk, $\vect{m}_p$ its
+  coordinate-wise validity mask, and $k$ the contiguous valid-prefix length:
+  \[
+    \vect{u}
+    =
+    \vect{m}_p\odot\vect{a}^{p},
+    \qquad
+    \tilde{\vect{a}}
+    =
+    f_\theta(\vect{u},\vect{m}_p,k,d\mid\vect{o}).
+  \]
+  The code injects the overlap metadata directly into each action token:
+  \[
+    \vect{x}_h
+    =
+    E_{\mathrm{act}}(u_h,0)
+    +W_m m_{p,h}
+    +E_k(k)
+    +E_d(d)
+    +E_{\mathrm{pos}}(h).
+  \]
+
+  \begin{itemize}
+    \item $d$ is the \textbf{estimated execution offset}: the integer number of
+          control steps expected to elapse while the request is in flight.
+    \item $E_d(d)$ is a learned embedding added to every action token; $d$ does
+          \textbf{not} modify RoPE. The action head uses a learned positional
+          embedding $E_{\mathrm{pos}}$.
+    \item The request must satisfy $0\le d\le\min(k,d_{\max})$; a request whose
+          estimated delay exceeds its valid prefix is rejected as stale.
+    \item With $k=0$, the seed and mask are zero and DrifOv recovers
+          unconditioned one-step generation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Hard prefix preservation is a control invariant}
+  Conditioning encourages compatibility, but does not guarantee that the known
+  overlap remains unchanged. DrifOv therefore applies the implementation's exact
+  element-wise copy:
+  \[
+    \hat{\vect{a}}
+    =
+    \operatorname{where}
+      \left(\vect{m}_p,\vect{a}^{p},\tilde{\vect{a}}\right)
+    =
+    \vect{m}_p\odot\vect{a}^{p}
+    +(1-\vect{m}_p)\odot\tilde{\vect{a}}.
+  \]
+
+  \begin{columns}[T]
+    \column{0.47\textwidth}
+      \textbf{Committed prefix}
+      \begin{itemize}
+        \item Already retained in the control queue
+        \item Potentially already dispatched downstream
+        \item Copied exactly, coordinate by coordinate
+      \end{itemize}
+    \column{0.47\textwidth}
+      \textbf{Predicted suffix}
+      \begin{itemize}
+        \item Generated from the request observation
+        \item Conditions on the fixed prefix and timing offset
+        \item Replaces only previously unknown coordinates
+      \end{itemize}
+  \end{columns}
+
+  \vspace{0.4em}
+  \textbf{Why hard rather than soft?} Commands already committed to the robot
+  must not be rewritten by replanning; exact copying avoids an artificial command
+  jump that can cause discontinuity or physical oscillation.
+\end{frame}
+
+\begin{frame}{Training DrifOv: reproduce the asynchronous handoff}
+  \small
+  For each expert window with $V_i$ valid timesteps, the implementation sets
+  \[
+    K_i^{\max}
+      =\min(V_i-1,K_{\max}),
+  \]
+  so every sample retains at least one suffix timestep.
+
+  \begin{itemize}
+    \item A positive prefix length is sampled uniformly from
+          $\min(K_i^{\max},\max(1,K_{\min}))$ through $K_i^{\max}$.
+          It is independently replaced by $k=0$ with probability $0.2$ by default.
+    \item The prefix comes from the aligned expert window and is detached.
+          For a non-empty prefix, corruption is applied with probability $0.5$:
+          Gaussian noise with standard deviation $0.02$, clipped to
+          $[-0.05,0.05]$.
+    \item The execution offset is sampled uniformly over the integers
+          $d\in[0,\min(k,d_{\max})]$.
+    \item Proposal input is the expert prefix followed by zeros. Proximal noise
+          is added only on the unknown suffix.
+    \item Proposal/proximal potentials and, by default, geometry estimation are
+          evaluated on the suffix mask
+          $\vect{m}_s=\vect{m}\odot(1-\vect{m}_p)$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Boundary losses make the fixed-prefix handoff smooth}
+  \small
+  Let $b=k$ be the first suffix timestep. In addition to suffix-only potential
+  losses, DrifOv computes
+  \begin{align*}
+    \mathcal{L}_{a}
+      &= \operatorname{MSE}(\hat{\vect{a}}_b,\vect{a}_b),\\
+    \mathcal{L}_{v}
+      &= \operatorname{MSE}\!\left(
+           (\hat{\vect{a}}_b-\vect{a}^{p}_{b-1})
+           -(\vect{a}_b-\vect{a}_{b-1})
+         \right),\\
+    \mathcal{L}_{\mathrm{acc}}
+      &= \operatorname{MSE}\!\left(
+           (\hat{\vect{a}}_b-2\vect{a}^{p}_{b-1}+\vect{a}^{p}_{b-2})
+           -(\vect{a}_b-2\vect{a}_{b-1}+\vect{a}_{b-2})
+         \right).
+  \end{align*}
+  The complete implemented objective is
+  \[
+    \mathcal{L}_{\mathrm{DrifOv}}
+      =
+      \mathcal{L}_{\mathrm{proposal}}^{s}
+      +\lambda_{\mathrm{prox}}\mathcal{L}_{\mathrm{proximal}}^{s}
+      +\lambda_a\mathcal{L}_a
+      +\lambda_v\mathcal{L}_v
+      +\lambda_{\mathrm{acc}}\mathcal{L}_{\mathrm{acc}},
+  \]
+  with default boundary weights $(\lambda_a,\lambda_v,\lambda_{\mathrm{acc}})
+  =(1.0,0.1,0.0)$.
+
+  \textbf{Purpose:} hard copying protects the prefix; these losses shape the
+  first new action and its first/second differences to reduce a command jump and
+  mechanical jerk at the prefix--suffix boundary. Acceleration supervision is
+  implemented but disabled by default.
+\end{frame}
+
+\begin{frame}{LIBERO-10: model-forward cost and synchronous success}
+  \begin{columns}[T]
+    \column{0.50\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]
+        {./libero_10_vlm_vs_head.png}
+    \column{0.48\textwidth}
+      \scriptsize
+      \textbf{Measured means per inference call}
+
+      \vspace{0.3em}
+      \begin{tabular}{lrrrr}
+        \hline
+        Model & VLM(ms)& Head(ms)& Sum(ms)& Success\\
+        \hline
+        Drifting & 24.49 & 4.84 & 29.33 & 48\%\\
+        DrifOv   & 24.25 & 5.03 & 29.28 & 46\%\\
+        GR00T N1.7 & 24.27 & 45.64 & 69.91 & 36\%\\
+        \hline
+      \end{tabular}
+
+      \vspace{0.7em}
+      \textbf{Timing scope}
+      \begin{itemize}
+        \item CUDA-synchronized hooks separately time
+              \texttt{backbone(...)} and \texttt{action\_head.get\_action(...)}.
+        \item ``Sum'' is their measured model-forward sum, \textbf{not} full
+              wall-clock end-to-end latency; preprocessing, postprocessing,
+              scheduling, and communication are excluded.
+        \item Drifting/DrifOv reduce the action-head mean by about
+              $9.4\times/9.1\times$ and the model-forward sum by about
+              $2.4\times$ relative to GR00T N1.7.
+      \end{itemize}
+  \end{columns}
+\end{frame}
+
+% \begin{frame}{Interpreting DrifOv's 46\% versus Drifting's 48\%}
+%   \begin{alertblock}{Do not claim a synchronous success-rate improvement}
+%     Under the reported synchronous \texttt{lerobot-eval} path, no leftover
+%     prefix is supplied; DrifOv therefore runs with $k=0$. This benchmark does
+%     not exercise the overlap mechanism that is intended to prevent queue stalls.
+%   \end{alertblock}
+
+%   \begin{itemize}
+%     \item With five episodes for each of ten LIBERO-10 subtasks, 48\% and 46\%
+%           correspond to 24/50 and 23/50 successes: a difference of one rollout.
+%     \item Without repeated seeds or confidence intervals, the current result
+%           supports neither a meaningful improvement nor a meaningful regression.
+%     \item \textbf{Hypotheses, not established causes:} the added conditioning
+%           modules and the mixture of zero/nonzero-prefix training examples may
+%           require separate hyperparameter tuning; checkpoint-to-checkpoint
+%           variation may also account for a one-rollout gap.
+%     \item The measurable cost of the extension is small in this run:
+%           $5.03-4.84=0.19$ ms in mean action-head time.
+%   \end{itemize}
+
+%   \textbf{Required validation:} compare synchronous and asynchronous RTC-engine
+%   execution under controlled delay, and report queue stalls, boundary jumps,
+%   task success, and sensitivity to overlap length.
+% \end{frame}
+
+\begin{frame}{Takeaways, tradeoffs, and current limitations}
+  \small
+  \textbf{Takeaways}
+  \begin{itemize}
+    \item \textbf{Drifting} targets model-side latency: one zero-seed action-head
+          evaluation replaces iterative flow generation.
+    \item \textbf{DrifOv} extends Drifting to the system-side stall problem:
+          it conditions on queued actions, timing, and overlap metadata.
+    \item While RTC performs soft overlap guidance during iterative inference, DrifOv learns overlap conditioning during training and exactly preserves the committed prefix after one-step generation.
+
+
+  \end{itemize}
+
+  % \textbf{Current limitations}
+  % \begin{itemize}
+  %   \item Training replays aligned expert prefixes, optionally corrupted, rather
+  %         than prefixes generated by the deployed model.
+  %   \item Timing is represented only by a discrete estimated execution offset;
+  %         planned-start timestamps and command-age signals are not inputs.
+  %   \item Relative-action overlap requires the leftover prefix to be explicitly
+  %         re-anchored to the current reference state. Native GR00T combinations
+  %         that do not expose this safe re-anchoring step are rejected.
+  %   \item The deterministic one-step head does not by itself represent balanced
+  %         multimodal action distributions.
+  %   \item The present synchronous LIBERO result verifies model-forward cost, not
+  %         DrifOv's asynchronous queue-continuity benefit.
+  % \end{itemize}
+\end{frame}
+
+\end{document}

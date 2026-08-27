@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import sys
+from types import SimpleNamespace
 
 import draccus
 import pytest
@@ -25,7 +26,11 @@ from lerobot.configs.train import TrainPipelineConfig  # noqa: E402
 from lerobot.policies.act.configuration_act import (
     ACTConfig,  # noqa: E402, F401  (registers --policy.type act)
 )
-from lerobot.scripts.lerobot_train import _remote_target_in_argv, train  # noqa: E402
+from lerobot.scripts.lerobot_train import (  # noqa: E402
+    _find_unused_parameters_for_ddp,
+    _remote_target_in_argv,
+    train,
+)
 
 
 def _set_argv(monkeypatch, *args):
@@ -65,3 +70,13 @@ def test_train_dispatches_to_submit_when_remote(monkeypatch):
     # Returns the submitter's result and never enters the local training path.
     assert train(cfg) == "submitted"
     assert captured == [cfg]
+
+
+def test_ddp_unused_parameter_detection_enabled_for_expert_only_policy():
+    cfg = SimpleNamespace(trainable_config=SimpleNamespace(train_expert_only=True))
+    assert _find_unused_parameters_for_ddp(cfg) is True
+
+
+def test_ddp_unused_parameter_detection_disabled_by_default():
+    cfg = SimpleNamespace(trainable_config=SimpleNamespace())
+    assert _find_unused_parameters_for_ddp(cfg) is False

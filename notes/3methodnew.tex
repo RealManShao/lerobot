@@ -1,0 +1,484 @@
+% Proposed history-latent replacement for the current DrifOv method.
+% This formulation is not yet implemented in modeling_drif_ov.py.
+% Suggested bibliography keys:
+%   yang2026implicitdrifting  (arXiv:2606.01098)
+%   black2025realtimechunking (arXiv:2506.07339)
+
+\section{DrifOv: History-Latent One-Step Replanning}
+\label{sec:drifov_method}
+
+\subsection{Problem Formulation}
+
+DrifOv targets asynchronous action-chunk generation for a robot that continues
+to execute commands while the next policy request is in flight.  The method
+must satisfy three requirements:
+\begin{enumerate}
+    \item generate the successor action chunk without iterative denoising;
+    \item reproduce real-time chunking (RTC) during training, including its
+          execution delay and immutable action overlap; and
+    \item retain the executed action trajectory in a latent state so that the
+          successor is conditioned on how the robot reached its predicted
+          execution state.
+\end{enumerate}
+
+These requirements imply a separation between three types of action context:
+\begin{equation}
+    \underbrace{\mathcal{H}_t}_{\text{executed history}},
+    \qquad
+    \underbrace{U_{t:d}}_{\text{executed during inference}},
+    \qquad
+    \underbrace{P_{t+d}}_{\text{committed after arrival}}.
+    \label{eq:three_action_contexts}
+\end{equation}
+The first describes the physical trajectory before the request.  The second
+contains commands that move the robot while inference is running.  The third
+contains commands that remain in the controller when the result arrives and
+therefore cannot be replaced.  Treating these three sequences as a single
+prefix loses their different causal roles.
+
+The proposed model has a Y-shaped topology.  A causal history branch maintains
+a latent representation of the executed trajectory.  A queue branch represents
+the commands scheduled during and after inference.  The branches meet in a
+one-step masked action decoder that predicts only the unknown suffix.  No
+prefix classifier is required: committed actions are physical constraints, not
+optional conditioning information.
+
+\subsection{Asynchronous Execution Timeline}
+
+Let an expert trajectory be
+\begin{equation}
+    \tau^n
+    =
+    \left\{
+        (o_t^n,s_t^n,a_t^{n,*})
+    \right\}_{t=0}^{T_n-1},
+\end{equation}
+where \(o_t\) is the visual-language observation, \(s_t\) is the robot state,
+and \(a_t^*\in\mathbb{R}^{D}\) is the executed expert action.  The policy emits
+a chunk of \(H\) actions.
+
+Assume that a request is issued at control step \(t\).  Its estimated inference
+delay is \(d\) control steps, so the result is intended to begin execution at
+\begin{equation}
+    r=t+d.
+\end{equation}
+At request time, the controller records the complete queue associated with the
+request.  The commands expected to execute while inference is running are
+\begin{equation}
+    U_{t:d}
+    =
+    \left(
+        a_t,
+        a_{t+1},
+        \ldots,
+        a_{t+d-1}
+    \right).
+    \label{eq:inflight_actions}
+\end{equation}
+If \(K\) queued commands were available at request time and \(0\leq d\leq K\),
+then \(L=K-d\) commands remain committed at arrival:
+\begin{equation}
+    P_{t+d}
+    =
+    \left(
+        a_{t+d},
+        a_{t+d+1},
+        \ldots,
+        a_{t+K-1}
+    \right),
+    \qquad
+    L=K-d.
+    \label{eq:committed_prefix}
+\end{equation}
+The delay-aligned training target begins at the intended arrival time:
+\begin{equation}
+    A_{t,d}^{*}
+    =
+    \left(
+        a_{t+d}^{*},
+        a_{t+d+1}^{*},
+        \ldots,
+        a_{t+d+H-1}^{*}
+    \right).
+    \label{eq:delay_aligned_target}
+\end{equation}
+For an aligned training sample, the first \(L\) target actions form the
+committed prefix.  The remaining \(H-L\) actions are the continuation that the
+model must generate.
+
+Equations~\eqref{eq:inflight_actions}--\eqref{eq:delay_aligned_target} give the
+delay a causal meaning.  Sampling \(d\) without shifting the target and
+partitioning the queue does not reproduce asynchronous execution.
+
+\paragraph{Action reference frame.}
+All three action sequences must use a common execution-time reference frame.
+Absolute joint commands satisfy this requirement directly.  Relative actions
+must be re-anchored to the corresponding predicted or measured robot state.
+Raw relative actions produced from different reference states must not be
+copied or compared as if they were aligned.
+
+\subsection{Y-Shaped Model Topology}
+\label{sec:y_topology}
+
+\subsubsection{Causal Historical Latent}
+
+A single request-time observation cannot determine the arrival-time state when
+the robot continues moving during inference.  DrifOv therefore maintains a
+fixed-size latent memory
+\begin{equation}
+    Z_t
+    =
+    \left\{
+        z_t^1,\ldots,z_t^M
+    \right\},
+    \qquad
+    z_t^m\in\mathbb{R}^{C},
+    \label{eq:latent_memory}
+\end{equation}
+consisting of \(M\) ordered latent tokens.  Multiple tokens are used instead of
+one pooled vector so that the memory can retain different aspects of the
+trajectory, such as scene state, robot configuration, recent motion, contact,
+and task progress.
+
+Let
+\begin{equation}
+    e_t
+    =
+    \left[
+        E_o(o_t),
+        E_s(s_t),
+        E_a(a_{t-1}),
+        E_{\Delta t}
+    \right]
+\end{equation}
+be the evidence available at control step \(t\).  A causal memory update gives
+\begin{equation}
+    Z_t
+    =
+    M_\theta(Z_{t-1},e_t).
+    \label{eq:memory_update}
+\end{equation}
+Only actions that were actually dispatched to the controller are written into
+the historical memory.  Planned actions that are replaced before execution
+must not be recorded as history.  In offline training,
+Equation~\eqref{eq:memory_update} is unrolled over a finite history window.  During
+deployment, the memory is updated online and cached between policy requests.
+
+\subsubsection{Action-Conditioned Delay Propagation}
+
+The latent \(Z_t\) represents the robot when the request is issued, whereas the
+new chunk begins at \(t+d\).  A lightweight delay propagator advances the
+historical latent using the known commands that will execute during inference:
+\begin{equation}
+    \bar Z_{t+d}
+    =
+    T_\theta
+    \left(
+        Z_t,
+        E_U(U_{t:d}),
+        E_d(d)
+    \right).
+    \label{eq:latent_rollout}
+\end{equation}
+Here, \(E_U\) encodes the complete in-flight sequence with execution-time
+positions.  The propagator processes this sequence in one module evaluation;
+it does not denoise or generate actions iteratively.  Its purpose is to predict
+the latent control context at the intended arrival time.
+
+The distinction between \(Z_t\) and \(\bar Z_{t+d}\) is essential.  A scalar
+delay embedding tells the action decoder how much time has elapsed, but it does
+not describe the state transition caused by the actions executed during that
+time.  Equation~\eqref{eq:latent_rollout} conditions the transition on both.
+
+\subsubsection{Committed-Prefix Tokens}
+
+The commands remaining after arrival are represented independently from the
+historical latent.  For output index \(h\in\{0,\ldots,H-1\}\), define the
+coordinate-wise committed mask
+\begin{equation}
+    m_{h,j}
+    =
+    \mathbb{I}[h<L]\nu_{h,j},
+    \label{eq:prefix_mask}
+\end{equation}
+where \(\nu\) is the valid-coordinate mask.  The action-query token is
+\begin{equation}
+    q_h
+    =
+    E_a(m_h\odot p_h)
+    +E_m(m_h)
+    +E_{\mathrm{exec}}(d+h)
+    +E_{\mathrm{pos}}(h)
+    +E_\xi((1-m_h)\odot\xi_h),
+    \label{eq:action_query}
+\end{equation}
+where \(\xi_h\) is the source input used by the inherited one-step generator.
+For deterministic endpoint regression, \(E_\xi\) may instead be a learned
+unknown-action token.  Prefix coordinates are supplied explicitly, while
+unknown coordinates contain no target-action information.
+
+\subsubsection{One-Step Masked Action Decoder}
+
+The decoder processes all \(H\) action queries jointly and cross-attends to the
+arrival-time latent:
+\begin{equation}
+    \widetilde A_\theta
+    =
+    D_\theta
+    \left(
+        q_{0:H-1},
+        \bar Z_{t+d}
+    \right).
+    \label{eq:one_step_decoder}
+\end{equation}
+This is one action-transformer evaluation.  The decoder may use bidirectional
+self-attention across action queries because the complete output chunk is
+generated simultaneously.  The history encoder remains causal, and the
+decoder never receives the ground-truth suffix.
+
+Committed actions are enforced after decoding:
+\begin{equation}
+    \widehat A_{h,j}
+    =
+    m_{h,j}p_{h,j}
+    +(1-m_{h,j})\widetilde A_{\theta,h,j}.
+    \label{eq:hard_prefix_copy}
+\end{equation}
+Consequently, the model cannot rewrite commands that the controller will
+execute.  The committed prefix influences the generated suffix through
+self-attention, but exact preservation does not depend on learned behavior.
+
+\subsection{Training-Time RTC}
+\label{sec:training_rtc}
+
+Training examples are constructed from the same timeline used at deployment.
+For each valid trajectory position:
+\begin{enumerate}
+    \item sample an inference delay \(d\) from the measured deployment latency
+          distribution or a documented discrete approximation;
+    \item sample a request-time queue length \(K\), with \(d\leq K<d+H\);
+    \item encode history only through time \(t\) to obtain \(Z_t\);
+    \item read \(U_{t:d}^{*}=a_{t:t+d-1}^{*}\), representing actions executed
+          while the request is in flight;
+    \item set \(L=K-d\) and construct the committed prefix
+          \(P_{t+d}^{*}=a_{t+d:t+K-1}^{*}\);
+    \item shift the target to \(A_{t,d}^{*}=a_{t+d:t+d+H-1}^{*}\);
+    \item propagate \(Z_t\) through \(U_{t:d}^{*}\), decode once, and optimize
+          only the unknown suffix together with latent-transition consistency.
+\end{enumerate}
+
+Samples crossing an episode boundary are masked or rejected.  The minibatch is
+stratified over \(d\) and \(L\), including \(L=0\), so the decoder learns both
+unconditioned generation and overlap-conditioned continuation.
+
+\paragraph{No synthetic compatibility labels.}
+The training prefix is not classified as valid or invalid.  A prefix taken from
+a different time or perturbed in action space generally changes the physical
+arrival state, making the original expert suffix an invalid counterfactual
+target.  Model-generated prefixes may be used only when the corresponding
+arrival observation, robot state, and continuation target are collected from a
+simulator or real rollout.  Simple prefix corruption is therefore not part of
+the core method.
+
+\subsection{Learning Objectives}
+
+\subsubsection{One-Step Suffix Generation}
+
+Let
+\begin{equation}
+    \omega_{h,j}
+    =
+    \nu_{h,j}(1-m_{h,j})
+\end{equation}
+select coordinates for which the model is responsible.  We apply the inherited
+one-step generation objective only to these coordinates:
+\begin{equation}
+    \mathcal{L}_{\mathrm{gen}}
+    =
+    \frac{
+        \sum_{h,j}
+        \omega_{h,j}
+        \ell_{\mathrm{1step}}
+        \left(
+            \widetilde A_{\theta,h,j},
+            A_{t,d,h,j}^{*}
+        \right)
+    }{
+        \sum_{h,j}\omega_{h,j}
+    }.
+    \label{eq:generation_loss}
+\end{equation}
+For DrifOv, \(\ell_{\mathrm{1step}}\) can retain the one-step Drifting objective
+of~\cite{yang2026implicitdrifting}; direct regression or a consistency-distilled
+generator can use the same topology.  RTC conditioning does not require a
+separate action, velocity, acceleration, attraction, or rejection loss.
+
+\subsubsection{Arrival-Latent Consistency}
+
+During training, the actual trajectory provides a representation of the
+arrival-time history.  Applying the same causal memory encoder through
+\(t+d\) gives a stop-gradient target
+\begin{equation}
+    Z_{t+d}^{+}
+    =
+    \operatorname{sg}
+    \left[
+        M_{\bar\theta}
+        \left(
+            \mathcal{H}_{t+d}
+        \right)
+    \right],
+    \label{eq:arrival_latent_target}
+\end{equation}
+where \(\bar\theta\) denotes an exponential-moving-average copy of the memory
+encoder or a stop-gradient online encoder.  The delay propagator is trained by
+\begin{equation}
+    \mathcal{L}_{\mathrm{dyn}}
+    =
+    \frac{1}{M}
+    \sum_{m=1}^{M}
+    \left\|
+        \operatorname{norm}(\bar z_{t+d}^{m})
+        -
+        \operatorname{norm}(z_{t+d}^{+,m})
+    \right\|_2^2.
+    \label{eq:latent_dynamics_loss}
+\end{equation}
+This objective gives the historical latent a measurable role: after consuming
+the in-flight actions, it must agree with the representation obtained from the
+trajectory that actually reached the arrival time.
+
+\subsubsection{Total Objective}
+
+The core objective contains only generation and latent propagation:
+\begin{equation}
+    \mathcal{L}_{\mathrm{DrifOv}}
+    =
+    \mathcal{L}_{\mathrm{gen}}
+    +
+    \lambda_{\mathrm{dyn}}
+    \mathcal{L}_{\mathrm{dyn}}.
+    \label{eq:drifov_total}
+\end{equation}
+An auxiliary decoder from \(\bar Z_{t+d}\) to the arrival robot state may be
+added if latent collapse is observed, but it is not a defining component.
+Boundary smoothness is measured during evaluation and introduced as a loss
+only if the base model exhibits a verified discontinuity that is not addressed
+by prefix conditioning.
+
+\subsection{Asynchronous Inference}
+
+The deployment system maintains the latent memory and action queue as explicit
+controller state:
+\begin{enumerate}
+    \item After each control step, update \(Z_t\) using the observation, robot
+          state, and action that was actually executed.
+    \item When issuing a policy request, snapshot \(Z_t\), estimate the arrival
+          delay \(\widehat d\), and record the queue associated with the request.
+    \item Partition that queue into the actions \(U_{t:\widehat d}\) expected to
+          execute during inference and the prefix \(P_{t+\widehat d}\) expected
+          to remain committed after arrival.
+    \item Compute \(\bar Z_{t+\widehat d}\) with one delay-propagator evaluation
+          and generate the complete candidate chunk with one action-decoder
+          evaluation.
+    \item At return time, compare the realized delay and queue state with the
+          request metadata.  If the assumed overlap has expired or changed,
+          discard the stale result rather than reinterpret it.
+    \item Otherwise, preserve the committed prefix exactly and append only the
+          newly generated suffix.
+\end{enumerate}
+
+The delay propagator does not perform iterative action generation.  The phrase
+``one-step inference'' refers to replacing iterative diffusion or flow
+integration with one action-transformer evaluation, consistent with the
+one-step Drifting baseline.
+
+\subsection{Information-Flow Constraints}
+
+The topology uses architectural information boundaries rather than auxiliary
+penalties:
+\begin{enumerate}
+    \item the historical encoder sees only observations, states, and executed
+          actions at or before the request time;
+    \item the delay propagator sees only the request-time latent, in-flight
+          actions, and delay metadata;
+    \item the action decoder sees the propagated latent, committed prefix,
+          validity mask, timing positions, and one-step source input;
+    \item the ground-truth suffix is used only by the loss;
+    \item hard copying, rather than a learned penalty, preserves committed
+          prefix coordinates.
+\end{enumerate}
+These constraints prevent future leakage during training and preserve the
+causal interpretation of every input.
+
+\subsection{Relation to RTC and One-Step Generation}
+
+RTC~\cite{black2025realtimechunking} begins the next request before the current
+chunk is exhausted and constrains the overlap during iterative diffusion or
+flow inference.  DrifOv adopts the same asynchronous execution timeline during
+training but replaces iterative inference-time guidance with three learned
+components: causal trajectory memory, action-conditioned latent propagation,
+and one-step masked continuation.  Exact prefix copying remains a controller
+invariant.
+
+The one-step generator itself is inherited from Drifting.  The new mechanism
+addresses a different problem: a one-step policy must know not only the
+request-time observation, but also the motion executed before its output can
+take effect.  The history-latent branch supplies this missing control context.
+
+\subsection{Implementation Changes}
+\label{sec:implementation_changes}
+
+The current \texttt{DrifOvActionHead} can be converted to the proposed topology
+through the following changes:
+\begin{enumerate}
+    \item \textbf{Add persistent latent memory.}
+          Maintain a fixed set of history tokens and update them with visual
+          features, robot state, and the action actually executed.
+    \item \textbf{Expose the request-time queue partition.}
+          The RTC engine must provide both the actions expected to execute
+          during inference and the commands expected to remain at arrival.
+    \item \textbf{Add the delay propagator.}
+          Encode the in-flight action sequence and transform the request-time
+          memory into an arrival-time latent.
+    \item \textbf{Replace global overlap metadata with execution-time tokens.}
+          Each action query receives its committed mask and execution index
+          \(d+h\).
+    \item \textbf{Retain one-step decoding and hard prefix copying.}
+          The existing action transformer and element-wise
+          \texttt{torch.where} operation can remain the output path.
+    \item \textbf{Replace boundary and compatibility objectives.}
+          Train the unknown suffix with the inherited one-step objective and
+          train the delay propagator with arrival-latent consistency.
+    \item \textbf{Cache only physical history.}
+          Update latent memory from actions confirmed as executed, not from the
+          full action chunk originally predicted by the policy.
+\end{enumerate}
+
+\subsection{Required Ablations and Metrics}
+
+The minimum ablation isolates each topological component:
+\begin{enumerate}
+    \item unconditioned one-step Drifting;
+    \item prefix-conditioned generation without delay alignment;
+    \item delay-aligned RTC with prefix conditioning but no historical latent;
+    \item historical latent without action-conditioned delay propagation;
+    \item the complete history-latent DrifOv model;
+    \item complete model without \(\mathcal{L}_{\mathrm{dyn}}\);
+    \item recurrent latent tokens versus a single pooled history vector.
+\end{enumerate}
+
+In addition to task success, evaluation reports:
+\begin{enumerate}
+    \item suffix action error and success rate by delay \(d\) and overlap \(L\);
+    \item arrival-state or arrival-feature prediction error;
+    \item exact committed-prefix preservation error;
+    \item action discontinuity at the prefix--suffix boundary;
+    \item stale-result frequency and achieved control update rate;
+    \item history-memory update cost, delay-propagator cost, and action-decoder
+          latency separately.
+\end{enumerate}
+
+This experiment distinguishes gains from one-step generation, training-time
+RTC, and historical trajectory modeling instead of combining them into a
+single collection of auxiliary constraints.

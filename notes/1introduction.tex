@@ -1,0 +1,42 @@
+\section{Introduction}
+
+Vision-Language-Action (VLA) models have demonstrated strong capabilities
+in robotic manipulation. However, their computational cost and inference
+latency can limit their use in real-time robotic systems. Improving
+inference efficiency while preserving action quality is therefore important
+for deploying VLA models on practical robot platforms.
+
+Existing approaches improve VLA efficiency at either the model or system
+level. Model-level methods include fast--slow architectures, lightweight
+vision-language backbones, KV caching, and early-exit strategies. System-level
+methods include quantization, CUDA Graphs, and custom CUDA operators.
+These approaches reduce different sources of latency, but action generation
+based on iterative denoising can remain computationally expensive.
+
+In this technical report, we investigate a one-step action-generation head
+based on [define ``drifting'' here]. The proposed head replaces the
+multi-step denoising procedure of the original diffusion-transformer
+(DiT) action head with a single generation step. In our experiments on
+NVIDIA GR00T N1.7, this modification reduces [action-head/end-to-end]
+inference latency to approximately 10\% of the original value under the
+same evaluation conditions. The head is designed as a modular modification
+to the VLA architecture, although its applicability to other models remains
+to be evaluated.
+
+One-step generation also creates a consistency problem during asynchronous
+action prefetching: a newly predicted action chunk may not account for
+actions that have already been committed to the robot's control queue.
+To address this issue, we introduce an overlap-aware action head inspired
+by training-time RTC [define and cite RTC]. It conditions generation on
+the committed action prefix and preserves valid prefix coordinates exactly.
+
+The main contributions of this report are:
+\begin{itemize}
+    \item We implement and evaluate a one-step action-generation head for
+    NVIDIA GR00T N1.7.
+    \item We describe the consistency limitation of combining one-step
+    generation with asynchronous action prefetching.
+    \item We introduce an overlap-aware formulation that represents the
+    committed action prefix, coordinate-wise validity, overlap length, and
+    estimated execution offset while preserving valid prefix coordinates.
+\end{itemize}

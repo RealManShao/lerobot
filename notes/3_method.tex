@@ -1,0 +1,252 @@
+\section{Preliminaries}
+
+\paragraph{From Multi-Step to One-Step Action Generation.}
+In conditional imitation learning, given a dataset of expert demonstrations \(\mathcal{D} = \{(o_i, a^*_i)\}_{i=1}^N\), 
+the objective is to learn a policy mapping an observation \(o \in \mathcal{O}\) to a expert action chunk \(a^*\) 
+from the target data distribution \(p_{\text{data}}(a^* | o)\). 
+Traditional behavior cloning (BC) frames this as a single-step direct mapping \(a = f_\theta(o)\), 
+optimizing the isotropic mean squared error \(\mathbb{E}_{o, a^* \sim p_{\text{data}}} \|f_\theta(o) - a^*\|_2^2\). 
+While deployment is highly efficient, this objective reduces generation to an isolated endpoint prediction, 
+failing to exploit the geometric structure of the expert action manifold.
+Generative action policies address this by constructing a continuous trajectory over a virtual time \(t \in [0, 1]\), 
+where \(a_t\) denotes the intermediate state. Starting from an initial source sample \(a_0 \sim p_0\), 
+diffusion models progressively reach the final action via a denoising path, 
+typically optimized using the denoising loss \(\mathcal{L}_{\text{DP}} = \mathbb{E}[\|\epsilon_\theta(a_t, o, t) - \epsilon\|_2^2]\). 
+Evolving from this, flow matching directly formulates the trajectory via an ordinary differential equation (ODE) 
+\(da_t = v_\theta(a_t, o, t) dt\) driven by a velocity field, 
+optimizing \(\mathcal{L}_{\text{FM}} = \mathbb{E}[\|v_\theta(a_t, o, t) - \frac{d}{dt}a_t\|_2^2]\). 
+This multi-step evolution naturally retains the capacity for progressive error correction.
+
+To reduce inference latency, recent acceleration algorithms compress the intermediate path to directly learn a one-step endpoint mapping or a large-stride velocity. 
+For instance, Consistency Models~\cite{prasad2024consistencypolicyacceleratedvisuomotor} learn a mapping \(f_\theta(o, a_t, t)\) by imposing a cross-time self-consistency constraint:
+\(\mathcal{L}_{\text{CM}} = \mathbb{E}\left[ \left\| f_\theta(o, a_t, t) - f_{\phi}(o, a_{t'}, t') \right\|_2^2 \right]\),
+enforcing any intermediate point on the trajectory to map to the same endpoint (where \(\phi\) is the target network parameter). 
+Similarly, MeanFlow~\cite{geng2025meanflowsonestepgenerative} learns the average velocity \(u_\theta(a_t, o, r, t)\) over a time interval \([r, t]\) by satisfying an intrinsic identity between average and instantaneous velocities:
+\(\mathcal{L}_{\text{MF}} = \mathbb{E}\left[ \left\| u_\theta(a_t, o, r, t) - \operatorname{sg}\left[ v_t - (t-r)\frac{d}{dt}u_\theta(a_t, o, r, t) \right] \right\|_2^2 \right]\),
+where \(\operatorname{sg}[\cdot]\) denotes the stop-gradient operator.
+However, whether relying on target-network distillation or higher-order derivative identities, the optimization processes encounter specific challenges. 
+When the physical intermediate evolution is bypassed, 
+reconstructing the corrective signal for the one-step mapping without relying on expensive cross-step constraints remains a crucial problem.
+
+\paragraph{Explicit Drifting in Behavior Cloning.}
+Drifting models offer a mathematical framework to isolate the correction mechanism entirely within the training phase. 
+Given the target data distribution \(p_{\text{data}}\) and generated distribution \(q_\theta\), 
+Drifting constructs an explicit continuous vector field \(V_{p,q}(a) = V_p^+(a) - V_q^-(a)\) comprising attraction and repulsion. 
+This field dictates the optimal displacement for a generated sample \(a\) toward the data manifold. Based on a kernel function \(k(\cdot, \cdot)\), 
+the attraction and repulsion fields are respectively defined as:
+\begin{equation}
+    V_p^+(a) = \frac{\mathbb{E}_{y\sim p_{\text{data}}}[k(a, y)(y - a)]}{\mathbb{E}_{y\sim p_{\text{data}}}[k(a, y)]}, \qquad V_q^-(a) = \frac{\mathbb{E}_{y\sim q_\theta}[k(a, y)(y - a)]}{\mathbb{E}_{y\sim q_\theta}[k(a, y)]}.
+\end{equation}
+The one-step generator \(f_\theta\) is trained to regress this field-displaced frozen target:
+\begin{equation}
+    \mathcal{L}_{\mathrm{Drift}}(\theta) = \mathbb{E}_{a_0 \sim p_0} \left\| f_\theta(o, a_0, 0) - \operatorname{sg}\left[ f_\theta(o, a_0, 0) + V_{p,q}(f_\theta(o, a_0, 0)) \right] \right\|_2^2.
+\end{equation}
+In unconditional generation, the rich sample sets supporting the distributions enable the vector field to provide smooth manifold guidance.
+However, directly porting this explicit drifting mechanism to conditional behavior cloning encounters a fundamental structural degeneration. 
+Consider the following proposition:
+
+% \textbf{Proposition 1.} 
+% \emph{
+%     Assume that in behavior cloning, the dataset provides only a unique, 
+%     deterministic expert action \(a_i^*\) for a specific observation \(o_i\), 
+%     and the generator produces a single prediction \(a = f_\theta(o_i, a_0, 0)\) per training iteration. 
+%     The empirical conditional distributions degenerate into Dirac measures \(\hat{p}_{\text{data}}(y | o_i) = \delta(y - a_i^*)\) 
+%     and \(\hat{q}_\theta(y | o_i) = \delta(y - a)\). For any translation-invariant positive kernel \(k(\cdot, \cdot)\), 
+%     the empirical conditional drifting field mathematically evaluates exactly to \(V_{\hat{p},\hat{q}}(a | o_i) = a_i^* - a\). 
+%     Consequently, the field-displaced regression objective becomes exactly equivalent to the isotropic Mean Squared Error (MSE), 
+%     losing all local geometric guidance.} 
+%     \emph{(Proof. See Appendix A.)
+% }
+\begin{proposition}[Degeneration of Explicit Drifting in Behavior Cloning]
+    \label{prop:degeneration_explicit_drifting}
+    
+    Assume that in behavior cloning, the dataset provides only a unique, 
+    deterministic expert action \(a_i^*\) for a specific observation \(o_i\), 
+    and the generator produces a single prediction \(a = f_\theta(o_i, a_0, 0)\) per training iteration. 
+    The empirical conditional distributions degenerate into Dirac measures \(\hat{p}_{\text{data}}(y | o_i) = \delta(y - a_i^*)\) 
+    and \(\hat{q}_\theta(y | o_i) = \delta(y - a)\). For any translation-invariant positive kernel \(k(\cdot, \cdot)\), 
+    the empirical conditional drifting field mathematically evaluates exactly to \(V_{\hat{p},\hat{q}}(a | o_i) = a_i^* - a\). 
+    Consequently, the field-displaced regression objective becomes exactly equivalent to the isotropic Mean Squared Error, 
+    losing all local geometric guidance. (Proof. See Appendix~\ref{app:proof_prop1}.)
+\end{proposition}
+
+While the underlying control task may tolerate variations around \(a_i^*\) 
+(e.g., alternative valid trajectories or recoverable states), 
+the preceding analysis highlights that the empirical target distribution in standard BC training is too sparse to directly support the estimation of a continuous drifting field. 
+To circumvent this degeneration in practice, models must resort to empirical approximations, 
+such as synthesizing a localized empirical distribution by drawing multiple independent noise samples per observation during training and applying self-masking heuristics. 
+While successful in avoiding the collapse to MSE, 
+these approximations significantly increase computational overhead and entangle the correction field with transient sampling densities. 
+This practical challenge motivates us to explore an alternative path: 
+rather than regressing an explicit dynamic vector field, 
+we extract the static local geometric structure directly from demonstrations.
+
+\section{Implicit Drifting Policy}
+
+Given the challenges of estimating explicit continuous vector fields under sparse empirical distributions, 
+we explore an alternative path. Our core idea is to shift away from regressing dynamic drifting fields, 
+and instead consider extracting the local geometric structure directly from static expert demonstrations, 
+converting it into a potential objective that induces correction (see Fig~\ref{fig:pipeline}). 
+
+
+\begin{figure}[t]
+\centering
+
+\includegraphics[width=\linewidth]{img/pipeline1.pdf}
+% \caption{
+% \textbf{Overview of Implicit Drifting Policy.}
+% % IDP replaces explicit drifting-field regression with a geometry-aware potential induced by static demonstrations.
+% (a) For each demonstration pair $(o_i,a_i^*)$, the expert action anchors the local action space.
+% (b) Observation-conditioned weights $w_{ij}$ select expert actions under similar observations, forming a Conditional Expert Geometry $G_i$ around $a_i^*$.
+% (c) Comparing $G_i$ with the reference geometry $\Sigma_{\mathrm{ref}}$ isolates the Local Geometry Excess $m_i$, visualized as the excess-constrained region and implemented as coordinate-wise precision excess.
+% (d) The resulting metric $M_i$ defines a potential $E_i$, whose negative gradient $-\nabla E_i(a)$ supervises both the deployment proposal $y_i$ and the expert-proximal evaluation $z_i$ during training.
+% }
+\caption{
+\textbf{Overview of Implicit Drifting Policy.}
+(a) Expert action $a_i^*$ anchors the local action space.
+(b) Weights $w_{ij}$ select observation-similar expert actions to form a Conditional Expert Geometry $G_i$ around $a_i^*$.
+(c) Comparing $G_i$ with reference geometry $\Sigma_{\mathrm{ref}}$ yields the Local Geometry Excess $m_i$ (coordinate-wise precision excess).
+(d) The induced metric $M_i$ defines a potential $E_i$, where $-\nabla E_i(a)$ supervises both deployment proposal $y_i$ and expert-proximal evaluation $z_i$.
+}
+\vspace{-2ex}
+\label{fig:pipeline}
+\end{figure}
+
+
+
+
+\subsection{Implicit Correction Objective and Local-Aware Evaluation}
+\label{sec:4.1}
+To avoid regressing a high-dimensional and unstable continuous drifting field, 
+we consider constructing an implicit correction field directed toward the expert target \(a_i^*\). 
+In the most basic case, a simple attraction field can be written as \(V_{\mathrm{base}}(a) = a_i^* - a\). 
+However, this simple attraction is isotropic. In multi-step generative models, 
+isotropic targets, like MSE loss, are sufficient because the model can implicitly adjust and align with the action manifold through hundreds of inference iterations along the intermediate trajectory. 
+However, for a one-step generator, it loses the ability to progressively correct errors along the intermediate path. 
+If the training objective does not explicitly reinforce the tightness of constraints across different action dimensions, 
+the prediction is highly prone to diverging from the valid manifold structure in a single stride.
+Therefore, for a given predicted action \(a\), we consider applying a geometry-aware correction vector:
+\begin{equation}
+    \Delta_i(a) = M_i(a_i^* - a),
+\end{equation}
+where \(M_i \succeq 0\) is a positive semi-definite symmetric matrix acting as geometry-adaptive weights, 
+determining the strength of the correction force along different directions. 
+We elucidate the mathematical properties of this vector through the following proposition.
+
+\begin{proposition}[Geometry-Induced Correction Potential]
+    \label{prop:geometry_induced_potential}
+    For any constant positive semi-definite symmetric matrix \(M_i \succeq 0\), the geometry-induced correction field defined by \(\Delta_i^{\text{geo}}(a) = M_i(a_i^* - a)\) is a conservative field. Mathematically, it corresponds exactly to the negative gradient (\(-\nabla_a E_i^{\text{geo}}(a) = \Delta_i^{\text{geo}}(a)\)) of the following geometry-only potential function:
+    (Proof. See Appendix~\ref{app:proof_prop2}.)
+    \begin{equation}
+        E_i^{\text{geo}}(a) = \frac{1}{2} (a - a_i^*)^\top M_i (a - a_i^*).
+    \end{equation}
+\end{proposition}
+The complete geometric potential objective incorporates the isotropic error of behavior cloning:
+\begin{equation}
+    E_i(a) = \frac{1}{2} \| a - a_i^* \|_2^2 + E_i^{\text{geo}}(a) = \frac{1}{2}[\underbrace{ \| a - a_i^* \|_2^2}_{\text{isotropic error}} + \underbrace{(a - a_i^*)^\top M_i (a - a_i^*)}_{\text{geometry-adaptive penalty}}]
+\end{equation}
+whose full negative gradient naturally yields a combined correction force: \(-\nabla_a E_i(a) = (I + M_i)(a_i^* - a)\) (Fig~\ref{fig:pipeline} (d)).
+The first term of this potential is equivalent to the isotropic error of behavior cloning, 
+while the second term adaptively increases the penalty for constrained directions based on \(M_i\). 
+% Consequently, we transform the regression of an explicit vector field into the minimization of a potential.
+We transform the regression of an explicit vector field into the minimization of a potential. 
+
+However, the constraint characterized by matrix \(M_i\) is statistically grounded primarily within the local vicinity of the expert action \(a_i^*\). 
+If the optimization process applies this potential constraint exclusively at the standard initial prediction point \(y_i = f_\theta(o_i, a_0, 0)\), 
+the network might struggle to adequately learn the true topology of the local manifold. To ensure that this local potential effectively guides network learning, 
+we consider introducing an expert-proximal evaluation anchor during training. 
+By selecting a time scalar \(t_* \in (0, 1)\) close to \(1\), 
+we construct a probing input \(\tilde{a}_i = a_i^* + (1 - t_*)\epsilon_i\) (where \(\epsilon_i \sim \mathcal{N}(0, I)\)) by injecting exploratory noise proportional to the distance around the expert action. 
+We evaluate the mapping at this proximal location, yielding \(z_i = f_\theta(o_i, \tilde{a}_i, t_*)\). 
+Therefore, the single-step prediction and the local probing are controlled by the same geometric potential objective, 
+formulating our total training objective as:
+% \begin{equation}
+%     \mathcal{L} = \mathbb{E}_{i \sim \mathcal{D}} \left[ \tfrac{1}{t_*^2}\, E_i(y_i) + \tfrac{1}{(1-t_*)^2}\, E_i(z_i) \right],
+% \end{equation}
+% where the time-symmetric weights \(1/t_*^2\) and \(1/(1-t_*)^2\) are determined entirely by the schedule scalar \(t_*\). ...
+\begin{equation}
+    \mathcal{L} = \mathbb{E}_{i \sim \mathcal{D}} \left[ E_i(y_i) + \lambda_{\mathrm{prox}}\, E_i(z_i) \right],
+    \label{eq:idp_total_loss}
+\end{equation}
+where \(\lambda_{\mathrm{prox}}\) is a hyperparameter balancing the standard endpoint regression and the expert-proximal evaluation. We adopt the implementation choice of MIP~\cite{pan2026adonoisingdispellingmyths} for this weight; details are deferred to Appendix~\ref{app:hyper}.
+This construction establishes the skeleton of the entire implicit correction framework. 
+The core challenge then becomes how to extract the adaptive constraint matrix \(M_i\) from static demonstration data to reflect the current control state.
+
+\subsection{Conditional Expert Geometry as the Correction Source}
+
+To ensure the adaptive penalty effectively limits invalid actions, 
+we consider grounding the construction of matrix \(M_i\) in the authentic structure of the demonstration data. 
+In control manifolds, similar observation states usually correspond to analogous robot poses or environmental layouts, 
+which physically often impose similar operational bottlenecks and obstacle avoidance constraints. 
+Therefore, under similar observation conditions, 
+the variation in expert actions naturally reflects the specific motion constraints and acceptable tolerances of the current task.
+
+To extract this structure, we need to identify and aggregate similar control contexts in the feature space. 
+However, because feature representations dynamically update during training, 
+to ensure that the similarity metric relies on stable features, we consider applying a stop-gradient operation and normalization to the embeddings before computation:
+% \begin{equation}
+%     h_i = \frac{\operatorname{sg}[\phi_\theta(o_i)]}{\|\operatorname{sg}[\phi_\theta(o_i)]\|_2 + \varepsilon}.
+% \end{equation}
+\begin{equation}
+    h_i = \operatorname{sg}[\phi_\theta(o_i)]  \Big/ \,    \big(\|\operatorname{sg}[\phi_\theta(o_i)]\|_2 + \varepsilon \big).
+\end{equation}
+To evaluate the correlation between different states, 
+we first compute the pairwise feature inner products \(s_{ij} = h_i^\top h_j\). 
+Considering that the observation density across different regions of the state space in the demonstration dataset is often highly imbalanced
+ (e.g., abundant samples in routine states but very few in edge cases), 
+directly using inner products can lead to local weight collapse in sparse regions. 
+To mitigate this issue, we adopt row-normalization \(\bar{s}_{ij} = \frac{s_{ij} - \mu_i}{\sigma_i + \varepsilon}\), 
+and obtain the local neighborhood weights \(w_{ij} \propto \exp(\bar{s}_{ij})\) via Softmax.
+Based on these weights, 
+to quantify the degree of action divergence under the current observation, 
+we define the Conditional Expert Geometry matrix within the local space of the expert action \(a_i^*\) (Fig~\ref{fig:pipeline} (b)):
+\begin{equation}
+    G_i = \mathbb{E}_{j \sim \mathcal{D} \setminus \{i\}} \left[ w_{ij} (a_j^* - a_i^*)(a_j^* - a_i^*)^\top \right].
+    \label{eq:cond_expert_geometry}
+\end{equation}
+Note that the query sample itself (\(j=i\)) is explicitly excluded to prevent the zero-distance term from artificially collapsing the local variance estimate.
+From a nonparametric statistical perspective, 
+this construction can be interpreted through kernel smoothing, 
+serving as an estimate of the local conditional covariance \(\Sigma_{a|o}\). 
+Directions in \(G_i\) with small variance indicate strict operational constraints, 
+whereas directions with large variance represent redundant dimensions of the action.
+
+\subsection{Local Geometry Excess}
+
+Directly utilizing the inverse of \(G_i\) as \(M_i\) could introduce biases. 
+This is because certain action coordinates may naturally maintain extremely low variance globally across the entire task. 
+We consider it necessary to distinguish the condition-specific constraints triggered purely by the current observation from this inherent global action scale.
+
+In a general multivariate form, distinguishing the condition-specific constraints from the global marginal prior typically requires comparing their inverse covariance matrices. Let \(P_i^{\mathrm{cond}} = (G_i + \varepsilon I)^{-1}\) and \(P^{\mathrm{ref}} = (\Sigma_{\text{ref}} + \varepsilon I)^{-1}\). The geometry excess can be conceptualized via a non-negative truncated comparison, such as \(M_i \propto [(P^{\mathrm{ref}})^{-1/2} P_i^{\mathrm{cond}} (P^{\mathrm{ref}})^{-1/2} - I]_+\), which usually involves expensive generalized eigenvalue decomposition operations. Considering computational efficiency and to ensure relatively independent penalties across dimensions, we adopt a diagonal instantiation in practice. 
+Specifically, we compute the diagonal conditional variance \(v_{i,d}^{\mathrm{cond}} = \mathbb{E}_{j \sim \mathcal{D}}[w_{ij} (a_{j,d}^* - a_{i,d}^*)^2]\) 
+and the global reference variance \(v_d^{\mathrm{ref}} = \mathbb{E}_{i \sim \mathcal{D}} [(a_{i,d}^* - \bar{a}_d^*)^2]\). 
+To eliminate dimensional impacts and compare the tightness of different dimensions on the same relative baseline, 
+we convert them into normalized precision scales (i.e., standardized inverse variance):
+% \begin{equation}
+%     s_{i,d}^{\mathrm{cond}}
+%     =
+%     \frac{1/\sqrt{v_{i,d}^{\mathrm{cond}}+\varepsilon}}
+%     {\mathbb{E}_{k}\big[1/\sqrt{v_{i,k}^{\mathrm{cond}}+\varepsilon}\big]},
+%     \qquad
+%     s_d^{\mathrm{ref}}
+%     =
+%     \frac{1/\sqrt{v_d^{\mathrm{ref}}+\varepsilon}}
+%     {\mathbb{E}_{k}\big[1/\sqrt{v_k^{\mathrm{ref}}+\varepsilon}\big]}.
+% \end{equation}
+\begin{equation}
+    s_{i,d}^{\mathrm{cond}} = \big( v_{i,d}^{\mathrm{cond}} + \varepsilon \big)^{-1/2} \Big/ \, \mathbb{E}_{k}\big[ (v_{i,k}^{\mathrm{cond}} + \varepsilon)^{-1/2} \big], 
+    \quad
+    s_d^{\mathrm{ref}} = \big( v_d^{\mathrm{ref}} + \varepsilon \big)^{-1/2} \Big/ \, \mathbb{E}_{k}\big[ (v_k^{\mathrm{ref}} + \varepsilon)^{-1/2} \big].
+\end{equation}
+Since we only wish to penalize dimensions that become more strictly constrained due to the current observation than they usually are, 
+we consider utilizing the filtering property of the one-sided ReLU operator to define the Geometry Excess (Fig~\ref{fig:pipeline} (c)):
+\begin{equation}
+    m_{i,d}=\operatorname{ReLU}\left(s_{i,d}^{\mathrm{cond}} \Big/ \, (s_d^{\mathrm{ref}}+\varepsilon)-1\right),
+    \qquad
+    M_i=\operatorname{Diag}(m_i).
+\end{equation}
+The ReLU operator ensures that a dimension is extracted only when 
+the local precision exceeds the global marginal precision prior. 
+Consequently, we filter out inherent features that do not surpass the baseline, 
+extract the specific geometry purely associated with the current state, 
+and use it as the adaptive weight matrix \(M_i\) for the potential in Section~\ref{sec:4.1}.

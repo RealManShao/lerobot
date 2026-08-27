@@ -177,6 +177,15 @@ def update_policy(
     return train_metrics, output_dict
 
 
+def _find_unused_parameters_for_ddp(cfg: TrainPipelineConfig) -> bool:
+    """Enable DDP unused-parameter detection only for expert-only finetuning.
+
+    Expert-only policies intentionally freeze large parts of the model, and some of
+    them keep trainable branches that are not traversed on every backward pass.
+    """
+    return bool(getattr(cfg.trainable_config, "train_expert_only", False))
+
+
 @parser.wrap()
 def train(cfg: TrainPipelineConfig, accelerator: "Accelerator | None" = None):
     """
@@ -208,9 +217,11 @@ def train(cfg: TrainPipelineConfig, accelerator: "Accelerator | None" = None):
     # Create Accelerator if not provided
     # It will automatically detect if running in distributed mode or single-process mode
     # We set step_scheduler_with_optimizer=False to prevent accelerate from adjusting the lr_scheduler steps based on the num_processes
-    # Disable unused-parameter detection to avoid an extra autograd-graph traversal each iteration.
+    # Disable unused-parameter detection by default to avoid an extra autograd-graph traversal each iteration.
     if accelerator is None:
-        ddp_kwargs = DistributedDataParallelKwargs(find_unused_parameters=False)
+        ddp_kwargs = DistributedDataParallelKwargs(
+            find_unused_parameters=_find_unused_parameters_for_ddp(cfg)
+        )
         # Accelerate auto-detects the device based on the available hardware and ignores the policy.device setting.
         # Force the device to be CPU when the active config's device is set to CPU (works for both policy and reward model training).
         force_cpu = cfg.trainable_config.device == "cpu"

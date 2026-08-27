@@ -1,20 +1,21 @@
 # Train Drifting based on LIBERO dataset
-export MUJOCO_GL=egl
-export OMP_NUM_THREADS=6
-CUDA_VISIBLE_DEVICES=0,1,2,3 torchrun \
+
+CUDA_VISIBLE_DEVICES=0,1 torchrun \
   --standalone \
-  --nproc_per_node=4 \
+  --nproc_per_node=2 \
   -m lerobot.scripts.lerobot_train \
   --dataset.repo_id=lerobot/libero \
   --dataset.video_backend=torchcodec \
   --policy.type=drif_ov \
-  --batch_size=256 \
-  --steps=15000 \
-  --output_dir=outputs/train/libero/drif_ov/try1 \
-  --job_name=drif_ov_libero \
+  --policy.use_bf16=true \
   --policy.device=cuda \
+  --batch_size=32 \
+  --steps=20000 \
+  --output_dir=outputs/train/libero/drif_ov/0822/try1 \
+  --job_name=Aug.21_drif_ov_libero_seed1000_steps20000 \
   --wandb.enable=true \
-  --policy.repo_id="Xihe666/drif_ov_libero0809"
+  --seed=1000 \
+  --policy.repo_id="Xihe666/drif_ov_libero_20k_seed1000_0822"
 
 # Finetune drifting on LIBERO 10
 IMAGE_TRANSFORMS='{
