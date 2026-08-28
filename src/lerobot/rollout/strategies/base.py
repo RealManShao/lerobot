@@ -16,6 +16,7 @@
 
 from __future__ import annotations
 
+from collections import deque
 import logging
 import time
 
@@ -47,10 +48,22 @@ class BaseStrategy(RolloutStrategy):
         interpolator = self._interpolator
 
         control_interval = interpolator.get_control_interval(cfg.fps)
+        target_hz = cfg.fps * interpolator.multiplier
 
         start_time = time.perf_counter()
         engine.resume()
         logger.info("Base strategy control loop started")
+
+        action_ms_window: deque[float] = deque(maxlen=200)
+        total_ms_window: deque[float] = deque(maxlen=200)
+        loop_counter = 0
+
+        def _percentile(values: list[float], q: float) -> float:
+            if not values:
+                return 0.0
+            ordered = sorted(values)
+            idx = min(len(ordered) - 1, max(0, int(round((len(ordered) - 1) * q))))
+            return ordered[idx]
 
         while not ctx.runtime.shutdown_event.is_set():
             loop_start = time.perf_counter()
@@ -72,15 +85,33 @@ class BaseStrategy(RolloutStrategy):
             self._log_telemetry(obs_processed, action_dict, ctx.runtime)
 
             dt = time.perf_counter() - loop_start
+            loop_counter += 1
+            action_ms_window.append((action_end - processing_end) * 1000.0)
+            total_ms_window.append(dt * 1000.0)
+
+            if loop_counter % 120 == 0 and total_ms_window:
+                action_values = list(action_ms_window)
+                total_values = list(total_ms_window)
+                logger.info(
+                    "Loop latency stats (window=%d, target=%.1fHz): "
+                    "action_p50=%.1fms action_p95=%.1fms total_p50=%.1fms total_p95=%.1fms",
+                    len(total_values),
+                    target_hz,
+                    _percentile(action_values, 0.50),
+                    _percentile(action_values, 0.95),
+                    _percentile(total_values, 0.50),
+                    _percentile(total_values, 0.95),
+                )
+
             if (sleep_t := control_interval - dt) > 0:
                 precise_sleep(sleep_t)
             else:
                 logger.warning(
-                    "Control loop is running slower (%.1f Hz) than the target FPS (%.1f Hz): "
+                    "Control loop is running slower (%.1f Hz) than the target control rate (%.1f Hz): "
                     "observation=%.1fms, processing=%.1fms, action=%.1fms, telemetry=%.1fms, total=%.1fms. "
                     "Robot control might be unstable.",
                     1 / dt,
-                    cfg.fps,
+                    target_hz,
                     (observation_end - loop_start) * 1000,
                     (processing_end - observation_end) * 1000,
                     (action_end - processing_end) * 1000,

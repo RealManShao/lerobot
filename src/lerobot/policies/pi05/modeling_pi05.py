@@ -16,8 +16,10 @@
 
 import builtins
 import logging
+import os
 from collections import deque
 from pathlib import Path
+from time import perf_counter
 from typing import TYPE_CHECKING, Literal, TypedDict, Unpack
 
 import torch
@@ -635,6 +637,7 @@ class PI05Pytorch(nn.Module):  # see openpi `PI0Pytorch`
 
         bsize = tokens.shape[0]
         device = tokens.device
+        timing_csv = os.environ.get("LEROBOT_PROFILE_INFERENCE_TIMINGS")
 
         if noise is None:
             # Sample noise with padded dimension as expected by action_in_proj
@@ -645,6 +648,10 @@ class PI05Pytorch(nn.Module):  # see openpi `PI0Pytorch`
             )  # Use config max_action_dim for internal processing
             noise = self.sample_noise(actions_shape, device)
 
+        if timing_csv:
+            if device.type == "cuda":
+                torch.cuda.synchronize(device)
+            start_time = perf_counter()
         prefix_embs, prefix_pad_masks, prefix_att_masks = self.embed_prefix(images, img_masks, tokens, masks)
         prefix_att_2d_masks = make_att_2d_masks(prefix_pad_masks, prefix_att_masks)
         prefix_position_ids = torch.cumsum(prefix_pad_masks, dim=1) - 1
@@ -660,7 +667,12 @@ class PI05Pytorch(nn.Module):  # see openpi `PI0Pytorch`
             use_cache=True,
         )
 
-        return euler_integrate(
+        if timing_csv:
+            if device.type == "cuda":
+                torch.cuda.synchronize(device)
+            backbone_seconds = perf_counter() - start_time
+            action_head_start_time = perf_counter()
+        actions = euler_integrate(
             lambda input_x_t, current_timestep: self.denoise_step(
                 prefix_pad_masks=prefix_pad_masks,
                 past_key_values=past_key_values,
@@ -675,6 +687,23 @@ class PI05Pytorch(nn.Module):  # see openpi `PI0Pytorch`
             prev_chunk_left_over=kwargs.get("prev_chunk_left_over"),
             execution_horizon=kwargs.get("execution_horizon"),
         )
+        if timing_csv:
+            if device.type == "cuda":
+                torch.cuda.synchronize(device)
+            action_head_seconds = perf_counter() - action_head_start_time
+            csv_path = Path(timing_csv)
+            csv_path.parent.mkdir(parents=True, exist_ok=True)
+            line = (
+                f"pi05,{backbone_seconds * 1000:.3f},"
+                f"{action_head_seconds * 1000:.3f},"
+                f"{(backbone_seconds + action_head_seconds) * 1000:.3f}\n"
+            )
+            if not csv_path.exists():
+                csv_path.write_text("model,backbone_ms,action_head_ms,total_ms\n" + line)
+            else:
+                with csv_path.open("a") as file:
+                    file.write(line)
+        return actions
 
     def denoise_step(
         self,

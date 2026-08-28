@@ -1,0 +1,42 @@
+{
+  "Xihe666/drif_ov_libero_20k_seed1000_0822": {
+    "backbone_ms": 30.72163862332696,
+    "action_head_ms": 5.390434034416827,
+    "total_ms": 36.11207265774379,
+    "success_rate": 53.0,
+    "n_timing_calls": 523,
+    "eval_returncode": 0
+  },
+  "Xihe666/drif_ov_libero_20k_seed1_0821": {
+    "backbone_ms": 24.15436346863469,
+    "action_head_ms": 4.792571955719557,
+    "total_ms": 28.946935424354244,
+    "success_rate": 52.0,
+    "n_timing_calls": 542,
+    "eval_returncode": 0
+  },
+  "Xihe666/drif_ov_libero_20k_seed42_0821": {
+    "backbone_ms": 24.532661596958174,
+    "action_head_ms": 5.036115969581749,
+    "total_ms": 29.56877756653992,
+    "success_rate": 51.0,
+    "n_timing_calls": 526,
+    "eval_returncode": 0
+  },
+  "Xihe666/gr00t_n17_libero_20k_seed1": {
+    "backbone_ms": 25.061310262529833,
+    "action_head_ms": 45.64670883054893,
+    "total_ms": 70.70801909307876,
+    "success_rate": 80.0,
+    "n_timing_calls": 419,
+    "eval_returncode": 0
+  },
+  "Xihe666/gr00t_n17_libero_20k_seed42": {
+    "backbone_ms": 24.564465968586386,
+    "action_head_ms": 45.32362565445026,
+    "total_ms": 69.88809162303664,
+    "success_rate": 87.0,
+    "n_timing_calls": 382,
+    "eval_returncode": 0
+  }
+}

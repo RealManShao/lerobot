@@ -211,13 +211,30 @@ def build_rollout_context(
     if cfg.use_torch_compile and policy.type not in ("pi0", "pi05"):
         try:
             if hasattr(torch, "compile"):
-                compile_kwargs = {
-                    "backend": cfg.torch_compile_backend,
-                    "mode": cfg.torch_compile_mode,
-                    "options": {"triton.cudagraphs": False},
-                }
-                policy.predict_action_chunk = torch.compile(policy.predict_action_chunk, **compile_kwargs)
-                logger.info("torch.compile applied to predict_action_chunk")
+                # Some torch versions reject passing both `mode` and `options`.
+                attempts = [
+                    {
+                        "backend": cfg.torch_compile_backend,
+                        "mode": cfg.torch_compile_mode,
+                    },
+                    {
+                        "backend": cfg.torch_compile_backend,
+                        "options": {"triton.cudagraphs": False},
+                    },
+                    {
+                        "backend": cfg.torch_compile_backend,
+                    },
+                ]
+                last_error: Exception | None = None
+                for compile_kwargs in attempts:
+                    try:
+                        policy.predict_action_chunk = torch.compile(policy.predict_action_chunk, **compile_kwargs)
+                        logger.info("torch.compile applied to predict_action_chunk with args=%s", compile_kwargs)
+                        break
+                    except Exception as inner_e:  # noqa: BLE001
+                        last_error = inner_e
+                else:
+                    raise RuntimeError(last_error)
         except Exception as e:
             logger.warning("Failed to apply torch.compile: %s", e)
 

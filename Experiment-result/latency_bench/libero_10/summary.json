@@ -1,0 +1,10 @@
+{
+  "Xihe666/pi05_libero_full_2A800_bs32_20k": {
+    "backbone_ms": 57.24855636363636,
+    "action_head_ms": 151.5431181818182,
+    "total_ms": 208.79167454545455,
+    "success_rate": 0.0,
+    "n_timing_calls": 550,
+    "eval_returncode": 0
+  }
+}

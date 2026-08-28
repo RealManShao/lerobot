@@ -13,12 +13,15 @@ parses the final ``pc_success`` from the eval log, and saves:
 
 Usage
 -----
-    # Three-policy comparison on libero_10:
-    conda run -n lerobot python scripts/latency_test/benchmark_libero_latency.py \\
-        --policies Xihe666/drifting_libero_full \\
-                   nvidia/gr00t17-lerobot-libero_10-640 \\
-                   Xihe666/drif_ov_libero0809 \\
-        --task libero_10 --n-episodes 1
+    # Multi-policy comparison on libero_10:
+    python scripts/latency_test/benchmark_libero_latency.py \
+        --output-dir outputs/latency_bench/seed_compare \
+        --policies Xihe666/drif_ov_libero_20k_seed1000_0822 \
+                   Xihe666/drif_ov_libero_20k_seed1_0821 \
+                   Xihe666/drif_ov_libero_20k_seed42_0821 \
+                   Xihe666/gr00t_n17_libero_20k_seed1 \
+                   Xihe666/gr00t_n17_libero_20k_seed42 \
+        --task libero_goal --n-episodes 10
 
     # Spatial suite with stable averages:
     conda run -n lerobot python scripts/latency_test/benchmark_libero_latency.py \\
