@@ -1,0 +1,6 @@
+task,model,run,backbone_ms,action_head_ms,total_ms,success_rate,n_timing_calls
+libero_spatial,drif_ov,Xihe666_drif_ov_libero0809,24.345,4.904,29.249,72.0,220
+libero_spatial,drifting,Xihe666_drifting_libero_full,24.673,4.805,29.478,,205
+libero_goal,drif_ov,Xihe666_drif_ov_libero0809,24.384,4.84,29.224,80.0,221
+libero_object,drif_ov,Xihe666_drif_ov_libero0809,24.56,4.996,29.556,74.0,241
+libero_10,drif_ov,Xihe666_drif_ov_libero0809,24.249,5.029,29.278,46.0,498

@@ -1,0 +1,4 @@
+model,n_seeds,seeds,backbone_ms,action_head_ms,total_ms,success_rate,backbone_ms_std,action_head_ms_std,total_ms_std,success_rate_std,n_timing_calls,n_success_reported
+pi05,1,1000,38.867,72.959,111.826,0.0,,,,,50,1
+gr00t,3,1+42+1000,24.992,45.359,70.352,82.333,0.284,0.166,0.193,6.807,982,3
+drif_ov,3,1+42+1000,24.418,4.964,29.382,64.0,0.108,0.082,0.052,4.0,1371,3
