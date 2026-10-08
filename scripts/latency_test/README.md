@@ -7,6 +7,10 @@ produces two styles of plot:
 |--------|-----------------|------|
 | `benchmark_offline_latency.py` | Offline warm-cache stage-by-stage GPU timing (P50/P99/Max/Mean per stage) | `plot_stage_breakdown.py` |
 | `benchmark_libero_latency.py` | Live LIBERO eval — VLM backbone vs action-head split per inference call | `plot_libero_vlm_vs_head.py` |
+| `benchmark_libero_feedback.py` | Fixed H=40, K=1/5/10/20/40: success, wall time, observation age, end-to-end latency, boundary jitter, deadline misses | `libero_feedback_report.py` |
+
+For LIBERO Long / LIBERO 90 feedback experiments with the existing DRIF-OV checkpoint,
+see [the experiment protocol and commands](LIBERO_feedback.md).
 
 ---
 
