@@ -1,0 +1,492 @@
+[
+  {
+    "task": "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it_demo",
+    "counts": {
+      "train": [
+        499,
+        623,
+        20,
+        7,
+        0
+      ],
+      "test": [
+        127,
+        158,
+        0,
+        0,
+        0
+      ]
+    },
+    "banks": {
+      "8": {
+        "full_match_prefix_mse": 0.03790079057216644,
+        "prefix_match_prefix_mse": 0.02258988842368126,
+        "same_template_fraction": 0.449122816324234,
+        "full_match_grip_accuracy": 0.9485087990760803,
+        "prefix_match_grip_accuracy": 0.6610526442527771
+      },
+      "24": {
+        "full_match_prefix_mse": 0.02377462014555931,
+        "prefix_match_prefix_mse": 0.010579600930213928,
+        "same_template_fraction": 0.3754386007785797,
+        "full_match_grip_accuracy": 0.9685965180397034,
+        "prefix_match_grip_accuracy": 0.783684253692627
+      },
+      "64": {
+        "full_match_prefix_mse": 0.016225045546889305,
+        "prefix_match_prefix_mse": 0.005874848458915949,
+        "same_template_fraction": 0.27368420362472534,
+        "full_match_grip_accuracy": 0.982719361782074,
+        "prefix_match_grip_accuracy": 0.7658772468566895
+      },
+      "128": {
+        "full_match_prefix_mse": 0.012865016236901283,
+        "prefix_match_prefix_mse": 0.004500368144363165,
+        "same_template_fraction": 0.2526315748691559,
+        "full_match_grip_accuracy": 0.9864035248756409,
+        "prefix_match_grip_accuracy": 0.8329824805259705
+      }
+    }
+  },
+  {
+    "task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_demo",
+    "counts": {
+      "train": [
+        658,
+        401,
+        0,
+        0,
+        0
+      ],
+      "test": [
+        167,
+        100,
+        0,
+        0,
+        0
+      ]
+    },
+    "banks": {
+      "8": {
+        "full_match_prefix_mse": 0.036442067474126816,
+        "prefix_match_prefix_mse": 0.020022159442305565,
+        "same_template_fraction": 0.5018726587295532,
+        "full_match_grip_accuracy": 0.9579588174819946,
+        "prefix_match_grip_accuracy": 0.6907303333282471
+      },
+      "24": {
+        "full_match_prefix_mse": 0.02107117883861065,
+        "prefix_match_prefix_mse": 0.010707449167966843,
+        "same_template_fraction": 0.3483146131038666,
+        "full_match_grip_accuracy": 0.9809924960136414,
+        "prefix_match_grip_accuracy": 0.6921348571777344
+      },
+      "64": {
+        "full_match_prefix_mse": 0.015088117681443691,
+        "prefix_match_prefix_mse": 0.006608913186937571,
+        "same_template_fraction": 0.32209739089012146,
+        "full_match_grip_accuracy": 0.9893258810043335,
+        "prefix_match_grip_accuracy": 0.7289326190948486
+      },
+      "128": {
+        "full_match_prefix_mse": 0.012884067371487617,
+        "prefix_match_prefix_mse": 0.005275254137814045,
+        "same_template_fraction": 0.23220974206924438,
+        "full_match_grip_accuracy": 0.992415726184845,
+        "prefix_match_grip_accuracy": 0.7647003531455994
+      }
+    }
+  },
+  {
+    "task": "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_demo",
+    "counts": {
+      "train": [
+        942,
+        389,
+        10,
+        3,
+        0
+      ],
+      "test": [
+        219,
+        97,
+        10,
+        4,
+        0
+      ]
+    },
+    "banks": {
+      "8": {
+        "full_match_prefix_mse": 0.053216204047203064,
+        "prefix_match_prefix_mse": 0.04024336487054825,
+        "same_template_fraction": 0.31515151262283325,
+        "full_match_grip_accuracy": 0.9706060886383057,
+        "prefix_match_grip_accuracy": 0.6416666507720947
+      },
+      "24": {
+        "full_match_prefix_mse": 0.0253789983689785,
+        "prefix_match_prefix_mse": 0.013958140276372433,
+        "same_template_fraction": 0.42424240708351135,
+        "full_match_grip_accuracy": 0.9762879014015198,
+        "prefix_match_grip_accuracy": 0.7946212291717529
+      },
+      "64": {
+        "full_match_prefix_mse": 0.02094942145049572,
+        "prefix_match_prefix_mse": 0.00993380043655634,
+        "same_template_fraction": 0.36060604453086853,
+        "full_match_grip_accuracy": 0.9835606217384338,
+        "prefix_match_grip_accuracy": 0.8159090876579285
+      },
+      "128": {
+        "full_match_prefix_mse": 0.021006181836128235,
+        "prefix_match_prefix_mse": 0.007518131751567125,
+        "same_template_fraction": 0.21212120354175568,
+        "full_match_grip_accuracy": 0.9859848618507385,
+        "prefix_match_grip_accuracy": 0.8271211981773376
+      }
+    }
+  },
+  {
+    "task": "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove_demo",
+    "counts": {
+      "train": [
+        1224,
+        664,
+        13,
+        0,
+        0
+      ],
+      "test": [
+        313,
+        152,
+        1,
+        4,
+        0
+      ]
+    },
+    "banks": {
+      "8": {
+        "full_match_prefix_mse": 0.03452048823237419,
+        "prefix_match_prefix_mse": 0.019830549135804176,
+        "same_template_fraction": 0.3829787075519562,
+        "full_match_grip_accuracy": 0.9731382727622986,
+        "prefix_match_grip_accuracy": 0.6901595592498779
+      },
+      "24": {
+        "full_match_prefix_mse": 0.023987172171473503,
+        "prefix_match_prefix_mse": 0.01376606710255146,
+        "same_template_fraction": 0.35531914234161377,
+        "full_match_grip_accuracy": 0.9813829660415649,
+        "prefix_match_grip_accuracy": 0.7004255056381226
+      },
+      "64": {
+        "full_match_prefix_mse": 0.012143606320023537,
+        "prefix_match_prefix_mse": 0.005785519257187843,
+        "same_template_fraction": 0.35957446694374084,
+        "full_match_grip_accuracy": 0.9912765622138977,
+        "prefix_match_grip_accuracy": 0.7810637950897217
+      },
+      "128": {
+        "full_match_prefix_mse": 0.010325559414923191,
+        "prefix_match_prefix_mse": 0.003921446856111288,
+        "same_template_fraction": 0.26595744490623474,
+        "full_match_grip_accuracy": 0.9928722977638245,
+        "prefix_match_grip_accuracy": 0.7867553234100342
+      }
+    }
+  },
+  {
+    "task": "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_demo",
+    "counts": {
+      "train": [
+        465,
+        666,
+        21,
+        8,
+        0
+      ],
+      "test": [
+        127,
+        169,
+        0,
+        0,
+        0
+      ]
+    },
+    "banks": {
+      "8": {
+        "full_match_prefix_mse": 0.052718453109264374,
+        "prefix_match_prefix_mse": 0.028350140899419785,
+        "same_template_fraction": 0.4729729890823364,
+        "full_match_grip_accuracy": 0.9433277249336243,
+        "prefix_match_grip_accuracy": 0.6853040456771851
+      },
+      "24": {
+        "full_match_prefix_mse": 0.038304999470710754,
+        "prefix_match_prefix_mse": 0.014274803921580315,
+        "same_template_fraction": 0.3006756901741028,
+        "full_match_grip_accuracy": 0.9721283912658691,
+        "prefix_match_grip_accuracy": 0.7209459543228149
+      },
+      "64": {
+        "full_match_prefix_mse": 0.02460918202996254,
+        "prefix_match_prefix_mse": 0.00818893313407898,
+        "same_template_fraction": 0.22297297418117523,
+        "full_match_grip_accuracy": 0.9816723465919495,
+        "prefix_match_grip_accuracy": 0.7847128510475159
+      },
+      "128": {
+        "full_match_prefix_mse": 0.020993055775761604,
+        "prefix_match_prefix_mse": 0.006131904199719429,
+        "same_template_fraction": 0.19594594836235046,
+        "full_match_grip_accuracy": 0.9838682413101196,
+        "prefix_match_grip_accuracy": 0.7980574369430542
+      }
+    }
+  },
+  {
+    "task": "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_demo",
+    "counts": {
+      "train": [
+        553,
+        698,
+        28,
+        1,
+        0
+      ],
+      "test": [
+        144,
+        176,
+        6,
+        0,
+        0
+      ]
+    },
+    "banks": {
+      "8": {
+        "full_match_prefix_mse": 0.035910677164793015,
+        "prefix_match_prefix_mse": 0.019185103476047516,
+        "same_template_fraction": 0.512269914150238,
+        "full_match_grip_accuracy": 0.9501533508300781,
+        "prefix_match_grip_accuracy": 0.7256134748458862
+      },
+      "24": {
+        "full_match_prefix_mse": 0.02491932548582554,
+        "prefix_match_prefix_mse": 0.009750772267580032,
+        "same_template_fraction": 0.34049078822135925,
+        "full_match_grip_accuracy": 0.9732362031936646,
+        "prefix_match_grip_accuracy": 0.729064404964447
+      },
+      "64": {
+        "full_match_prefix_mse": 0.01904420554637909,
+        "prefix_match_prefix_mse": 0.005821512546390295,
+        "same_template_fraction": 0.20245398581027985,
+        "full_match_grip_accuracy": 0.9842791557312012,
+        "prefix_match_grip_accuracy": 0.7584356069564819
+      },
+      "128": {
+        "full_match_prefix_mse": 0.016506727784872055,
+        "prefix_match_prefix_mse": 0.004263054113835096,
+        "same_template_fraction": 0.14723926782608032,
+        "full_match_grip_accuracy": 0.9868865013122559,
+        "prefix_match_grip_accuracy": 0.7818251252174377
+      }
+    }
+  },
+  {
+    "task": "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_demo",
+    "counts": {
+      "train": [
+        417,
+        678,
+        24,
+        2,
+        4
+      ],
+      "test": [
+        109,
+        165,
+        0,
+        0,
+        0
+      ]
+    },
+    "banks": {
+      "8": {
+        "full_match_prefix_mse": 0.04915324226021767,
+        "prefix_match_prefix_mse": 0.025492988526821136,
+        "same_template_fraction": 0.5620437860488892,
+        "full_match_grip_accuracy": 0.9503649473190308,
+        "prefix_match_grip_accuracy": 0.795802891254425
+      },
+      "24": {
+        "full_match_prefix_mse": 0.03679164871573448,
+        "prefix_match_prefix_mse": 0.014131637290120125,
+        "same_template_fraction": 0.2846715450286865,
+        "full_match_grip_accuracy": 0.9726276993751526,
+        "prefix_match_grip_accuracy": 0.7406021356582642
+      },
+      "64": {
+        "full_match_prefix_mse": 0.025524523109197617,
+        "prefix_match_prefix_mse": 0.009934178553521633,
+        "same_template_fraction": 0.20802919566631317,
+        "full_match_grip_accuracy": 0.9816605448722839,
+        "prefix_match_grip_accuracy": 0.7740875482559204
+      },
+      "128": {
+        "full_match_prefix_mse": 0.02056245319545269,
+        "prefix_match_prefix_mse": 0.006717527750879526,
+        "same_template_fraction": 0.14963503181934357,
+        "full_match_grip_accuracy": 0.9843977689743042,
+        "prefix_match_grip_accuracy": 0.8083941340446472
+      }
+    }
+  },
+  {
+    "task": "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_demo",
+    "counts": {
+      "train": [
+        454,
+        636,
+        15,
+        3,
+        0
+      ],
+      "test": [
+        113,
+        159,
+        6,
+        2,
+        0
+      ]
+    },
+    "banks": {
+      "8": {
+        "full_match_prefix_mse": 0.04506796970963478,
+        "prefix_match_prefix_mse": 0.02640623413026333,
+        "same_template_fraction": 0.35357144474983215,
+        "full_match_grip_accuracy": 0.932232141494751,
+        "prefix_match_grip_accuracy": 0.6249107122421265
+      },
+      "24": {
+        "full_match_prefix_mse": 0.03007453866302967,
+        "prefix_match_prefix_mse": 0.009518123231828213,
+        "same_template_fraction": 0.3499999940395355,
+        "full_match_grip_accuracy": 0.9640178680419922,
+        "prefix_match_grip_accuracy": 0.7004464268684387
+      },
+      "64": {
+        "full_match_prefix_mse": 0.015532002784311771,
+        "prefix_match_prefix_mse": 0.005381452850997448,
+        "same_template_fraction": 0.2678571343421936,
+        "full_match_grip_accuracy": 0.9781249761581421,
+        "prefix_match_grip_accuracy": 0.737678587436676
+      },
+      "128": {
+        "full_match_prefix_mse": 0.012377545237541199,
+        "prefix_match_prefix_mse": 0.00420725904405117,
+        "same_template_fraction": 0.2321428656578064,
+        "full_match_grip_accuracy": 0.9836606979370117,
+        "prefix_match_grip_accuracy": 0.7416964173316956
+      }
+    }
+  },
+  {
+    "task": "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_demo",
+    "counts": {
+      "train": [
+        440,
+        628,
+        31,
+        10,
+        3
+      ],
+      "test": [
+        103,
+        149,
+        2,
+        0,
+        0
+      ]
+    },
+    "banks": {
+      "8": {
+        "full_match_prefix_mse": 0.03143435716629028,
+        "prefix_match_prefix_mse": 0.021823769435286522,
+        "same_template_fraction": 0.4921259880065918,
+        "full_match_grip_accuracy": 0.9502952694892883,
+        "prefix_match_grip_accuracy": 0.7446850538253784
+      },
+      "24": {
+        "full_match_prefix_mse": 0.019328700378537178,
+        "prefix_match_prefix_mse": 0.007074931636452675,
+        "same_template_fraction": 0.33070865273475647,
+        "full_match_grip_accuracy": 0.9704724550247192,
+        "prefix_match_grip_accuracy": 0.7246062755584717
+      },
+      "64": {
+        "full_match_prefix_mse": 0.013919711112976074,
+        "prefix_match_prefix_mse": 0.004437937401235104,
+        "same_template_fraction": 0.27952754497528076,
+        "full_match_grip_accuracy": 0.9808070659637451,
+        "prefix_match_grip_accuracy": 0.7360236048698425
+      },
+      "128": {
+        "full_match_prefix_mse": 0.010167574509978294,
+        "prefix_match_prefix_mse": 0.003525912994518876,
+        "same_template_fraction": 0.22834645211696625,
+        "full_match_grip_accuracy": 0.9866141676902771,
+        "prefix_match_grip_accuracy": 0.7614173293113708
+      }
+    }
+  },
+  {
+    "task": "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_demo",
+    "counts": {
+      "train": [
+        573,
+        195,
+        0,
+        0,
+        0
+      ],
+      "test": [
+        136,
+        50,
+        0,
+        0,
+        0
+      ]
+    },
+    "banks": {
+      "8": {
+        "full_match_prefix_mse": 0.02166442759335041,
+        "prefix_match_prefix_mse": 0.012516811490058899,
+        "same_template_fraction": 0.5645161271095276,
+        "full_match_grip_accuracy": 0.9817204475402832,
+        "prefix_match_grip_accuracy": 0.8961021900177002
+      },
+      "24": {
+        "full_match_prefix_mse": 0.01673867553472519,
+        "prefix_match_prefix_mse": 0.007917774841189384,
+        "same_template_fraction": 0.4462365508079529,
+        "full_match_grip_accuracy": 0.989650547504425,
+        "prefix_match_grip_accuracy": 0.8965054154396057
+      },
+      "64": {
+        "full_match_prefix_mse": 0.011868051253259182,
+        "prefix_match_prefix_mse": 0.0043642958626151085,
+        "same_template_fraction": 0.23655913770198822,
+        "full_match_grip_accuracy": 0.9926075339317322,
+        "prefix_match_grip_accuracy": 0.9201613068580627
+      },
+      "128": {
+        "full_match_prefix_mse": 0.010268228128552437,
+        "prefix_match_prefix_mse": 0.00348750245757401,
+        "same_template_fraction": 0.20430107414722443,
+        "full_match_grip_accuracy": 0.9934139847755432,
+        "prefix_match_grip_accuracy": 0.9458333253860474
+      }
+    }
+  }
+]
