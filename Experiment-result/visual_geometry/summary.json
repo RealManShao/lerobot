@@ -1,0 +1,4457 @@
+{
+  "curves": {
+    "world": {
+      "1800": {
+        "direct": {
+          "success": 4,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 2,
+              "14": 1
+            },
+            "42": {
+              "12": 1,
+              "14": 0
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 2,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+          },
+          "initial_12_13_success": 3,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 87.69660382778461,
+          "live_rotation_deg": 26.298295582187073,
+          "live_contact_f1": 0.6258802816901409,
+          "live_contact_prevalence": 0.3182877468416534,
+          "live_plans": 8153
+        },
+        "half": {
+          "success": 4,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 2
+            },
+            "42": {
+              "12": 2
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+          },
+          "initial_12_13_success": 4,
+          "gate_values": {
+            "1": 0.5,
+            "42": 0.5
+          },
+          "average_rollout_weight": 0.5,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 95.34222321406453,
+          "live_rotation_deg": 26.04846557885761,
+          "live_contact_f1": 0.6564576711932968,
+          "live_contact_prevalence": 0.3622423328305681,
+          "live_plans": 3978
+        },
+        "constant": {
+          "success": 3,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 2
+            },
+            "42": {
+              "12": 1
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+          },
+          "initial_12_13_success": 3,
+          "gate_values": {
+            "1": 0.9391117095947266,
+            "42": 0.9373079538345337
+          },
+          "average_rollout_weight": 0.9382,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 91.63418585677165,
+          "live_rotation_deg": 27.903178188583865,
+          "live_contact_f1": 0.6879906949694679,
+          "live_contact_prevalence": 0.36072144288577157,
+          "live_plans": 3992
+        },
+        "contact": {
+          "success": 1,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 0,
+              "14": 0
+            },
+            "42": {
+              "12": 1,
+              "14": 0
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+          },
+          "initial_12_13_success": 1,
+          "gate_values": {
+            "1": [
+              0.925000011920929,
+              0.925000011920929
+            ],
+            "42": [
+              0.925000011920929,
+              0.925000011920929
+            ]
+          },
+          "average_rollout_weight": 0.925,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 94.85443483187848,
+          "live_rotation_deg": 25.458553061997232,
+          "live_contact_f1": 0.600370423137199,
+          "live_contact_prevalence": 0.31482825350749877,
+          "live_plans": 8268
+        }
+      },
+      "7200": {
+        "direct": {
+          "success": 16,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 4,
+              "14": 5
+            },
+            "42": {
+              "12": 4,
+              "14": 3
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 6,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 2,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 1,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 2,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 5
+          },
+          "initial_12_13_success": 8,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 68.77391387391111,
+          "live_rotation_deg": 21.659890947560704,
+          "live_contact_f1": 0.7305199481492151,
+          "live_contact_prevalence": 0.39604221635883907,
+          "live_plans": 7580
+        },
+        "half": {
+          "success": 4,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 3
+            },
+            "42": {
+              "12": 1
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 2
+          },
+          "initial_12_13_success": 4,
+          "gate_values": {
+            "1": 0.5,
+            "42": 0.5
+          },
+          "average_rollout_weight": 0.5,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 66.64736319717564,
+          "live_rotation_deg": 21.56332705585098,
+          "live_contact_f1": 0.7387732749178533,
+          "live_contact_prevalence": 0.4011213047910296,
+          "live_plans": 3924
+        },
+        "constant": {
+          "success": 3,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 3
+            },
+            "42": {
+              "12": 0
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 2
+          },
+          "initial_12_13_success": 3,
+          "gate_values": {
+            "1": 0.8318960666656494,
+            "42": 0.7506595253944397
+          },
+          "average_rollout_weight": 0.7913,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 71.95450227667492,
+          "live_rotation_deg": 21.041147093619294,
+          "live_contact_f1": 0.721103448275862,
+          "live_contact_prevalence": 0.43435613682092555,
+          "live_plans": 3976
+        },
+        "contact": {
+          "success": 12,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 4,
+              "14": 4
+            },
+            "42": {
+              "12": 1,
+              "14": 3
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 6,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 2,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 3
+          },
+          "initial_12_13_success": 5,
+          "gate_values": {
+            "1": [
+              0.6499999761581421,
+              1.0
+            ],
+            "42": [
+              0.625,
+              0.875
+            ]
+          },
+          "average_rollout_weight": 0.7851033264388113,
+          "episodes_weight_range_gt_025": 38,
+          "live_pose_mm": 74.10719866644921,
+          "live_rotation_deg": 22.06167108474192,
+          "live_contact_f1": 0.6933955387082665,
+          "live_contact_prevalence": 0.3826861871419478,
+          "live_plans": 7855
+        }
+      },
+      "20000": {
+        "direct": {
+          "success": 16,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 5,
+              "14": 2
+            },
+            "42": {
+              "12": 3,
+              "14": 6
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 3,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 3,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 4
+          },
+          "initial_12_13_success": 8,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 68.77630312080153,
+          "live_rotation_deg": 23.879312793626102,
+          "live_contact_f1": 0.7339844872163171,
+          "live_contact_prevalence": 0.3936657505562099,
+          "live_plans": 7641
+        },
+        "half": {
+          "success": 15,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 5,
+              "14": 2
+            },
+            "42": {
+              "12": 5,
+              "14": 3
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 3,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 3,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 2,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 2,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+          },
+          "initial_12_13_success": 10,
+          "gate_values": {
+            "1": 0.5,
+            "42": 0.5
+          },
+          "average_rollout_weight": 0.5,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 84.5661492376538,
+          "live_rotation_deg": 24.994542582319745,
+          "live_contact_f1": 0.6470016207455429,
+          "live_contact_prevalence": 0.30127206645898236,
+          "live_plans": 7704
+        },
+        "constant": {
+          "success": 10,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 4,
+              "14": 4
+            },
+            "42": {
+              "12": 2,
+              "14": 0
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 3,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 2,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+          },
+          "initial_12_13_success": 6,
+          "gate_values": {
+            "1": 0.6800394654273987,
+            "42": 0.6609368324279785
+          },
+          "average_rollout_weight": 0.67045,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 78.96027702604515,
+          "live_rotation_deg": 22.571921101482715,
+          "live_contact_f1": 0.643059913342298,
+          "live_contact_prevalence": 0.32177844762622454,
+          "live_plans": 7962
+        },
+        "contact": {
+          "success": 10,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 4,
+              "14": 3
+            },
+            "42": {
+              "12": 2,
+              "14": 1
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 2,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 2
+          },
+          "initial_12_13_success": 6,
+          "gate_values": {
+            "1": [
+              0.5249999761581421,
+              0.824999988079071
+            ],
+            "42": [
+              0.5,
+              0.800000011920929
+            ]
+          },
+          "average_rollout_weight": 0.6564919112041852,
+          "episodes_weight_range_gt_025": 79,
+          "live_pose_mm": 76.52315069671694,
+          "live_rotation_deg": 21.948866127420896,
+          "live_contact_f1": 0.6921535378449206,
+          "live_contact_prevalence": 0.3440751078406496,
+          "live_plans": 7882
+        },
+        "entity_contact": {
+          "success": 11,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 4,
+              "14": 2
+            },
+            "42": {
+              "12": 5,
+              "14": 0
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 4,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 2,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+          },
+          "initial_12_13_success": 9,
+          "gate_values": {
+            "1": [
+              [
+                0.5278534293174744,
+                0.8264572024345398
+              ],
+              [
+                0.47014912962913513,
+                0.9569734334945679
+              ],
+              [
+                0.6793120503425598,
+                0.73975670337677
+              ],
+              [
+                0.603961706161499,
+                0.824999988079071
+              ]
+            ],
+            "42": [
+              [
+                0.41443711519241333,
+                0.8285940885543823
+              ],
+              [
+                0.4525131285190582,
+                0.9297568202018738
+              ],
+              [
+                0.70765221118927,
+                0.6730836033821106
+              ],
+              [
+                0.5699414014816284,
+                0.8000001907348633
+              ]
+            ]
+          },
+          "average_rollout_weight": 0.6839656883900719,
+          "episodes_weight_range_gt_025": 77,
+          "live_pose_mm": 81.97922256625107,
+          "live_rotation_deg": 23.334472169073397,
+          "live_contact_f1": 0.668929889298893,
+          "live_contact_prevalence": 0.3491002570694087,
+          "live_plans": 7780
+        }
+      }
+    },
+    "object": {
+      "1800": {
+        "direct": {
+          "success": 2,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 0
+            },
+            "42": {
+              "12": 2
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+          },
+          "initial_12_13_success": 2,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 127.62637316776492,
+          "live_rotation_deg": 29.90073572450614,
+          "live_contact_f1": 0.5823888404533566,
+          "live_contact_prevalence": 0.32573529411764707,
+          "live_plans": 4080
+        },
+        "half": {
+          "success": 4,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 2
+            },
+            "42": {
+              "12": 2
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 2,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+          },
+          "initial_12_13_success": 4,
+          "gate_values": {
+            "1": 0.5,
+            "42": 0.5
+          },
+          "average_rollout_weight": 0.5,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 76.72477567513042,
+          "live_rotation_deg": 23.650537822196732,
+          "live_contact_f1": 0.5856382978723405,
+          "live_contact_prevalence": 0.32140230448639373,
+          "live_plans": 4079
+        },
+        "constant": {
+          "success": 3,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 2
+            },
+            "42": {
+              "12": 1
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+          },
+          "initial_12_13_success": 3,
+          "gate_values": {
+            "1": 0.30774715542793274,
+            "42": 0.31453123688697815
+          },
+          "average_rollout_weight": 0.3111,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 85.65419925998009,
+          "live_rotation_deg": 26.62029990272072,
+          "live_contact_f1": 0.5417001877178869,
+          "live_contact_prevalence": 0.3041021861950381,
+          "live_plans": 4071
+        },
+        "contact": {
+          "success": 1,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 0,
+              "14": 0
+            },
+            "42": {
+              "12": 1,
+              "14": 0
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+          },
+          "initial_12_13_success": 1,
+          "gate_values": {
+            "1": [
+              0.32500001788139343,
+              0.30000001192092896
+            ],
+            "42": [
+              0.30000001192092896,
+              0.32500001788139343
+            ]
+          },
+          "average_rollout_weight": 0.31268627876733923,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 83.11437817155071,
+          "live_rotation_deg": 25.869968774808648,
+          "live_contact_f1": 0.6378521550686251,
+          "live_contact_prevalence": 0.36510813096532563,
+          "live_plans": 8277
+        }
+      },
+      "7200": {
+        "direct": {
+          "success": 2,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 1
+            },
+            "42": {
+              "12": 1
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+          },
+          "initial_12_13_success": 2,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 77.58174643075263,
+          "live_rotation_deg": 20.076405520209995,
+          "live_contact_f1": 0.7345995893223819,
+          "live_contact_prevalence": 0.4347296639064783,
+          "live_plans": 4106
+        },
+        "half": {
+          "success": 5,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 3
+            },
+            "42": {
+              "12": 2
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+          },
+          "initial_12_13_success": 5,
+          "gate_values": {
+            "1": 0.5,
+            "42": 0.5
+          },
+          "average_rollout_weight": 0.5,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 61.279763610748084,
+          "live_rotation_deg": 19.287344858564257,
+          "live_contact_f1": 0.6367316893632683,
+          "live_contact_prevalence": 0.25731584258324924,
+          "live_plans": 3964
+        },
+        "constant": {
+          "success": 12,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 7
+            },
+            "42": {
+              "12": 5
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 2,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 2,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 2,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 2,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+          },
+          "initial_12_13_success": 12,
+          "gate_values": {
+            "1": 0.2554607391357422,
+            "42": 0.26802748441696167
+          },
+          "average_rollout_weight": 0.26175000000000004,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 58.13250732074012,
+          "live_rotation_deg": 18.078337401379596,
+          "live_contact_f1": 0.7460595446584939,
+          "live_contact_prevalence": 0.3248,
+          "live_plans": 3750
+        },
+        "contact": {
+          "success": 14,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 3,
+              "14": 2
+            },
+            "42": {
+              "12": 5,
+              "14": 4
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 2,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 4,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 1,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 3,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 2,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+          },
+          "initial_12_13_success": 8,
+          "gate_values": {
+            "1": [
+              0.22500000894069672,
+              0.2750000059604645
+            ],
+            "42": [
+              0.25,
+              0.30000001192092896
+            ]
+          },
+          "average_rollout_weight": 0.2633804290497748,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 57.54986568676058,
+          "live_rotation_deg": 20.40805545517758,
+          "live_contact_f1": 0.7783413296778615,
+          "live_contact_prevalence": 0.4136165856155618,
+          "live_plans": 7814
+        }
+      },
+      "20000": {
+        "direct": {
+          "success": 23,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 8,
+              "14": 5
+            },
+            "42": {
+              "12": 3,
+              "14": 7
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 7,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 4,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 5
+          },
+          "initial_12_13_success": 11,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 71.76911927498722,
+          "live_rotation_deg": 22.04467362887323,
+          "live_contact_f1": 0.6666666666666666,
+          "live_contact_prevalence": 0.35728868926092283,
+          "live_plans": 7347
+        },
+        "half": {
+          "success": 17,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 5,
+              "14": 7
+            },
+            "42": {
+              "12": 3,
+              "14": 2
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 2,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 3,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 3,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 4
+          },
+          "initial_12_13_success": 8,
+          "gate_values": {
+            "1": 0.5,
+            "42": 0.5
+          },
+          "average_rollout_weight": 0.5,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 63.69131421850832,
+          "live_rotation_deg": 20.986247004409243,
+          "live_contact_f1": 0.6768727705112961,
+          "live_contact_prevalence": 0.3632983667507635,
+          "live_plans": 7531
+        },
+        "constant": {
+          "success": 26,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 10,
+              "14": 9
+            },
+            "42": {
+              "12": 5,
+              "14": 2
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 4,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 3,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 5,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 2,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 2,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 1,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 3,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 5
+          },
+          "initial_12_13_success": 15,
+          "gate_values": {
+            "1": 0.2510566711425781,
+            "42": 0.267119824886322
+          },
+          "average_rollout_weight": 0.2591,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 68.05642668326765,
+          "live_rotation_deg": 21.224814290217108,
+          "live_contact_f1": 0.6877570389117368,
+          "live_contact_prevalence": 0.34912823397075365,
+          "live_plans": 7112
+        },
+        "contact": {
+          "success": 23,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 9,
+              "14": 8
+            },
+            "42": {
+              "12": 4,
+              "14": 2
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 4,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 4,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 3,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 2,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 4,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 3
+          },
+          "initial_12_13_success": 13,
+          "gate_values": {
+            "1": [
+              0.22500000894069672,
+              0.2750000059604645
+            ],
+            "42": [
+              0.22500000894069672,
+              0.32500001788139343
+            ]
+          },
+          "average_rollout_weight": 0.2647327845989385,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 63.038946811551405,
+          "live_rotation_deg": 20.53354562435241,
+          "live_contact_f1": 0.691358024691358,
+          "live_contact_prevalence": 0.3655331255927381,
+          "live_plans": 7381
+        },
+        "entity_contact": {
+          "success": 25,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 9,
+              "14": 7
+            },
+            "42": {
+              "12": 4,
+              "14": 5
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 5,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 4,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 5,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 3,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 2,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 5
+          },
+          "initial_12_13_success": 13,
+          "gate_values": {
+            "1": [
+              [
+                0.262363463640213,
+                0.2607291638851166
+              ],
+              [
+                0.1925688534975052,
+                0.2676241397857666
+              ],
+              [
+                0.23364615440368652,
+                0.28294336795806885
+              ],
+              [
+                0.22746770083904266,
+                0.2750000059604645
+              ]
+            ],
+            "42": [
+              [
+                0.2257632464170456,
+                0.33247968554496765
+              ],
+              [
+                0.16793318092823029,
+                0.3602907657623291
+              ],
+              [
+                0.2546267807483673,
+                0.2914935052394867
+              ],
+              [
+                0.2264537513256073,
+                0.32500001788139343
+              ]
+            ]
+          },
+          "average_rollout_weight": 0.26547547232979307,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 61.97285810546488,
+          "live_rotation_deg": 20.451824726016024,
+          "live_contact_f1": 0.7344033918837068,
+          "live_contact_prevalence": 0.3852765839456537,
+          "live_plans": 7213
+        }
+      }
+    },
+    "consistent": {
+      "1800": {
+        "direct": {
+          "success": 1,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 0
+            },
+            "42": {
+              "12": 1
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+          },
+          "initial_12_13_success": 1,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 118.8154091481331,
+          "live_rotation_deg": 29.849235185780785,
+          "live_contact_f1": 0.5444997236042012,
+          "live_contact_prevalence": 0.329153605015674,
+          "live_plans": 4147
+        },
+        "half": {
+          "success": 2,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 2
+            },
+            "42": {
+              "12": 0
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+          },
+          "initial_12_13_success": 2,
+          "gate_values": {
+            "1": 0.5,
+            "42": 0.5
+          },
+          "average_rollout_weight": 0.5,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 96.05444106551055,
+          "live_rotation_deg": 25.32428297954989,
+          "live_contact_f1": 0.366954851104707,
+          "live_contact_prevalence": 0.18512153204026516,
+          "live_plans": 4073
+        },
+        "constant": {
+          "success": 4,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 3
+            },
+            "42": {
+              "12": 1
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+          },
+          "initial_12_13_success": 4,
+          "gate_values": {
+            "1": 0.28044411540031433,
+            "42": 0.26399844884872437
+          },
+          "average_rollout_weight": 0.2722,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 89.29501735118626,
+          "live_rotation_deg": 22.72843755660518,
+          "live_contact_f1": 0.6006174571989896,
+          "live_contact_prevalence": 0.326561324303988,
+          "live_plans": 3987
+        },
+        "contact": {
+          "success": 9,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 2,
+              "14": 4
+            },
+            "42": {
+              "12": 1,
+              "14": 2
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 4,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 2
+          },
+          "initial_12_13_success": 3,
+          "gate_values": {
+            "1": [
+              0.2750000059604645,
+              0.30000001192092896
+            ],
+            "42": [
+              0.25,
+              0.30000001192092896
+            ]
+          },
+          "average_rollout_weight": 0.28423588305562975,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 90.05028802279149,
+          "live_rotation_deg": 23.97121042180388,
+          "live_contact_f1": 0.5913345814388874,
+          "live_contact_prevalence": 0.3256657082135267,
+          "live_plans": 7999
+        }
+      },
+      "7200": {
+        "direct": {
+          "success": 4,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 2
+            },
+            "42": {
+              "12": 2
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 3,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+          },
+          "initial_12_13_success": 4,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 90.32159982254645,
+          "live_rotation_deg": 23.472959483806683,
+          "live_contact_f1": 0.665938864628821,
+          "live_contact_prevalence": 0.4235500878734622,
+          "live_plans": 3983
+        },
+        "half": {
+          "success": 2,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 2
+            },
+            "42": {
+              "12": 0
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+          },
+          "initial_12_13_success": 2,
+          "gate_values": {
+            "1": 0.5,
+            "42": 0.5
+          },
+          "average_rollout_weight": 0.5,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 64.96199217651841,
+          "live_rotation_deg": 20.708584130197295,
+          "live_contact_f1": 0.6147715196599363,
+          "live_contact_prevalence": 0.35412573673870335,
+          "live_plans": 4072
+        },
+        "constant": {
+          "success": 5,
+          "episodes": 40,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 2
+            },
+            "42": {
+              "12": 3
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+          },
+          "initial_12_13_success": 5,
+          "gate_values": {
+            "1": 0.22251726686954498,
+            "42": 0.20809417963027954
+          },
+          "average_rollout_weight": 0.2153,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 75.42104644972687,
+          "live_rotation_deg": 22.57229320093495,
+          "live_contact_f1": 0.5923470924977403,
+          "live_contact_prevalence": 0.31808943089430897,
+          "live_plans": 3936
+        },
+        "contact": {
+          "success": 17,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 3,
+              "14": 6
+            },
+            "42": {
+              "12": 5,
+              "14": 3
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 4,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 3,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 3,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 2
+          },
+          "initial_12_13_success": 8,
+          "gate_values": {
+            "1": [
+              0.20000000298023224,
+              0.25
+            ],
+            "42": [
+              0.20000000298023224,
+              0.22500000894069672
+            ]
+          },
+          "average_rollout_weight": 0.21960348025896018,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 70.67413237848571,
+          "live_rotation_deg": 20.54236370381239,
+          "live_contact_f1": 0.6661835048557762,
+          "live_contact_prevalence": 0.3739406779661017,
+          "live_plans": 7552
+        }
+      },
+      "20000": {
+        "direct": {
+          "success": 18,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 5,
+              "14": 4
+            },
+            "42": {
+              "12": 5,
+              "14": 4
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 4,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 2,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 2,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 2,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 4
+          },
+          "initial_12_13_success": 10,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 83.49391926651545,
+          "live_rotation_deg": 25.05220611426709,
+          "live_contact_f1": 0.6337378225944283,
+          "live_contact_prevalence": 0.3153225806451613,
+          "live_plans": 7440
+        },
+        "half": {
+          "success": 14,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 4,
+              "14": 4
+            },
+            "42": {
+              "12": 2,
+              "14": 4
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 2,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 4,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 2,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 2
+          },
+          "initial_12_13_success": 6,
+          "gate_values": {
+            "1": 0.5,
+            "42": 0.5
+          },
+          "average_rollout_weight": 0.5,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 72.58183629698527,
+          "live_rotation_deg": 23.330690730996587,
+          "live_contact_f1": 0.651761918862896,
+          "live_contact_prevalence": 0.342797873719694,
+          "live_plans": 7713
+        },
+        "constant": {
+          "success": 17,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 3,
+              "14": 5
+            },
+            "42": {
+              "12": 5,
+              "14": 4
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 4,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 4,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 2,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 4
+          },
+          "initial_12_13_success": 8,
+          "gate_values": {
+            "1": 0.21963569521903992,
+            "42": 0.2092088758945465
+          },
+          "average_rollout_weight": 0.21439999999999998,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 69.52308085550654,
+          "live_rotation_deg": 22.384713616141504,
+          "live_contact_f1": 0.7494937807347412,
+          "live_contact_prevalence": 0.3961185697195268,
+          "live_plans": 7523
+        },
+        "contact": {
+          "success": 23,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 6,
+              "14": 9
+            },
+            "42": {
+              "12": 4,
+              "14": 4
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 4,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 2,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 4,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 2,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 2,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 2,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 6
+          },
+          "initial_12_13_success": 10,
+          "gate_values": {
+            "1": [
+              0.20000000298023224,
+              0.25
+            ],
+            "42": [
+              0.20000000298023224,
+              0.22500000894069672
+            ]
+          },
+          "average_rollout_weight": 0.2195497911549468,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 71.30409697997989,
+          "live_rotation_deg": 19.96167369619843,
+          "live_contact_f1": 0.6449769877797175,
+          "live_contact_prevalence": 0.34774774774774775,
+          "live_plans": 7215
+        },
+        "entity_contact": {
+          "success": 20,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 7,
+              "14": 4
+            },
+            "42": {
+              "12": 3,
+              "14": 6
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 4,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 4,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 2,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 3,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 3
+          },
+          "initial_12_13_success": 10,
+          "gate_values": {
+            "1": [
+              [
+                0.20538300275802612,
+                0.23692747950553894
+              ],
+              [
+                0.24434271454811096,
+                0.21305100619792938
+              ],
+              [
+                0.19036026298999786,
+                0.23965772986412048
+              ],
+              [
+                0.2115895003080368,
+                0.25
+              ]
+            ],
+            "42": [
+              [
+                0.18383771181106567,
+                0.22020167112350464
+              ],
+              [
+                0.19915029406547546,
+                0.3066568374633789
+              ],
+              [
+                0.22374069690704346,
+                0.2093343585729599
+              ],
+              [
+                0.2153557538986206,
+                0.22500178217887878
+              ]
+            ]
+          },
+          "average_rollout_weight": 0.21893328190990813,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 74.70286394019843,
+          "live_rotation_deg": 22.077058282757353,
+          "live_contact_f1": 0.623202614379085,
+          "live_contact_prevalence": 0.31379403065340145,
+          "live_plans": 7438
+        }
+      }
+    },
+    "shared": {
+      "1800": {
+        "direct": {
+          "success": 5,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 1,
+              "14": 1
+            },
+            "42": {
+              "12": 2,
+              "14": 1
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 2,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+          },
+          "initial_12_13_success": 3,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 87.73401069331162,
+          "live_rotation_deg": 27.04365506304224,
+          "live_contact_f1": 0.6609530339389784,
+          "live_contact_prevalence": 0.3437384785547499,
+          "live_plans": 8137
+        }
+      },
+      "7200": {
+        "direct": {
+          "success": 19,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 7,
+              "14": 4
+            },
+            "42": {
+              "12": 5,
+              "14": 3
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 5,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 3,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 6
+          },
+          "initial_12_13_success": 12,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 69.11950643635967,
+          "live_rotation_deg": 23.334496385890414,
+          "live_contact_f1": 0.7175726200747771,
+          "live_contact_prevalence": 0.4407894736842105,
+          "live_plans": 7600
+        }
+      },
+      "20000": {
+        "direct": {
+          "success": 22,
+          "episodes": 80,
+          "by_seed_and_first_state": {
+            "1": {
+              "12": 5,
+              "14": 7
+            },
+            "42": {
+              "12": 5,
+              "14": 5
+            }
+          },
+          "per_task": {
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 4,
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 7,
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 2,
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 2,
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 2,
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 5
+          },
+          "initial_12_13_success": 10,
+          "gate_values": {
+            "1": 0,
+            "42": 0
+          },
+          "average_rollout_weight": 0.0,
+          "episodes_weight_range_gt_025": 0,
+          "live_pose_mm": 75.98894162151622,
+          "live_rotation_deg": 23.62248992177057,
+          "live_contact_f1": 0.6784386617100372,
+          "live_contact_prevalence": 0.35836968375136313,
+          "live_plans": 7336
+        }
+      }
+    }
+  },
+  "pairs": {
+    "world/contact: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 2,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 2
+      },
+      "seed_net": {
+        "1": 7,
+        "42": 2
+      },
+      "n": 80,
+      "a": 10,
+      "b": 1,
+      "a_only": 10,
+      "b_only": 1
+    },
+    "world/constant: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+      },
+      "seed_net": {
+        "1": 2,
+        "42": 1
+      },
+      "n": 40,
+      "a": 6,
+      "b": 3,
+      "a_only": 5,
+      "b_only": 2
+    },
+    "world/half: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 2,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -1
+      },
+      "seed_net": {
+        "1": 3,
+        "42": 3
+      },
+      "n": 40,
+      "a": 10,
+      "b": 4,
+      "a_only": 8,
+      "b_only": 2
+    },
+    "world/direct: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 3,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 3
+      },
+      "seed_net": {
+        "1": 4,
+        "42": 8
+      },
+      "n": 80,
+      "a": 16,
+      "b": 4,
+      "a_only": 15,
+      "b_only": 3
+    },
+    "world/entity_contact vs calibrated constant 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": -1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": -1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+      },
+      "seed_net": {
+        "1": -2,
+        "42": 3
+      },
+      "n": 80,
+      "a": 11,
+      "b": 10,
+      "a_only": 8,
+      "b_only": 7
+    },
+    "world/contact vs calibrated constant 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": -1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": -1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": -1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+      },
+      "seed_net": {
+        "1": -1,
+        "42": 1
+      },
+      "n": 80,
+      "a": 10,
+      "b": 10,
+      "a_only": 6,
+      "b_only": 6
+    },
+    "world/half vs calibrated constant 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 3,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": -1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+      },
+      "seed_net": {
+        "1": -1,
+        "42": 6
+      },
+      "n": 80,
+      "a": 15,
+      "b": 10,
+      "a_only": 12,
+      "b_only": 7
+    },
+    "object/contact: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 4,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 3,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 2,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 4,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 3
+      },
+      "seed_net": {
+        "1": 17,
+        "42": 5
+      },
+      "n": 80,
+      "a": 23,
+      "b": 1,
+      "a_only": 23,
+      "b_only": 1
+    },
+    "object/constant: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 2,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 1,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 4
+      },
+      "seed_net": {
+        "1": 8,
+        "42": 4
+      },
+      "n": 40,
+      "a": 15,
+      "b": 3,
+      "a_only": 13,
+      "b_only": 1
+    },
+    "object/half: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": -1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": -1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 3
+      },
+      "seed_net": {
+        "1": 3,
+        "42": 1
+      },
+      "n": 40,
+      "a": 8,
+      "b": 4,
+      "a_only": 7,
+      "b_only": 3
+    },
+    "object/direct: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 3,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 2,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+      },
+      "seed_net": {
+        "1": 8,
+        "42": 1
+      },
+      "n": 40,
+      "a": 11,
+      "b": 2,
+      "a_only": 10,
+      "b_only": 1
+    },
+    "object/entity_contact vs calibrated constant 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": -2,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": -1,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": -2,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+      },
+      "seed_net": {
+        "1": -3,
+        "42": 2
+      },
+      "n": 80,
+      "a": 25,
+      "b": 26,
+      "a_only": 8,
+      "b_only": 9
+    },
+    "object/contact vs calibrated constant 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": -2,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 2,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": -1,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": -2,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -2
+      },
+      "seed_net": {
+        "1": -2,
+        "42": -1
+      },
+      "n": 80,
+      "a": 23,
+      "b": 26,
+      "a_only": 7,
+      "b_only": 10
+    },
+    "object/half vs calibrated constant 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": -2,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": -1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": -4,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": -1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": -1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": -1,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": -2,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 3,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -1
+      },
+      "seed_net": {
+        "1": -7,
+        "42": -2
+      },
+      "n": 80,
+      "a": 17,
+      "b": 26,
+      "a_only": 7,
+      "b_only": 16
+    },
+    "consistent/contact: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 3,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 2,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 2,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 4
+      },
+      "seed_net": {
+        "1": 9,
+        "42": 5
+      },
+      "n": 80,
+      "a": 23,
+      "b": 9,
+      "a_only": 20,
+      "b_only": 6
+    },
+    "consistent/constant: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": -2,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 2,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 2
+      },
+      "seed_net": {
+        "1": 0,
+        "42": 4
+      },
+      "n": 40,
+      "a": 8,
+      "b": 4,
+      "a_only": 6,
+      "b_only": 2
+    },
+    "consistent/half: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 2
+      },
+      "seed_net": {
+        "1": 2,
+        "42": 2
+      },
+      "n": 40,
+      "a": 6,
+      "b": 2,
+      "a_only": 4,
+      "b_only": 0
+    },
+    "consistent/direct: 20k vs 1.8k on common states": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 2,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 3
+      },
+      "seed_net": {
+        "1": 5,
+        "42": 4
+      },
+      "n": 40,
+      "a": 10,
+      "b": 1,
+      "a_only": 10,
+      "b_only": 1
+    },
+    "consistent/entity_contact vs calibrated constant 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 2,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": -2,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 2,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -1
+      },
+      "seed_net": {
+        "1": 3,
+        "42": 0
+      },
+      "n": 80,
+      "a": 20,
+      "b": 17,
+      "a_only": 12,
+      "b_only": 9
+    },
+    "consistent/contact vs calibrated constant 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 2,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": -2,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 2,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 2
+      },
+      "seed_net": {
+        "1": 7,
+        "42": -1
+      },
+      "n": 80,
+      "a": 23,
+      "b": 17,
+      "a_only": 12,
+      "b_only": 6
+    },
+    "consistent/half vs calibrated constant 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": -2,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 0,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": -1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 2,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": -1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -2
+      },
+      "seed_net": {
+        "1": 0,
+        "42": -3
+      },
+      "n": 80,
+      "a": 14,
+      "b": 17,
+      "a_only": 5,
+      "b_only": 8
+    },
+    "separate vs shared direct 1800": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": -1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": -2,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": -1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+      },
+      "seed_net": {
+        "1": 1,
+        "42": -2
+      },
+      "n": 80,
+      "a": 4,
+      "b": 5,
+      "a_only": 4,
+      "b_only": 5
+    },
+    "separate vs shared direct 7200": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 5,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": -3,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": -1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": -1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": -3,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 1,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": -1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -1
+      },
+      "seed_net": {
+        "1": -2,
+        "42": -1
+      },
+      "n": 80,
+      "a": 16,
+      "b": 19,
+      "a_only": 10,
+      "b_only": 13
+    },
+    "separate vs shared direct 20000": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": -1,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": -4,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": -1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 3,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": -1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": -2,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -1
+      },
+      "seed_net": {
+        "1": -5,
+        "42": -1
+      },
+      "n": 80,
+      "a": 16,
+      "b": 22,
+      "a_only": 8,
+      "b_only": 14
+    },
+    "consistent vs object 20k direct": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": -3,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": -2,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": -1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": -1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -1
+      },
+      "seed_net": {
+        "1": -4,
+        "42": -1
+      },
+      "n": 80,
+      "a": 18,
+      "b": 23,
+      "a_only": 11,
+      "b_only": 16
+    },
+    "object vs world 20k direct": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 4,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 3,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": -1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": -2,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+      },
+      "seed_net": {
+        "1": 6,
+        "42": 1
+      },
+      "n": 80,
+      "a": 23,
+      "b": 16,
+      "a_only": 15,
+      "b_only": 8
+    },
+    "consistent vs object 20k half": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 3,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": -1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": -2,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": -3,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -2
+      },
+      "seed_net": {
+        "1": -4,
+        "42": 1
+      },
+      "n": 80,
+      "a": 14,
+      "b": 17,
+      "a_only": 9,
+      "b_only": 12
+    },
+    "object vs world 20k half": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": -1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": -2,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": -1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 3
+      },
+      "seed_net": {
+        "1": 5,
+        "42": -3
+      },
+      "n": 80,
+      "a": 17,
+      "b": 15,
+      "a_only": 13,
+      "b_only": 11
+    },
+    "consistent vs object 20k constant": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": -2,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 1,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": -1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": -2,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": -1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": -1,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": -3,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -1
+      },
+      "seed_net": {
+        "1": -11,
+        "42": 2
+      },
+      "n": 80,
+      "a": 17,
+      "b": 26,
+      "a_only": 9,
+      "b_only": 18
+    },
+    "object vs world 20k constant": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 5,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 1,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 2,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": -1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 4
+      },
+      "seed_net": {
+        "1": 11,
+        "42": 5
+      },
+      "n": 80,
+      "a": 26,
+      "b": 10,
+      "a_only": 20,
+      "b_only": 4
+    },
+    "consistent vs object 20k contact": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 0,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": -2,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": -2,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": -2,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 3
+      },
+      "seed_net": {
+        "1": -2,
+        "42": 2
+      },
+      "n": 80,
+      "a": 23,
+      "b": 23,
+      "a_only": 10,
+      "b_only": 10
+    },
+    "object vs world 20k contact": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 2,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 3,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 2,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 3,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 0,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 1
+      },
+      "seed_net": {
+        "1": 10,
+        "42": 3
+      },
+      "n": 80,
+      "a": 23,
+      "b": 10,
+      "a_only": 18,
+      "b_only": 5
+    },
+    "consistent vs object 20k entity_contact": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": -2,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": -1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 2,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": -3,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": -2,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 3,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -2
+      },
+      "seed_net": {
+        "1": -5,
+        "42": 0
+      },
+      "n": 80,
+      "a": 20,
+      "b": 25,
+      "a_only": 9,
+      "b_only": 14
+    },
+    "object vs world 20k entity_contact": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 3,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 4,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 2,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 1,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": -1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 4
+      },
+      "seed_net": {
+        "1": 10,
+        "42": 4
+      },
+      "n": 80,
+      "a": 25,
+      "b": 11,
+      "a_only": 21,
+      "b_only": 7
+    },
+    "world/calibrated constant vs direct 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": -2,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": -1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 0,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": -1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": 1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": -3
+      },
+      "seed_net": {
+        "1": 1,
+        "42": -7
+      },
+      "n": 80,
+      "a": 10,
+      "b": 16,
+      "a_only": 5,
+      "b_only": 11
+    },
+    "object/calibrated constant vs direct 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": 1,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": -4,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 1,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": 2,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 1,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 1,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 2,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": -1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+      },
+      "seed_net": {
+        "1": 6,
+        "42": -3
+      },
+      "n": 80,
+      "a": 26,
+      "b": 23,
+      "a_only": 16,
+      "b_only": 13
+    },
+    "consistent/calibrated constant vs direct 20k": {
+      "task_net": {
+        "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it": -1,
+        "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it": 0,
+        "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it": 2,
+        "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove": -1,
+        "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket": 0,
+        "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket": 0,
+        "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate": 0,
+        "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate": -1,
+        "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy": 0
+      },
+      "seed_net": {
+        "1": -1,
+        "42": 0
+      },
+      "n": 80,
+      "a": 17,
+      "b": 18,
+      "a_only": 8,
+      "b_only": 9
+    }
+  },
+  "diagnostics": {
+    "world": {
+      "1": {
+        "1800": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.01270508486777544,
+            "pose_mean_mm": 13.371498323976994,
+            "moving_pose_mean_mm": 15.861129388213158,
+            "moving_rows": 15337,
+            "angle_deg": 5.450631618499756,
+            "goal_rms_mm": 13.816027902066708,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9516578316688538,
+            "contact_average_precision": 0.9902632236480713
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.016237040981650352,
+            "pose_mean_mm": 19.329668954014778,
+            "moving_pose_mean_mm": 24.052627384662628,
+            "moving_rows": 3778,
+            "angle_deg": 6.215582847595215,
+            "goal_rms_mm": 16.463452950119972,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9328474998474121,
+            "contact_average_precision": 0.9762418866157532
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.016387658193707466,
+            "pose_mean_mm": 19.829580560326576,
+            "moving_pose_mean_mm": 24.768447503447533,
+            "moving_rows": 4761,
+            "angle_deg": 6.486793518066406,
+            "goal_rms_mm": 16.597039997577667,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9281632900238037,
+            "contact_average_precision": 0.9800358414649963
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.027315789833664894,
+            "pose_mean_mm": 27.82914601266384,
+            "moving_pose_mean_mm": 37.06447035074234,
+            "moving_rows": 4761,
+            "angle_deg": 6.821653842926025,
+            "goal_rms_mm": 23.380639031529427,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9064688682556152,
+            "contact_average_precision": 0.9647755026817322
+          }
+        },
+        "7200": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.004740092437714338,
+            "pose_mean_mm": 6.8203359842300415,
+            "moving_pose_mean_mm": 7.478360552340746,
+            "moving_rows": 15337,
+            "angle_deg": 3.7442753314971924,
+            "goal_rms_mm": 6.223202217370272,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9997469186782837,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.016869593411684036,
+            "pose_mean_mm": 17.46109314262867,
+            "moving_pose_mean_mm": 21.358035504817963,
+            "moving_rows": 3778,
+            "angle_deg": 5.34228515625,
+            "goal_rms_mm": 17.776383087038994,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9264705777168274,
+            "contact_average_precision": 0.9743333458900452
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.0169999860227108,
+            "pose_mean_mm": 17.91677251458168,
+            "moving_pose_mean_mm": 22.142114117741585,
+            "moving_rows": 4761,
+            "angle_deg": 5.453135013580322,
+            "goal_rms_mm": 17.90509931743145,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9242863059043884,
+            "contact_average_precision": 0.9753463268280029
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.029419146478176117,
+            "pose_mean_mm": 26.715723797678947,
+            "moving_pose_mean_mm": 35.34768894314766,
+            "moving_rows": 4761,
+            "angle_deg": 5.94707727432251,
+            "goal_rms_mm": 25.098657235503197,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9003751277923584,
+            "contact_average_precision": 0.9538315534591675
+          }
+        },
+        "20000": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.0023915981873869896,
+            "pose_mean_mm": 2.1762484684586525,
+            "moving_pose_mean_mm": 2.2046787198632956,
+            "moving_rows": 15337,
+            "angle_deg": 2.4447951316833496,
+            "goal_rms_mm": 1.5744880074635148,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 1.0,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.01942817121744156,
+            "pose_mean_mm": 18.73973198235035,
+            "moving_pose_mean_mm": 22.818641737103462,
+            "moving_rows": 3778,
+            "angle_deg": 5.254075050354004,
+            "goal_rms_mm": 19.490275532007217,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9262166619300842,
+            "contact_average_precision": 0.9697691202163696
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.019509075209498405,
+            "pose_mean_mm": 18.995031714439392,
+            "moving_pose_mean_mm": 23.33003282546997,
+            "moving_rows": 4761,
+            "angle_deg": 5.4563727378845215,
+            "goal_rms_mm": 19.503679126501083,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.929623544216156,
+            "contact_average_precision": 0.9680334329605103
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.03259320557117462,
+            "pose_mean_mm": 27.953993529081345,
+            "moving_pose_mean_mm": 36.50493547320366,
+            "moving_rows": 4761,
+            "angle_deg": 6.10684061050415,
+            "goal_rms_mm": 26.526134461164474,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8956701159477234,
+            "contact_average_precision": 0.9474829435348511
+          }
+        }
+      },
+      "42": {
+        "1800": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.012578785419464111,
+            "pose_mean_mm": 13.405636884272099,
+            "moving_pose_mean_mm": 15.344556421041489,
+            "moving_rows": 15337,
+            "angle_deg": 5.310056209564209,
+            "goal_rms_mm": 13.698120601475239,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9509903788566589,
+            "contact_average_precision": 0.9907674193382263
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.016445297747850418,
+            "pose_mean_mm": 19.451305270195007,
+            "moving_pose_mean_mm": 23.52740429341793,
+            "moving_rows": 3778,
+            "angle_deg": 5.981755256652832,
+            "goal_rms_mm": 16.578461974859238,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9325025677680969,
+            "contact_average_precision": 0.9765644073486328
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.016582373529672623,
+            "pose_mean_mm": 20.017705857753754,
+            "moving_pose_mean_mm": 24.55860935151577,
+            "moving_rows": 4761,
+            "angle_deg": 6.428692817687988,
+            "goal_rms_mm": 16.59511774778366,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9307661056518555,
+            "contact_average_precision": 0.9789522886276245
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.02752147987484932,
+            "pose_mean_mm": 27.834026142954826,
+            "moving_pose_mean_mm": 36.54571995139122,
+            "moving_rows": 4761,
+            "angle_deg": 6.74344539642334,
+            "goal_rms_mm": 23.522114381194115,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9120466709136963,
+            "contact_average_precision": 0.9652102589607239
+          }
+        },
+        "7200": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.004539177753031254,
+            "pose_mean_mm": 6.428812630474567,
+            "moving_pose_mean_mm": 7.039061281830072,
+            "moving_rows": 15337,
+            "angle_deg": 3.6319637298583984,
+            "goal_rms_mm": 5.881261546164751,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 1.0,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.016891859471797943,
+            "pose_mean_mm": 17.43212155997753,
+            "moving_pose_mean_mm": 21.478179842233658,
+            "moving_rows": 3778,
+            "angle_deg": 5.232909202575684,
+            "goal_rms_mm": 17.850026488304138,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9282346963882446,
+            "contact_average_precision": 0.9758704900741577
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.016623709350824356,
+            "pose_mean_mm": 17.97291450202465,
+            "moving_pose_mean_mm": 22.456692531704903,
+            "moving_rows": 4761,
+            "angle_deg": 5.458477973937988,
+            "goal_rms_mm": 17.630476504564285,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9255927801132202,
+            "contact_average_precision": 0.9770926237106323
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.02993045561015606,
+            "pose_mean_mm": 26.65458619594574,
+            "moving_pose_mean_mm": 35.431817173957825,
+            "moving_rows": 4761,
+            "angle_deg": 5.904799938201904,
+            "goal_rms_mm": 25.337589904665947,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8970099687576294,
+            "contact_average_precision": 0.9535223245620728
+          }
+        },
+        "20000": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.002417702693492174,
+            "pose_mean_mm": 2.128414809703827,
+            "moving_pose_mean_mm": 2.105971099808812,
+            "moving_rows": 15337,
+            "angle_deg": 2.428771734237671,
+            "goal_rms_mm": 1.5458900015801191,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 1.0,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.019593842327594757,
+            "pose_mean_mm": 18.673887476325035,
+            "moving_pose_mean_mm": 22.774644196033478,
+            "moving_rows": 3778,
+            "angle_deg": 5.1264262199401855,
+            "goal_rms_mm": 19.599463790655136,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9306930899620056,
+            "contact_average_precision": 0.9731005430221558
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.019373780116438866,
+            "pose_mean_mm": 19.2989744246006,
+            "moving_pose_mean_mm": 23.821691051125526,
+            "moving_rows": 4761,
+            "angle_deg": 5.453449726104736,
+            "goal_rms_mm": 19.439134746789932,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9216326475143433,
+            "contact_average_precision": 0.9715346097946167
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.033080484718084335,
+            "pose_mean_mm": 27.916602790355682,
+            "moving_pose_mean_mm": 36.524709314107895,
+            "moving_rows": 4761,
+            "angle_deg": 6.070643424987793,
+            "goal_rms_mm": 26.76173858344555,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8967795372009277,
+            "contact_average_precision": 0.946282148361206
+          }
+        }
+      }
+    },
+    "object": {
+      "1": {
+        "1800": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.017986629158258438,
+            "pose_mean_mm": 15.429554507136345,
+            "moving_pose_mean_mm": 18.822351470589638,
+            "moving_rows": 15337,
+            "angle_deg": 8.397286415100098,
+            "goal_rms_mm": 18.240652978420258,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9383957982063293,
+            "contact_average_precision": 0.9833674430847168
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.019686367362737656,
+            "pose_mean_mm": 19.727246835827827,
+            "moving_pose_mean_mm": 24.198273196816444,
+            "moving_rows": 3778,
+            "angle_deg": 8.782638549804688,
+            "goal_rms_mm": 24.82406608760357,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9290853142738342,
+            "contact_average_precision": 0.9748440384864807
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.019775740802288055,
+            "pose_mean_mm": 20.418789237737656,
+            "moving_pose_mean_mm": 25.646230205893517,
+            "moving_rows": 4761,
+            "angle_deg": 9.072911262512207,
+            "goal_rms_mm": 25.236910209059715,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9246963858604431,
+            "contact_average_precision": 0.9769071340560913
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.027327191084623337,
+            "pose_mean_mm": 27.977539226412773,
+            "moving_pose_mean_mm": 36.97986155748367,
+            "moving_rows": 4761,
+            "angle_deg": 9.256625175476074,
+            "goal_rms_mm": 38.902584463357925,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9122664332389832,
+            "contact_average_precision": 0.9589601755142212
+          }
+        },
+        "7200": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.009327908977866173,
+            "pose_mean_mm": 8.180106990039349,
+            "moving_pose_mean_mm": 9.149812161922455,
+            "moving_rows": 15337,
+            "angle_deg": 4.727899074554443,
+            "goal_rms_mm": 8.871320635080338,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.999240517616272,
+            "contact_average_precision": 0.9999982714653015
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.015475068241357803,
+            "pose_mean_mm": 16.284845769405365,
+            "moving_pose_mean_mm": 19.942061975598335,
+            "moving_rows": 3778,
+            "angle_deg": 5.512765407562256,
+            "goal_rms_mm": 22.865602746605873,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9295039176940918,
+            "contact_average_precision": 0.9749603271484375
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.016198894008994102,
+            "pose_mean_mm": 17.034171149134636,
+            "moving_pose_mean_mm": 21.483073011040688,
+            "moving_rows": 4761,
+            "angle_deg": 5.918796539306641,
+            "goal_rms_mm": 23.17669987678528,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9281632900238037,
+            "contact_average_precision": 0.9788354635238647
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.02771473303437233,
+            "pose_mean_mm": 25.86529217660427,
+            "moving_pose_mean_mm": 34.5691442489624,
+            "moving_rows": 4761,
+            "angle_deg": 6.165548801422119,
+            "goal_rms_mm": 38.9183945953846,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8963515758514404,
+            "contact_average_precision": 0.9541563391685486
+          }
+        },
+        "20000": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.005108713172376156,
+            "pose_mean_mm": 3.5632464569061995,
+            "moving_pose_mean_mm": 3.7487605586647987,
+            "moving_rows": 15337,
+            "angle_deg": 3.606065034866333,
+            "goal_rms_mm": 1.9815878476947546,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 1.0,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.017258694395422935,
+            "pose_mean_mm": 16.26257225871086,
+            "moving_pose_mean_mm": 20.104175433516502,
+            "moving_rows": 3778,
+            "angle_deg": 5.071954727172852,
+            "goal_rms_mm": 24.199435487389565,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9321594834327698,
+            "contact_average_precision": 0.9714367985725403
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.017424212768673897,
+            "pose_mean_mm": 16.92880317568779,
+            "moving_pose_mean_mm": 21.2335716933012,
+            "moving_rows": 4761,
+            "angle_deg": 5.394018650054932,
+            "goal_rms_mm": 24.738457053899765,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9217603802680969,
+            "contact_average_precision": 0.9760385751724243
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.030266236513853073,
+            "pose_mean_mm": 26.410551741719246,
+            "moving_pose_mean_mm": 35.03938391804695,
+            "moving_rows": 4761,
+            "angle_deg": 5.823700904846191,
+            "goal_rms_mm": 40.155939757823944,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8927392959594727,
+            "contact_average_precision": 0.948765754699707
+          }
+        }
+      },
+      "42": {
+        "1800": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.017331261187791824,
+            "pose_mean_mm": 15.173369087278843,
+            "moving_pose_mean_mm": 17.89485476911068,
+            "moving_rows": 15337,
+            "angle_deg": 7.938061237335205,
+            "goal_rms_mm": 16.615869477391243,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9406704902648926,
+            "contact_average_precision": 0.98560631275177
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.01914374902844429,
+            "pose_mean_mm": 19.987067207694054,
+            "moving_pose_mean_mm": 24.248331785202026,
+            "moving_rows": 3778,
+            "angle_deg": 8.351851463317871,
+            "goal_rms_mm": 24.25576001405716,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9323696494102478,
+            "contact_average_precision": 0.9755185842514038
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.01921391300857067,
+            "pose_mean_mm": 20.62242105603218,
+            "moving_pose_mean_mm": 25.41937492787838,
+            "moving_rows": 4761,
+            "angle_deg": 8.612828254699707,
+            "goal_rms_mm": 24.273138493299484,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9311608672142029,
+            "contact_average_precision": 0.9785082936286926
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.027171622961759567,
+            "pose_mean_mm": 28.283508494496346,
+            "moving_pose_mean_mm": 36.489877849817276,
+            "moving_rows": 4761,
+            "angle_deg": 8.858986854553223,
+            "goal_rms_mm": 38.22506591677666,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9124690294265747,
+            "contact_average_precision": 0.9665049910545349
+          }
+        },
+        "7200": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.009256885387003422,
+            "pose_mean_mm": 7.788778282701969,
+            "moving_pose_mean_mm": 8.818463422358036,
+            "moving_rows": 15337,
+            "angle_deg": 4.669345378875732,
+            "goal_rms_mm": 8.279010653495789,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9992408752441406,
+            "contact_average_precision": 0.9999983906745911
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.015721291303634644,
+            "pose_mean_mm": 16.16813614964485,
+            "moving_pose_mean_mm": 20.167378708720207,
+            "moving_rows": 3778,
+            "angle_deg": 5.454207897186279,
+            "goal_rms_mm": 22.81215786933899,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9376947283744812,
+            "contact_average_precision": 0.9801608920097351
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.015802450478076935,
+            "pose_mean_mm": 16.652725636959076,
+            "moving_pose_mean_mm": 21.001897752285004,
+            "moving_rows": 4761,
+            "angle_deg": 5.864671230316162,
+            "goal_rms_mm": 22.66578935086727,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9270876049995422,
+            "contact_average_precision": 0.9780840277671814
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.026695068925619125,
+            "pose_mean_mm": 25.7014948874712,
+            "moving_pose_mean_mm": 34.05389562249184,
+            "moving_rows": 4761,
+            "angle_deg": 6.119241237640381,
+            "goal_rms_mm": 38.25533762574196,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8973196148872375,
+            "contact_average_precision": 0.9579756855964661
+          }
+        },
+        "20000": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.005057568196207285,
+            "pose_mean_mm": 3.507590154185891,
+            "moving_pose_mean_mm": 3.7166865076869726,
+            "moving_rows": 15337,
+            "angle_deg": 3.5525944232940674,
+            "goal_rms_mm": 2.1298036444932222,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 1.0,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.01765286549925804,
+            "pose_mean_mm": 16.522012650966644,
+            "moving_pose_mean_mm": 20.534098148345947,
+            "moving_rows": 3778,
+            "angle_deg": 5.072688579559326,
+            "goal_rms_mm": 24.625010788440704,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9319480657577515,
+            "contact_average_precision": 0.9792577624320984
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.01758592575788498,
+            "pose_mean_mm": 16.88937097787857,
+            "moving_pose_mean_mm": 21.17587998509407,
+            "moving_rows": 4761,
+            "angle_deg": 5.384238243103027,
+            "goal_rms_mm": 24.506768211722374,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.920880913734436,
+            "contact_average_precision": 0.9737116098403931
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.029894541949033737,
+            "pose_mean_mm": 26.15131251513958,
+            "moving_pose_mean_mm": 34.42735970020294,
+            "moving_rows": 4761,
+            "angle_deg": 5.808102607727051,
+            "goal_rms_mm": 39.56633061170578,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8930041193962097,
+            "contact_average_precision": 0.9489325881004333
+          }
+        }
+      }
+    },
+    "consistent": {
+      "1": {
+        "1800": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.01711381785571575,
+            "pose_mean_mm": 14.286111108958721,
+            "moving_pose_mean_mm": 16.304099932312965,
+            "moving_rows": 15337,
+            "angle_deg": 6.121337413787842,
+            "goal_rms_mm": 17.645830288529396,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9399346709251404,
+            "contact_average_precision": 0.9859858751296997
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.019053218886256218,
+            "pose_mean_mm": 19.450990483164787,
+            "moving_pose_mean_mm": 23.04183319211006,
+            "moving_rows": 3778,
+            "angle_deg": 6.761895179748535,
+            "goal_rms_mm": 25.097714737057686,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9325785040855408,
+            "contact_average_precision": 0.9762861132621765
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.018759751692414284,
+            "pose_mean_mm": 19.861962646245956,
+            "moving_pose_mean_mm": 23.99076521396637,
+            "moving_rows": 4761,
+            "angle_deg": 7.04901123046875,
+            "goal_rms_mm": 25.26465430855751,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.928744912147522,
+            "contact_average_precision": 0.9787138104438782
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.027281422168016434,
+            "pose_mean_mm": 27.830269187688828,
+            "moving_pose_mean_mm": 36.11534833908081,
+            "moving_rows": 4761,
+            "angle_deg": 7.319767475128174,
+            "goal_rms_mm": 40.80163687467575,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9093127250671387,
+            "contact_average_precision": 0.9597422480583191
+          }
+        },
+        "7200": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.008910930715501308,
+            "pose_mean_mm": 7.427433971315622,
+            "moving_pose_mean_mm": 7.977698929607868,
+            "moving_rows": 15337,
+            "angle_deg": 4.0438008308410645,
+            "goal_rms_mm": 9.8075270652771,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9991140365600586,
+            "contact_average_precision": 0.9999987483024597
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.015548105351626873,
+            "pose_mean_mm": 16.300052404403687,
+            "moving_pose_mean_mm": 19.663006067276,
+            "moving_rows": 3778,
+            "angle_deg": 5.109020233154297,
+            "goal_rms_mm": 24.499842897057533,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9333333373069763,
+            "contact_average_precision": 0.9749699234962463
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.01616794243454933,
+            "pose_mean_mm": 17.060311511158943,
+            "moving_pose_mean_mm": 20.91315947473049,
+            "moving_rows": 4761,
+            "angle_deg": 5.473908424377441,
+            "goal_rms_mm": 24.931689724326134,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9262295365333557,
+            "contact_average_precision": 0.977515459060669
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.027254121378064156,
+            "pose_mean_mm": 26.096835732460022,
+            "moving_pose_mean_mm": 34.28708016872406,
+            "moving_rows": 4761,
+            "angle_deg": 5.8349480628967285,
+            "goal_rms_mm": 42.073871940374374,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8903709650039673,
+            "contact_average_precision": 0.9521985650062561
+          }
+        },
+        "20000": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.004783139564096928,
+            "pose_mean_mm": 3.0554698314517736,
+            "moving_pose_mean_mm": 3.058200003579259,
+            "moving_rows": 15337,
+            "angle_deg": 2.902841091156006,
+            "goal_rms_mm": 2.4499669671058655,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 1.0,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.01699475757777691,
+            "pose_mean_mm": 16.668150201439857,
+            "moving_pose_mean_mm": 20.458059385418892,
+            "moving_rows": 3778,
+            "angle_deg": 4.8611836433410645,
+            "goal_rms_mm": 25.84969438612461,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9318063259124756,
+            "contact_average_precision": 0.9730430245399475
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.01769355684518814,
+            "pose_mean_mm": 17.263788729906082,
+            "moving_pose_mean_mm": 21.36296220123768,
+            "moving_rows": 4761,
+            "angle_deg": 5.284558296203613,
+            "goal_rms_mm": 26.709144935011864,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.924704909324646,
+            "contact_average_precision": 0.9715787172317505
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.029500992968678474,
+            "pose_mean_mm": 26.509419083595276,
+            "moving_pose_mean_mm": 34.75299850106239,
+            "moving_rows": 4761,
+            "angle_deg": 5.826537132263184,
+            "goal_rms_mm": 42.441632598638535,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.891546368598938,
+            "contact_average_precision": 0.9451636672019958
+          }
+        }
+      },
+      "42": {
+        "1800": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.01686972565948963,
+            "pose_mean_mm": 13.82068358361721,
+            "moving_pose_mean_mm": 15.920553356409073,
+            "moving_rows": 15337,
+            "angle_deg": 6.1329779624938965,
+            "goal_rms_mm": 17.223984003067017,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9430091381072998,
+            "contact_average_precision": 0.986769437789917
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.018798228353261948,
+            "pose_mean_mm": 19.46345530450344,
+            "moving_pose_mean_mm": 23.36665615439415,
+            "moving_rows": 3778,
+            "angle_deg": 6.691858291625977,
+            "goal_rms_mm": 25.410007685422897,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9318181872367859,
+            "contact_average_precision": 0.9769108891487122
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.018756886944174767,
+            "pose_mean_mm": 20.184988155961037,
+            "moving_pose_mean_mm": 24.74225126206875,
+            "moving_rows": 4761,
+            "angle_deg": 7.082484722137451,
+            "goal_rms_mm": 25.197844952344894,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.930402934551239,
+            "contact_average_precision": 0.9790704846382141
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.027310717850923538,
+            "pose_mean_mm": 27.969053015112877,
+            "moving_pose_mean_mm": 36.349110305309296,
+            "moving_rows": 4761,
+            "angle_deg": 7.26347017288208,
+            "goal_rms_mm": 41.19771346449852,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9156327247619629,
+            "contact_average_precision": 0.9642468690872192
+          }
+        },
+        "7200": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.00907186046242714,
+            "pose_mean_mm": 7.6321749947965145,
+            "moving_pose_mean_mm": 8.465969003736973,
+            "moving_rows": 15337,
+            "angle_deg": 4.05906343460083,
+            "goal_rms_mm": 9.869514033198357,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9993669986724854,
+            "contact_average_precision": 0.9999999403953552
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.01593603752553463,
+            "pose_mean_mm": 16.364721581339836,
+            "moving_pose_mean_mm": 20.09076625108719,
+            "moving_rows": 3778,
+            "angle_deg": 5.096180438995361,
+            "goal_rms_mm": 24.9029528349638,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9253417253494263,
+            "contact_average_precision": 0.9788959622383118
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.016628632321953773,
+            "pose_mean_mm": 17.12040789425373,
+            "moving_pose_mean_mm": 21.359769627451897,
+            "moving_rows": 4761,
+            "angle_deg": 5.531838417053223,
+            "goal_rms_mm": 25.52080899477005,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9256062507629395,
+            "contact_average_precision": 0.9788618087768555
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.02754128910601139,
+            "pose_mean_mm": 26.18943154811859,
+            "moving_pose_mean_mm": 34.60494056344032,
+            "moving_rows": 4761,
+            "angle_deg": 5.851278781890869,
+            "goal_rms_mm": 42.17733442783356,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8963795304298401,
+            "contact_average_precision": 0.9536069631576538
+          }
+        },
+        "20000": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.004886850714683533,
+            "pose_mean_mm": 3.0228600371629,
+            "moving_pose_mean_mm": 3.019719384610653,
+            "moving_rows": 15337,
+            "angle_deg": 2.8579976558685303,
+            "goal_rms_mm": 2.477130154147744,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 1.0,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.01773860678076744,
+            "pose_mean_mm": 16.63254201412201,
+            "moving_pose_mean_mm": 20.18263377249241,
+            "moving_rows": 3778,
+            "angle_deg": 4.885744571685791,
+            "goal_rms_mm": 26.39455534517765,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9322916865348816,
+            "contact_average_precision": 0.9763615131378174
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.01809709332883358,
+            "pose_mean_mm": 17.475951462984085,
+            "moving_pose_mean_mm": 21.59370295703411,
+            "moving_rows": 4761,
+            "angle_deg": 5.185640811920166,
+            "goal_rms_mm": 27.1358173340559,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9305160641670227,
+            "contact_average_precision": 0.9760405421257019
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.02997412346303463,
+            "pose_mean_mm": 26.69195644557476,
+            "moving_pose_mean_mm": 35.05340591073036,
+            "moving_rows": 4761,
+            "angle_deg": 5.820486068725586,
+            "goal_rms_mm": 42.69122704863548,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8940206170082092,
+            "contact_average_precision": 0.9503617882728577
+          }
+        }
+      }
+    },
+    "shared": {
+      "1": {
+        "1800": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.01246498804539442,
+            "pose_mean_mm": 14.183723367750645,
+            "moving_pose_mean_mm": 15.941549092531204,
+            "moving_rows": 15337,
+            "angle_deg": 5.545784950256348,
+            "goal_rms_mm": 13.44503927975893,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9541377425193787,
+            "contact_average_precision": 0.9920820593833923
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.016835642978549004,
+            "pose_mean_mm": 20.66110074520111,
+            "moving_pose_mean_mm": 24.724697694182396,
+            "moving_rows": 3778,
+            "angle_deg": 6.408867835998535,
+            "goal_rms_mm": 16.741696745157242,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9395973086357117,
+            "contact_average_precision": 0.979000985622406
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.016836853697896004,
+            "pose_mean_mm": 20.969737321138382,
+            "moving_pose_mean_mm": 25.15600435435772,
+            "moving_rows": 4761,
+            "angle_deg": 6.6767897605896,
+            "goal_rms_mm": 16.6990514844656,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9299103617668152,
+            "contact_average_precision": 0.979248046875
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.027939194813370705,
+            "pose_mean_mm": 28.664620593190193,
+            "moving_pose_mean_mm": 36.688096821308136,
+            "moving_rows": 4761,
+            "angle_deg": 7.0686116218566895,
+            "goal_rms_mm": 23.49388226866722,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9122373461723328,
+            "contact_average_precision": 0.9645837545394897
+          }
+        },
+        "7200": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.0044641150161623955,
+            "pose_mean_mm": 7.51442601904273,
+            "moving_pose_mean_mm": 8.163399994373322,
+            "moving_rows": 15337,
+            "angle_deg": 3.7307260036468506,
+            "goal_rms_mm": 5.973723251372576,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9998734593391418,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.017136691138148308,
+            "pose_mean_mm": 19.32344399392605,
+            "moving_pose_mean_mm": 23.089827969670296,
+            "moving_rows": 3778,
+            "angle_deg": 5.57432222366333,
+            "goal_rms_mm": 17.92917773127556,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9293563365936279,
+            "contact_average_precision": 0.9759554266929626
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.016536777839064598,
+            "pose_mean_mm": 19.333491101861,
+            "moving_pose_mean_mm": 23.64773117005825,
+            "moving_rows": 4761,
+            "angle_deg": 5.866281032562256,
+            "goal_rms_mm": 17.669295892119408,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9295315742492676,
+            "contact_average_precision": 0.9744396209716797
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.02905483916401863,
+            "pose_mean_mm": 27.73640677332878,
+            "moving_pose_mean_mm": 36.23707965016365,
+            "moving_rows": 4761,
+            "angle_deg": 6.35603141784668,
+            "goal_rms_mm": 24.98139627277851,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9069863557815552,
+            "contact_average_precision": 0.9537645578384399
+          }
+        },
+        "20000": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.0022761740256100893,
+            "pose_mean_mm": 2.000031992793083,
+            "moving_pose_mean_mm": 1.945819123648107,
+            "moving_rows": 15337,
+            "angle_deg": 2.459261417388916,
+            "goal_rms_mm": 1.3611112954095006,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 1.0,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.020092634484171867,
+            "pose_mean_mm": 22.217420861124992,
+            "moving_pose_mean_mm": 25.64193867146969,
+            "moving_rows": 3778,
+            "angle_deg": 5.660172462463379,
+            "goal_rms_mm": 19.675113260746002,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9283488988876343,
+            "contact_average_precision": 0.9683467745780945
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.019664341583848,
+            "pose_mean_mm": 22.565262392163277,
+            "moving_pose_mean_mm": 26.521386578679085,
+            "moving_rows": 4761,
+            "angle_deg": 5.985821723937988,
+            "goal_rms_mm": 19.58915777504444,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9275833964347839,
+            "contact_average_precision": 0.9639273285865784
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.032461490482091904,
+            "pose_mean_mm": 30.903536826372147,
+            "moving_pose_mean_mm": 38.792867213487625,
+            "moving_rows": 4761,
+            "angle_deg": 6.702104568481445,
+            "goal_rms_mm": 26.448240503668785,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8990976214408875,
+            "contact_average_precision": 0.9388681650161743
+          }
+        }
+      },
+      "42": {
+        "1800": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.012346789240837097,
+            "pose_mean_mm": 14.332364313304424,
+            "moving_pose_mean_mm": 16.597220674157143,
+            "moving_rows": 15337,
+            "angle_deg": 5.58386754989624,
+            "goal_rms_mm": 13.398491777479649,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 0.9559460282325745,
+            "contact_average_precision": 0.9914684891700745
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.016409603878855705,
+            "pose_mean_mm": 20.663375034928322,
+            "moving_pose_mean_mm": 24.964135140180588,
+            "moving_rows": 3778,
+            "angle_deg": 6.41237211227417,
+            "goal_rms_mm": 16.468333080410957,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9340260028839111,
+            "contact_average_precision": 0.977628767490387
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.016481148079037666,
+            "pose_mean_mm": 21.150710061192513,
+            "moving_pose_mean_mm": 25.82784928381443,
+            "moving_rows": 4761,
+            "angle_deg": 6.843473434448242,
+            "goal_rms_mm": 16.47062785923481,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9343724250793457,
+            "contact_average_precision": 0.9797572493553162
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.026747485622763634,
+            "pose_mean_mm": 28.825804591178894,
+            "moving_pose_mean_mm": 36.981407552957535,
+            "moving_rows": 4761,
+            "angle_deg": 7.192412376403809,
+            "goal_rms_mm": 23.042919114232063,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9171499609947205,
+            "contact_average_precision": 0.9664980173110962
+          }
+        },
+        "7200": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.004527515731751919,
+            "pose_mean_mm": 7.371585350483656,
+            "moving_pose_mean_mm": 8.015569299459457,
+            "moving_rows": 15337,
+            "angle_deg": 3.7368314266204834,
+            "goal_rms_mm": 6.14317599684,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 1.0,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.016897808760404587,
+            "pose_mean_mm": 18.980344757437706,
+            "moving_pose_mean_mm": 23.090478032827377,
+            "moving_rows": 3778,
+            "angle_deg": 5.506433010101318,
+            "goal_rms_mm": 17.53992959856987,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9311237931251526,
+            "contact_average_precision": 0.9748648405075073
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.01674584671854973,
+            "pose_mean_mm": 19.56767775118351,
+            "moving_pose_mean_mm": 24.103393778204918,
+            "moving_rows": 4761,
+            "angle_deg": 5.817197799682617,
+            "goal_rms_mm": 17.630157992243767,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9281632900238037,
+            "contact_average_precision": 0.9756404161453247
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.028674785047769547,
+            "pose_mean_mm": 28.016716241836548,
+            "moving_pose_mean_mm": 36.5203432738781,
+            "moving_rows": 4761,
+            "angle_deg": 6.3964924812316895,
+            "goal_rms_mm": 24.77913908660412,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9050554633140564,
+            "contact_average_precision": 0.9534069895744324
+          }
+        },
+        "20000": {
+          "fit": {
+            "windows": 9627,
+            "arm5_mse": 0.002304074354469776,
+            "pose_mean_mm": 2.0458162762224674,
+            "moving_pose_mean_mm": 1.9660454709082842,
+            "moving_rows": 15337,
+            "angle_deg": 2.503636121749878,
+            "goal_rms_mm": 1.420278218574822,
+            "contact_prevalence": 0.4105120897293091,
+            "contact_f1": 1.0,
+            "contact_average_precision": 1.0
+          },
+          "calibration": {
+            "windows": 2379,
+            "arm5_mse": 0.019868778064846992,
+            "pose_mean_mm": 22.396285086870193,
+            "moving_pose_mean_mm": 25.893928483128548,
+            "moving_rows": 3778,
+            "angle_deg": 5.588387966156006,
+            "goal_rms_mm": 19.25734058022499,
+            "contact_prevalence": 0.4073140025138855,
+            "contact_f1": 0.9265242218971252,
+            "contact_average_precision": 0.9675500392913818
+          },
+          "test": {
+            "windows": 2968,
+            "arm5_mse": 0.01967668905854225,
+            "pose_mean_mm": 23.003695532679558,
+            "moving_pose_mean_mm": 27.151569724082947,
+            "moving_rows": 4761,
+            "angle_deg": 6.234993934631348,
+            "goal_rms_mm": 19.446348771452904,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.9237046241760254,
+            "contact_average_precision": 0.9558855295181274
+          },
+          "swapped_cameras": {
+            "windows": 2968,
+            "arm5_mse": 0.03297924995422363,
+            "pose_mean_mm": 31.537387520074844,
+            "moving_pose_mean_mm": 39.37625512480736,
+            "moving_rows": 4761,
+            "angle_deg": 6.933013439178467,
+            "goal_rms_mm": 26.564277708530426,
+            "contact_prevalence": 0.4150943160057068,
+            "contact_f1": 0.8967795372009277,
+            "contact_average_precision": 0.9403514266014099
+          }
+        }
+      }
+    }
+  },
+  "decomposition": {
+    "object": {
+      "1800-1": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            126.88469696044922,
+            -15.645862579345703,
+            -46.173030853271484,
+            -64.80973815917969
+          ],
+          [
+            -15.645862579345703,
+            769.6021728515625,
+            -42.181819915771484,
+            -493.9173278808594
+          ],
+          [
+            -46.173030853271484,
+            -42.181819915771484,
+            1837.533203125,
+            -1694.85693359375
+          ],
+          [
+            -64.80973815917969,
+            -493.9173278808594,
+            -1694.85693359375,
+            2618.051025390625
+          ]
+        ],
+        "component_rms_mm": [
+          11.264310836791992,
+          27.7417049407959,
+          42.866458892822266,
+          51.166893005371094
+        ],
+        "endpoint_rms_mm": 25.236910209059715,
+        "true_frames_only_rms_mm": 47.64091223478317,
+        "true_anchor_only_rms_mm": 27.62741781771183,
+        "true_frames_and_anchor_rms_mm": 51.166895776987076,
+        "invalid_slot_weight": 4.190578329144046e-05
+      },
+      "1800-42": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            100.84724426269531,
+            -16.362272262573242,
+            -45.47161102294922,
+            -46.7811164855957
+          ],
+          [
+            -16.362272262573242,
+            742.8883666992188,
+            -0.11214027553796768,
+            -542.4215087890625
+          ],
+          [
+            -45.47161102294922,
+            -0.11214027553796768,
+            1325.0601806640625,
+            -1198.663330078125
+          ],
+          [
+            -46.7811164855957,
+            -542.4215087890625,
+            -1198.663330078125,
+            2120.01318359375
+          ]
+        ],
+        "component_rms_mm": [
+          10.042272567749023,
+          27.255977630615234,
+          36.40137481689453,
+          46.043601989746094
+        ],
+        "endpoint_rms_mm": 24.273138493299484,
+        "true_frames_only_rms_mm": 43.710652738809586,
+        "true_anchor_only_rms_mm": 26.562528684735298,
+        "true_frames_and_anchor_rms_mm": 46.043600887060165,
+        "invalid_slot_weight": 7.894178270362318e-05
+      },
+      "7200-1": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            33.35051345825195,
+            -7.5624542236328125,
+            -19.525964736938477,
+            1.981880784034729
+          ],
+          [
+            -7.5624542236328125,
+            579.2350463867188,
+            -5.556426048278809,
+            -415.9403076171875
+          ],
+          [
+            -19.525964736938477,
+            -5.556426048278809,
+            906.0758056640625,
+            -844.5986938476562
+          ],
+          [
+            1.981880784034729,
+            -415.9403076171875,
+            -844.5986938476562,
+            1600.9022216796875
+          ]
+        ],
+        "component_rms_mm": [
+          5.774990558624268,
+          24.067302703857422,
+          30.101093292236328,
+          40.01127624511719
+        ],
+        "endpoint_rms_mm": 23.17669987678528,
+        "true_frames_only_rms_mm": 39.17925804853439,
+        "true_anchor_only_rms_mm": 23.53767305612564,
+        "true_frames_and_anchor_rms_mm": 40.011271834373474,
+        "invalid_slot_weight": 4.518751666182652e-07
+      },
+      "7200-42": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            40.90056228637695,
+            -8.312917709350586,
+            -29.252721786499023,
+            6.752376556396484
+          ],
+          [
+            -8.312917709350586,
+            584.6049194335938,
+            10.282754898071289,
+            -446.0777893066406
+          ],
+          [
+            -29.252721786499023,
+            10.282754898071289,
+            878.8020629882812,
+            -816.4794311523438
+          ],
+          [
+            6.752376556396484,
+            -446.0777893066406,
+            -816.4794311523438,
+            1575.6055908203125
+          ]
+        ],
+        "component_rms_mm": [
+          6.395354747772217,
+          24.178604125976562,
+          29.644596099853516,
+          39.69389724731445
+        ],
+        "endpoint_rms_mm": 22.66578935086727,
+        "true_frames_only_rms_mm": 38.81073370575905,
+        "true_anchor_only_rms_mm": 23.118477314710617,
+        "true_frames_and_anchor_rms_mm": 39.69389572739601,
+        "invalid_slot_weight": 1.5375608199974522e-06
+      },
+      "20000-1": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            39.963844299316406,
+            -6.758382797241211,
+            -22.167192459106445,
+            3.998772621154785
+          ],
+          [
+            -6.758382797241211,
+            568.8079223632812,
+            -5.980941295623779,
+            -417.4862976074219
+          ],
+          [
+            -22.167192459106445,
+            -5.980941295623779,
+            848.3156127929688,
+            -779.4191284179688
+          ],
+          [
+            3.998772621154785,
+            -417.4862976074219,
+            -779.4191284179688,
+            1610.5302734375
+          ]
+        ],
+        "component_rms_mm": [
+          6.3216962814331055,
+          23.849695205688477,
+          29.125858306884766,
+          40.131412506103516
+        ],
+        "endpoint_rms_mm": 24.738457053899765,
+        "true_frames_only_rms_mm": 39.469704031944275,
+        "true_anchor_only_rms_mm": 24.937542155385017,
+        "true_frames_and_anchor_rms_mm": 40.13141244649887,
+        "invalid_slot_weight": 1.1133992394718462e-08
+      },
+      "20000-42": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            45.26715087890625,
+            -10.475822448730469,
+            -24.30387306213379,
+            6.423525333404541
+          ],
+          [
+            -10.475822448730469,
+            599.6864624023438,
+            5.907712936401367,
+            -445.4548034667969
+          ],
+          [
+            -24.30387306213379,
+            5.907712936401367,
+            847.1070556640625,
+            -784.3307495117188
+          ],
+          [
+            6.423525333404541,
+            -445.4548034667969,
+            -784.3307495117188,
+            1612.9888916015625
+          ]
+        ],
+        "component_rms_mm": [
+          6.728086948394775,
+          24.488496780395508,
+          29.105104446411133,
+          40.16203308105469
+        ],
+        "endpoint_rms_mm": 24.506768211722374,
+        "true_frames_only_rms_mm": 39.387039840221405,
+        "true_anchor_only_rms_mm": 24.739177897572517,
+        "true_frames_and_anchor_rms_mm": 40.16203433275223,
+        "invalid_slot_weight": 1.088310153107841e-08
+      }
+    },
+    "consistent": {
+      "1800-1": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            625.9993286132812,
+            -68.71150207519531,
+            -194.94032287597656,
+            -402.28594970703125
+          ],
+          [
+            -68.71150207519531,
+            665.3945922851562,
+            -24.109872817993164,
+            -371.5458679199219
+          ],
+          [
+            -194.94032287597656,
+            -24.109872817993164,
+            920.4036865234375,
+            -640.8690185546875
+          ],
+          [
+            -402.28594970703125,
+            -371.5458679199219,
+            -640.8690185546875,
+            1831.4305419921875
+          ]
+        ],
+        "component_rms_mm": [
+          25.01997947692871,
+          25.795244216918945,
+          30.33815574645996,
+          42.79521560668945
+        ],
+        "endpoint_rms_mm": 25.26465430855751,
+        "true_frames_only_rms_mm": 29.697993770241737,
+        "true_anchor_only_rms_mm": 36.66304424405098,
+        "true_frames_and_anchor_rms_mm": 42.79521852731705,
+        "invalid_slot_weight": 0.010259014554321766
+      },
+      "1800-42": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            598.1777954101562,
+            -66.1724624633789,
+            -181.98037719726562,
+            -361.4059753417969
+          ],
+          [
+            -66.1724624633789,
+            709.0642700195312,
+            -34.08842468261719,
+            -376.0907897949219
+          ],
+          [
+            -181.98037719726562,
+            -34.08842468261719,
+            901.0255737304688,
+            -625.6701049804688
+          ],
+          [
+            -361.4059753417969,
+            -376.0907897949219,
+            -625.6701049804688,
+            1717.479736328125
+          ]
+        ],
+        "component_rms_mm": [
+          24.457674026489258,
+          26.62826156616211,
+          30.017087936401367,
+          41.44248580932617
+        ],
+        "endpoint_rms_mm": 25.197844952344894,
+        "true_frames_only_rms_mm": 29.00906652212143,
+        "true_anchor_only_rms_mm": 35.43826937675476,
+        "true_frames_and_anchor_rms_mm": 41.44248738884926,
+        "invalid_slot_weight": 0.009366268292069435
+      },
+      "7200-1": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            59.75975036621094,
+            -15.560253143310547,
+            -40.58186340332031,
+            0.10281575471162796
+          ],
+          [
+            -15.560253143310547,
+            541.8693237304688,
+            -0.32845062017440796,
+            -363.3367614746094
+          ],
+          [
+            -40.58186340332031,
+            -0.32845062017440796,
+            831.7850952148438,
+            -720.5714111328125
+          ],
+          [
+            0.10281575471162796,
+            -363.3367614746094,
+            -720.5714111328125,
+            1468.7265625
+          ]
+        ],
+        "component_rms_mm": [
+          7.730443000793457,
+          23.278087615966797,
+          28.84068489074707,
+          38.32396697998047
+        ],
+        "endpoint_rms_mm": 24.931689724326134,
+        "true_frames_only_rms_mm": 36.661144345998764,
+        "true_anchor_only_rms_mm": 25.959735736250877,
+        "true_frames_and_anchor_rms_mm": 38.32396864891052,
+        "invalid_slot_weight": 0.0009760119137354195
+      },
+      "7200-42": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            61.057655334472656,
+            -20.89991569519043,
+            -24.64307975769043,
+            -12.038629531860352
+          ],
+          [
+            -20.89991569519043,
+            598.20654296875,
+            -11.19596004486084,
+            -364.9303283691406
+          ],
+          [
+            -24.64307975769043,
+            -11.19596004486084,
+            794.0035400390625,
+            -701.6907958984375
+          ],
+          [
+            -12.038629531860352,
+            -364.9303283691406,
+            -701.6907958984375,
+            1468.8409423828125
+          ]
+        ],
+        "component_rms_mm": [
+          7.813939571380615,
+          24.458261489868164,
+          28.178068161010742,
+          38.325462341308594
+        ],
+        "endpoint_rms_mm": 25.52080899477005,
+        "true_frames_only_rms_mm": 36.58928722143173,
+        "true_anchor_only_rms_mm": 26.55969187617302,
+        "true_frames_and_anchor_rms_mm": 38.32545876502991,
+        "invalid_slot_weight": 0.0007957664201967418
+      },
+      "20000-1": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            45.816368103027344,
+            -9.402604103088379,
+            -23.060388565063477,
+            -4.902828216552734
+          ],
+          [
+            -9.402604103088379,
+            570.7528076171875,
+            8.943620681762695,
+            -387.04034423828125
+          ],
+          [
+            -23.060388565063477,
+            8.943620681762695,
+            842.2919921875,
+            -732.9080810546875
+          ],
+          [
+            -4.902828216552734,
+            -387.04034423828125,
+            -732.9080810546875,
+            1551.259033203125
+          ]
+        ],
+        "component_rms_mm": [
+          6.7687788009643555,
+          23.89043426513672,
+          29.022266387939453,
+          39.386024475097656
+        ],
+        "endpoint_rms_mm": 26.709144935011864,
+        "true_frames_only_rms_mm": 38.838330656290054,
+        "true_anchor_only_rms_mm": 27.245067059993744,
+        "true_frames_and_anchor_rms_mm": 39.386022835969925,
+        "invalid_slot_weight": 0.00011514605284901336
+      },
+      "20000-42": {
+        "terms": [
+          "association",
+          "translation",
+          "rotation",
+          "local_offset"
+        ],
+        "gram_mm2": [
+          [
+            53.658138275146484,
+            -13.456255912780762,
+            -24.165956497192383,
+            -2.428821325302124
+          ],
+          [
+            -13.456255912780762,
+            610.1403198242188,
+            -5.498345375061035,
+            -381.9029235839844
+          ],
+          [
+            -24.165956497192383,
+            -5.498345375061035,
+            811.9566650390625,
+            -714.16064453125
+          ],
+          [
+            -2.428821325302124,
+            -381.9029235839844,
+            -714.16064453125,
+            1543.8228759765625
+          ]
+        ],
+        "component_rms_mm": [
+          7.32517147064209,
+          24.701019287109375,
+          28.494853973388672,
+          39.29151153564453
+        ],
+        "endpoint_rms_mm": 27.1358173340559,
+        "true_frames_only_rms_mm": 38.45628350973129,
+        "true_anchor_only_rms_mm": 27.6187714189291,
+        "true_frames_and_anchor_rms_mm": 39.291512221097946,
+        "invalid_slot_weight": 4.359978902357398e-06
+      }
+    }
+  },
+  "gate_projection": {
+    "world": {
+      "1": {
+        "windows": 2968,
+        "rms_mm": {
+          "constant": 19.296009093523026,
+          "contact": 19.28069069981575,
+          "entity_contact": 19.29529383778572,
+          "hindsight": 18.06432567536831
+        },
+        "expert_disagreement_rms_mm": 7.5530968606472015,
+        "interior_optimum_fraction": 0.20451481640338898
+      },
+      "42": {
+        "windows": 2968,
+        "rms_mm": {
+          "constant": 19.206944853067398,
+          "contact": 19.178668037056923,
+          "entity_contact": 19.18124221265316,
+          "hindsight": 17.91110262274742
+        },
+        "expert_disagreement_rms_mm": 7.5606186874210835,
+        "interior_optimum_fraction": 0.2001347690820694
+      }
+    },
+    "object": {
+      "1": {
+        "windows": 2968,
+        "rms_mm": {
+          "constant": 18.4332225471735,
+          "contact": 18.421506509184837,
+          "entity_contact": 18.43906380236149,
+          "hindsight": 16.051460057497025
+        },
+        "expert_disagreement_rms_mm": 20.953621715307236,
+        "interior_optimum_fraction": 0.5357142686843872
+      },
+      "42": {
+        "windows": 2968,
+        "rms_mm": {
+          "constant": 18.446942791342735,
+          "contact": 18.408162519335747,
+          "entity_contact": 18.416225910186768,
+          "hindsight": 15.997715294361115
+        },
+        "expert_disagreement_rms_mm": 21.075917407870293,
+        "interior_optimum_fraction": 0.5427897572517395
+      }
+    },
+    "consistent": {
+      "1": {
+        "windows": 2968,
+        "rms_mm": {
+          "constant": 18.514489755034447,
+          "contact": 18.491806462407112,
+          "entity_contact": 18.501024693250656,
+          "hindsight": 16.07912965118885
+        },
+        "expert_disagreement_rms_mm": 22.805770859122276,
+        "interior_optimum_fraction": 0.5421158671379089
+      },
+      "42": {
+        "windows": 2968,
+        "rms_mm": {
+          "constant": 18.90670508146286,
+          "contact": 18.899034708738327,
+          "entity_contact": 18.905356526374817,
+          "hindsight": 16.53958112001419
+        },
+        "expert_disagreement_rms_mm": 23.094704374670982,
+        "interior_optimum_fraction": 0.5485175251960754
+      }
+    }
+  },
+  "rollouts": 2720,
+  "distinct_task_states": 40
+}
