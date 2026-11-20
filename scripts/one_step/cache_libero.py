@@ -8,6 +8,7 @@ import numpy as np
 import torch
 from transformers import Qwen2VLImageProcessor
 
+from lerobot.policies.demonstration_chunk.observed_control import encode_rgb_batch
 from lerobot.policies.groot.modeling_groot import GrootPolicy
 
 TASKS = ("KITCHEN_SCENE3_", "KITCHEN_SCENE4_", "STUDY_SCENE1_")
@@ -22,12 +23,7 @@ def encode_views(obs, starts, visual, processor):
         tokens = []
         for first in range(0, len(images), 16):
             batch = torch.from_numpy(images[first : first + 16].copy()).permute(0, 3, 1, 2)
-            pixels = processor(images=list(batch), return_tensors="pt", do_resize=False)
-            grid = pixels["image_grid_thw"].to("cuda")
-            encoded = visual(pixels["pixel_values"].to("cuda", dtype=torch.bfloat16), grid_thw=grid)
-            # Each 128x128 frame yields 4x4 merged tokens. Keep four spatial quadrants.
-            quadrants = encoded.pooler_output.reshape(len(batch), 2, 2, 2, 2, -1).float().mean((2, 4))
-            tokens.append(quadrants.flatten(1, 2).half().cpu())
+            tokens.append(encode_rgb_batch(batch, visual, processor).cpu())
         views.append(torch.cat(tokens))
     return torch.cat(views, dim=1)
 
