@@ -169,6 +169,8 @@ def main():
             "servo",
             "constant",
             "short",
+            "motion",
+            "events",
             "delayed",
             "mean_delayed",
             "random_delayed",
@@ -184,7 +186,11 @@ def main():
 
     suite = _get_suite("libero_10")
     manifest = json.loads((args.root / "object_constant.json").read_text())
-    switch_file = args.out / f"{args.mode}_switch.json" if args.mode in ("short", "delayed") else None
+    switch_file = (
+        args.out / f"{args.mode}_switch.json"
+        if args.mode in ("short", "delayed", "motion", "events")
+        else None
+    )
     policy = ObservedController.from_checkpoints(args.checkpoint, args.root, switch_file)
     if args.mode in ("direct", "collect", "sham", "servo"):
         policy.weight = float(args.mode == "servo")

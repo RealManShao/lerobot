@@ -9,10 +9,15 @@ from pathlib import Path
 import numpy as np
 
 
-def score(values):
+def score(values, source="combined"):
     # Spatial shaping contributes at most 0.25; positive values indicate better outcomes.
     success, predicates, distance = values.T
-    return success + predicates - 0.25 * distance / 0.4
+    motion = -0.25 * distance / 0.4
+    if source == "motion":
+        return motion
+    if source == "events":
+        return success + predicates
+    return success + predicates + motion
 
 
 def load(root, initial_states):
@@ -72,9 +77,14 @@ def main():
         "fit_states": list(range(16, 24)),
         "held_states": list(range(24, 28)),
     }
-    for h, name in enumerate(("short", "delayed")):
+    for name, h, source in (
+        ("short", 0, "combined"),
+        ("delayed", 1, "combined"),
+        ("motion", 1, "motion"),
+        ("events", 1, "events"),
+    ):
         x, a, b, groups, _ = tr
-        target = score(b[:, h]) - score(a[:, h])
+        target = score(b[:, h], source) - score(a[:, h], source)
         cv = {}
         for lam in (0.01, 0.1, 1.0, 10.0):
             pred = np.zeros(len(x))
@@ -87,7 +97,7 @@ def main():
         center, scale, coef, bias = pars
         x2, a2, b2, _, tasks = test
         held_pred = predict(pars, x2)
-        held_target = score(b2[:, h]) - score(a2[:, h])
+        held_target = score(b2[:, h], source) - score(a2[:, h], source)
         result[name] = {
             "mean": center.tolist(),
             "scale": scale.tolist(),
