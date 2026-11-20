@@ -27,6 +27,19 @@ DEVICE=cuda make test-end-to-end                      # All E2E tests
 pre-commit run --all-files                           # Lint + format (ruff, typos, bandit, etc.)
 ```
 
+## Remote GPU testing and training
+
+On Xihe's workstation, use the SSH alias `lerobot-gpu` for remote LeRobot runs. OpenSSH reads the connection settings from `~/.ssh/config`. To verify login and list the available GPUs from a new chat, run:
+
+```bash
+ssh -o BatchMode=yes -o ConnectTimeout=10 lerobot-gpu 'id -un && hostname && nvidia-smi -L'
+```
+
+The remote checkout is `/root/autodl-tmp/lerobot`. Run project commands there with
+`/root/autodl-tmp/lerobot-env/bin/uv run --no-sync` to reuse its Python 3.12 environment.
+LIBERO demonstrations are raw per-task HDF5 files under `/root/autodl-pub/datasets/libero`.
+The base GR00T checkpoint is `/root/autodl-pub/checkpoints/groot/n1.7-3b`.
+
 ## Architecture (`src/lerobot/`)
 
 - **`scripts/`** — CLI entry points (`lerobot-train`, `lerobot-eval`, `lerobot-record`, etc.), mapped in `pyproject.toml [project.scripts]`.
