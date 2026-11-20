@@ -1,0 +1,56 @@
+[
+  {
+    "task": "KITCHEN_SCENE3_",
+    "demo": 0,
+    "steps": 255,
+    "success": true
+  },
+  {
+    "task": "KITCHEN_SCENE3_",
+    "demo": 1,
+    "steps": 267,
+    "success": true
+  },
+  {
+    "task": "KITCHEN_SCENE3_",
+    "demo": 2,
+    "steps": 292,
+    "success": true
+  },
+  {
+    "task": "KITCHEN_SCENE4_",
+    "demo": 0,
+    "steps": 250,
+    "success": true
+  },
+  {
+    "task": "KITCHEN_SCENE4_",
+    "demo": 1,
+    "steps": 217,
+    "success": true
+  },
+  {
+    "task": "KITCHEN_SCENE4_",
+    "demo": 2,
+    "steps": 199,
+    "success": false
+  },
+  {
+    "task": "STUDY_SCENE1_",
+    "demo": 0,
+    "steps": 224,
+    "success": true
+  },
+  {
+    "task": "STUDY_SCENE1_",
+    "demo": 1,
+    "steps": 178,
+    "success": true
+  },
+  {
+    "task": "STUDY_SCENE1_",
+    "demo": 2,
+    "steps": 172,
+    "success": true
+  }
+]

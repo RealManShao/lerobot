@@ -1,0 +1,245 @@
+{
+  "variant": "switch_sampling",
+  "steps": 1000,
+  "torch": "2.11.0+cu128",
+  "train_windows": 2988,
+  "train_event_fraction": 0.4149933159351349,
+  "horizon": 40,
+  "batch_size": 128,
+  "layers": 4,
+  "width": 256,
+  "tf32": true,
+  "results": [
+    {
+      "seed": 1,
+      "tasks": [
+        {
+          "task": "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it_demo",
+          "validation_demos": [
+            "demo_28",
+            "demo_40",
+            "demo_7",
+            "demo_26",
+            "demo_31",
+            "demo_37",
+            "demo_49",
+            "demo_39",
+            "demo_4",
+            "demo_42"
+          ],
+          "windows": 289,
+          "arm_first5_mse": 0.04479960352182388,
+          "arm_last20_mse": 0.03632047772407532,
+          "arm_diff_mse": 0.0008524489239789546,
+          "gripper_accuracy": 0.8077854514122009,
+          "switch_f1": 0.02030456852791878,
+          "matched_events": 2,
+          "expert_events": 158,
+          "predicted_events": 39
+        },
+        {
+          "task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_demo",
+          "validation_demos": [
+            "demo_28",
+            "demo_40",
+            "demo_7",
+            "demo_26",
+            "demo_31",
+            "demo_37",
+            "demo_49",
+            "demo_39",
+            "demo_4",
+            "demo_42"
+          ],
+          "windows": 268,
+          "arm_first5_mse": 0.04280121251940727,
+          "arm_last20_mse": 0.04137670621275902,
+          "arm_diff_mse": 0.0009105931967496872,
+          "gripper_accuracy": 0.8782649040222168,
+          "switch_f1": 0.016129032258064516,
+          "matched_events": 1,
+          "expert_events": 99,
+          "predicted_events": 25
+        },
+        {
+          "task": "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_demo",
+          "validation_demos": [
+            "demo_28",
+            "demo_40",
+            "demo_7",
+            "demo_26",
+            "demo_31",
+            "demo_37",
+            "demo_49",
+            "demo_39",
+            "demo_4",
+            "demo_42"
+          ],
+          "windows": 189,
+          "arm_first5_mse": 0.04400503262877464,
+          "arm_last20_mse": 0.02859075553715229,
+          "arm_diff_mse": 0.0006843239534646273,
+          "gripper_accuracy": 0.9351851940155029,
+          "switch_f1": 0.0,
+          "matched_events": 0,
+          "expert_events": 51,
+          "predicted_events": 13
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "tasks": [
+        {
+          "task": "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it_demo",
+          "validation_demos": [
+            "demo_28",
+            "demo_40",
+            "demo_7",
+            "demo_26",
+            "demo_31",
+            "demo_37",
+            "demo_49",
+            "demo_39",
+            "demo_4",
+            "demo_42"
+          ],
+          "windows": 289,
+          "arm_first5_mse": 0.04919584095478058,
+          "arm_last20_mse": 0.035859230905771255,
+          "arm_diff_mse": 0.000856894941534847,
+          "gripper_accuracy": 0.80873703956604,
+          "switch_f1": 0.03292181069958848,
+          "matched_events": 4,
+          "expert_events": 158,
+          "predicted_events": 85
+        },
+        {
+          "task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_demo",
+          "validation_demos": [
+            "demo_28",
+            "demo_40",
+            "demo_7",
+            "demo_26",
+            "demo_31",
+            "demo_37",
+            "demo_49",
+            "demo_39",
+            "demo_4",
+            "demo_42"
+          ],
+          "windows": 268,
+          "arm_first5_mse": 0.04506450518965721,
+          "arm_last20_mse": 0.039316847920417786,
+          "arm_diff_mse": 0.0009146304219029844,
+          "gripper_accuracy": 0.8705223798751831,
+          "switch_f1": 0.037037037037037035,
+          "matched_events": 3,
+          "expert_events": 99,
+          "predicted_events": 63
+        },
+        {
+          "task": "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_demo",
+          "validation_demos": [
+            "demo_28",
+            "demo_40",
+            "demo_7",
+            "demo_26",
+            "demo_31",
+            "demo_37",
+            "demo_49",
+            "demo_39",
+            "demo_4",
+            "demo_42"
+          ],
+          "windows": 189,
+          "arm_first5_mse": 0.04930371418595314,
+          "arm_last20_mse": 0.026723744347691536,
+          "arm_diff_mse": 0.0006886616465635598,
+          "gripper_accuracy": 0.9443121552467346,
+          "switch_f1": 0.136986301369863,
+          "matched_events": 5,
+          "expert_events": 51,
+          "predicted_events": 22
+        }
+      ]
+    },
+    {
+      "seed": 1000,
+      "tasks": [
+        {
+          "task": "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it_demo",
+          "validation_demos": [
+            "demo_28",
+            "demo_40",
+            "demo_7",
+            "demo_26",
+            "demo_31",
+            "demo_37",
+            "demo_49",
+            "demo_39",
+            "demo_4",
+            "demo_42"
+          ],
+          "windows": 289,
+          "arm_first5_mse": 0.044872984290122986,
+          "arm_last20_mse": 0.036711812019348145,
+          "arm_diff_mse": 0.0008487606537528336,
+          "gripper_accuracy": 0.804844319820404,
+          "switch_f1": 0.03278688524590164,
+          "matched_events": 3,
+          "expert_events": 158,
+          "predicted_events": 25
+        },
+        {
+          "task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_demo",
+          "validation_demos": [
+            "demo_28",
+            "demo_40",
+            "demo_7",
+            "demo_26",
+            "demo_31",
+            "demo_37",
+            "demo_49",
+            "demo_39",
+            "demo_4",
+            "demo_42"
+          ],
+          "windows": 268,
+          "arm_first5_mse": 0.04359860718250275,
+          "arm_last20_mse": 0.04316702485084534,
+          "arm_diff_mse": 0.0009100773022510111,
+          "gripper_accuracy": 0.8694030046463013,
+          "switch_f1": 0.0,
+          "matched_events": 0,
+          "expert_events": 99,
+          "predicted_events": 25
+        },
+        {
+          "task": "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_demo",
+          "validation_demos": [
+            "demo_28",
+            "demo_40",
+            "demo_7",
+            "demo_26",
+            "demo_31",
+            "demo_37",
+            "demo_49",
+            "demo_39",
+            "demo_4",
+            "demo_42"
+          ],
+          "windows": 189,
+          "arm_first5_mse": 0.041209448128938675,
+          "arm_last20_mse": 0.029027583077549934,
+          "arm_diff_mse": 0.0006819621776230633,
+          "gripper_accuracy": 0.9232804179191589,
+          "switch_f1": 0.03389830508474576,
+          "matched_events": 1,
+          "expert_events": 51,
+          "predicted_events": 8
+        }
+      ]
+    }
+  ]
+}

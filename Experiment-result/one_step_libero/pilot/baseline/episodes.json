@@ -1,0 +1,127 @@
+{
+  "variant": "baseline",
+  "seed": 1,
+  "K": 5,
+  "H": 40,
+  "calibration": {
+    "KITCHEN_SCENE3_": {
+      "flips": [
+        0,
+        0
+      ],
+      "rgb_mae_0_255": [
+        1.9259440104166667,
+        8.41556125217014
+      ],
+      "max_state_abs_diff": 0.02644695469124883
+    },
+    "KITCHEN_SCENE4_": {
+      "flips": [
+        0,
+        0
+      ],
+      "rgb_mae_0_255": [
+        6.304850260416666,
+        6.410732693142361
+      ],
+      "max_state_abs_diff": 0.03677610404431375
+    },
+    "STUDY_SCENE1_": {
+      "flips": [
+        0,
+        0
+      ],
+      "rgb_mae_0_255": [
+        2.248006184895833,
+        5.447041829427083
+      ],
+      "max_state_abs_diff": 0.027929664629536943
+    }
+  },
+  "episodes": [
+    {
+      "task": "KITCHEN_SCENE3_",
+      "initial_state": 0,
+      "fingerprint": "f7d7466177e0b9b4ce3812f09dc77019f730a644d3aec42d25b658573a3bb22c",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE3_",
+      "initial_state": 1,
+      "fingerprint": "0a1cce715f0316ae4ad0815cfdc58bd13cea55d35c5bd02300bfb50066a95a37",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE3_",
+      "initial_state": 2,
+      "fingerprint": "4541778bcdf4ad2c844450a21b4c16df06e6377345be3f6eeafbb9df404f8400",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE3_",
+      "initial_state": 3,
+      "fingerprint": "46f2be07c482e85cdce4e51c0f16464761a1fafb95257499f26db6d17c79e1d6",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE4_",
+      "initial_state": 0,
+      "fingerprint": "b032c8d849e3add8aa924275c42072770d696723b2bf7070983c8360465e9c8f",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE4_",
+      "initial_state": 1,
+      "fingerprint": "25391853b301a20e9426bacdcbb2e0ada8726a03bce3f248039e78ad7d83b447",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE4_",
+      "initial_state": 2,
+      "fingerprint": "88d81e5995cec808b50127c369f89d24d63845b9c06e133a15929084c9e6bf28",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE4_",
+      "initial_state": 3,
+      "fingerprint": "5722a82566f7267a669d53a45581916d7367018fe36010bde32cc9fe2b13f5e1",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "STUDY_SCENE1_",
+      "initial_state": 0,
+      "fingerprint": "47bd0abfcc33dc1825895884d5f78f5af1a7cd375535ac060e3b405f77ff238a",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "STUDY_SCENE1_",
+      "initial_state": 1,
+      "fingerprint": "8c83bfeb389c4de1b27c0466c16c755eaf3f86d07bf01722a6f50a07ec79eeb1",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "STUDY_SCENE1_",
+      "initial_state": 2,
+      "fingerprint": "bb990dcc76fe8a410b8aff1a6818e26b24d109a80f419f1b6bdc65e2c9851794",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "STUDY_SCENE1_",
+      "initial_state": 3,
+      "fingerprint": "9c17d09a49ba3bf261d38f7c30dc7ac6fccb181aa485c7efb59003be9597af81",
+      "steps": 520,
+      "success": false
+    }
+  ]
+}

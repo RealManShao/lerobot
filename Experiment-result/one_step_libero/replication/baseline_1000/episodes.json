@@ -1,0 +1,169 @@
+{
+  "variant": "baseline",
+  "seed": 1000,
+  "K": 5,
+  "H": 40,
+  "calibration": {
+    "KITCHEN_SCENE3_": {
+      "flips": [
+        0,
+        0
+      ],
+      "rgb_mae_0_255": [
+        1.9259440104166667,
+        8.41556125217014
+      ],
+      "max_state_abs_diff": 0.02644695469124883
+    },
+    "KITCHEN_SCENE4_": {
+      "flips": [
+        0,
+        0
+      ],
+      "rgb_mae_0_255": [
+        6.304850260416666,
+        6.410732693142361
+      ],
+      "max_state_abs_diff": 0.03677610404431375
+    },
+    "STUDY_SCENE1_": {
+      "flips": [
+        0,
+        0
+      ],
+      "rgb_mae_0_255": [
+        2.248006184895833,
+        5.447041829427083
+      ],
+      "max_state_abs_diff": 0.027929664629536943
+    }
+  },
+  "episodes": [
+    {
+      "task": "KITCHEN_SCENE3_",
+      "initial_state": 4,
+      "fingerprint": "e5a85ed65a97bd64f0c0c659b3255dbf44ec9d12395fa8459416ffe14b1ef99f",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE3_",
+      "initial_state": 5,
+      "fingerprint": "77a659f766641701d13271ed736f6b94ebeecd12117fc7704cc36ef3d1d5f731",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE3_",
+      "initial_state": 6,
+      "fingerprint": "4e11bec9c4ae8854d0465fc29e0a6f9e9d60cebc813df7702b54b47246f72be1",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE3_",
+      "initial_state": 7,
+      "fingerprint": "e4ce9b374be1eaab3e927b43db4e8db83d4b50f37637eb1873833defea026361",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE3_",
+      "initial_state": 8,
+      "fingerprint": "d0672502e116a99b54003f7d3bfe97c21765ea6be7980831967555e010ebcdd3",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE3_",
+      "initial_state": 9,
+      "fingerprint": "5e64ed5e212ee043ab61fe1b0417336cee49b71ae62c8414f86bb264cd452749",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE4_",
+      "initial_state": 4,
+      "fingerprint": "c16a51a8a99eef964db50e20e3afe849181306fb781c963a9643aafbbf8f45c7",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE4_",
+      "initial_state": 5,
+      "fingerprint": "f1804581e8f0d8d9b735ace2c33cbbab27b148fb0b3719d5c703574562326214",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE4_",
+      "initial_state": 6,
+      "fingerprint": "37c673ae20a8ecfd6046ddce954648e981c010aad7492615f25ad19d7246636b",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE4_",
+      "initial_state": 7,
+      "fingerprint": "e6b9c4edf55f8affd5aec09997d950ba3a514133e70d72a914213a5c4e83ff60",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE4_",
+      "initial_state": 8,
+      "fingerprint": "831882d20658d8ad5c421b7f1c413ad4d550055b489acf595015c576d1dfe66f",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "KITCHEN_SCENE4_",
+      "initial_state": 9,
+      "fingerprint": "6f7f978222084652c52c982fd231113b817c94cea5042ca174038523260bd20d",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "STUDY_SCENE1_",
+      "initial_state": 4,
+      "fingerprint": "7ef67e09398d10adbfed34aa69359cee83e3e3cb4467d4e7a0fd213b80549f24",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "STUDY_SCENE1_",
+      "initial_state": 5,
+      "fingerprint": "765230df537b407fbb6e198e1ed30e205628d27b7a8703e1b72dd3f3b139851e",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "STUDY_SCENE1_",
+      "initial_state": 6,
+      "fingerprint": "308ac44bec75e4ac7402d83e476e561173513f7cc830f8cae837e4a9e5754663",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "STUDY_SCENE1_",
+      "initial_state": 7,
+      "fingerprint": "0afd006941e57ce72624222a889318d7ddeb337bced99a2fe12b749d530b20c2",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "STUDY_SCENE1_",
+      "initial_state": 8,
+      "fingerprint": "665d362194fe435cc991f71a66c4f090027ca6ea1b355cf2851c7350be7e67ec",
+      "steps": 520,
+      "success": false
+    },
+    {
+      "task": "STUDY_SCENE1_",
+      "initial_state": 9,
+      "fingerprint": "d4364231561beaa1ad7f9a67452ac8b523e915af73e1cd15e57a132c70e2f3b6",
+      "steps": 520,
+      "success": false
+    }
+  ]
+}
