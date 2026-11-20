@@ -57,7 +57,10 @@ class ObservedController:
         from .visual_geometry import VisualGeometryHead
 
         root = Path(head_directory)
-        run = json.loads((root / "object_constant.json").read_text())
+        manifest = root / "observed_head.json"
+        if not manifest.is_file():
+            manifest = root / "object_constant.json"
+        run = json.loads(manifest.read_text())
         weights = root / run["weights"]
         head = VisualGeometryHead(**run["model"]).to(device)
         head.load_state_dict(torch.load(weights, map_location=device, weights_only=True))
