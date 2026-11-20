@@ -1,0 +1,310 @@
+{
+  "task": "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it_demo.hdf5",
+  "torch": "2.11.0+cu128",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "steps": 300,
+  "train_demos": [
+    "demo_32",
+    "demo_45",
+    "demo_30",
+    "demo_46",
+    "demo_3",
+    "demo_18",
+    "demo_36",
+    "demo_6",
+    "demo_12",
+    "demo_9",
+    "demo_5",
+    "demo_38",
+    "demo_8",
+    "demo_43",
+    "demo_17",
+    "demo_16",
+    "demo_19",
+    "demo_11",
+    "demo_25",
+    "demo_47",
+    "demo_10",
+    "demo_35",
+    "demo_29",
+    "demo_2",
+    "demo_44",
+    "demo_48",
+    "demo_21",
+    "demo_22",
+    "demo_1",
+    "demo_27",
+    "demo_0",
+    "demo_33",
+    "demo_24",
+    "demo_20",
+    "demo_13",
+    "demo_34",
+    "demo_15",
+    "demo_14",
+    "demo_23",
+    "demo_41"
+  ],
+  "test_demos": [
+    "demo_28",
+    "demo_40",
+    "demo_7",
+    "demo_26",
+    "demo_31",
+    "demo_37",
+    "demo_49",
+    "demo_39",
+    "demo_4",
+    "demo_42"
+  ],
+  "train_windows": 1154,
+  "test_windows": 289,
+  "results": [
+    {
+      "seed": 1,
+      "variant": "original",
+      "metrics": [
+        {
+          "length": 0,
+          "noisy": false,
+          "first_arm_mse": 0.07403720915317535,
+          "first_gripper_mse": 0.7301099300384521,
+          "suffix_arm_mse": 0.048353202641010284
+        },
+        {
+          "length": 5,
+          "noisy": false,
+          "first_arm_mse": 0.06908604502677917,
+          "first_gripper_mse": 0.6136573553085327,
+          "suffix_arm_mse": 0.04530449956655502
+        },
+        {
+          "length": 5,
+          "noisy": true,
+          "first_arm_mse": 0.06908777356147766,
+          "first_gripper_mse": 0.6137010455131531,
+          "suffix_arm_mse": 0.045305248349905014
+        },
+        {
+          "length": 20,
+          "noisy": false,
+          "first_arm_mse": 0.04161453992128372,
+          "first_gripper_mse": 0.37268635630607605,
+          "suffix_arm_mse": 0.04044130817055702
+        },
+        {
+          "length": 20,
+          "noisy": true,
+          "first_arm_mse": 0.041614122688770294,
+          "first_gripper_mse": 0.3726919889450073,
+          "suffix_arm_mse": 0.040440142154693604
+        }
+      ]
+    },
+    {
+      "seed": 1,
+      "variant": "action_only",
+      "metrics": [
+        {
+          "length": 0,
+          "noisy": false,
+          "first_arm_mse": 0.07402825355529785,
+          "first_gripper_mse": 0.729880690574646,
+          "suffix_arm_mse": 0.04835785552859306
+        },
+        {
+          "length": 5,
+          "noisy": false,
+          "first_arm_mse": 0.06908925622701645,
+          "first_gripper_mse": 0.613451361656189,
+          "suffix_arm_mse": 0.04531372711062431
+        },
+        {
+          "length": 5,
+          "noisy": true,
+          "first_arm_mse": 0.06909099221229553,
+          "first_gripper_mse": 0.6134951114654541,
+          "suffix_arm_mse": 0.0453144796192646
+        },
+        {
+          "length": 20,
+          "noisy": false,
+          "first_arm_mse": 0.04163558781147003,
+          "first_gripper_mse": 0.3726324141025543,
+          "suffix_arm_mse": 0.04045611247420311
+        },
+        {
+          "length": 20,
+          "noisy": true,
+          "first_arm_mse": 0.04163516312837601,
+          "first_gripper_mse": 0.372638076543808,
+          "suffix_arm_mse": 0.04045494645833969
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "variant": "original",
+      "metrics": [
+        {
+          "length": 0,
+          "noisy": false,
+          "first_arm_mse": 0.066046342253685,
+          "first_gripper_mse": 0.6695238947868347,
+          "suffix_arm_mse": 0.04414299130439758
+        },
+        {
+          "length": 5,
+          "noisy": false,
+          "first_arm_mse": 0.05552539601922035,
+          "first_gripper_mse": 0.6108690500259399,
+          "suffix_arm_mse": 0.04537434130907059
+        },
+        {
+          "length": 5,
+          "noisy": true,
+          "first_arm_mse": 0.05552526190876961,
+          "first_gripper_mse": 0.6108835935592651,
+          "suffix_arm_mse": 0.04537484049797058
+        },
+        {
+          "length": 20,
+          "noisy": false,
+          "first_arm_mse": 0.03642546758055687,
+          "first_gripper_mse": 0.4161915183067322,
+          "suffix_arm_mse": 0.03846999630331993
+        },
+        {
+          "length": 20,
+          "noisy": true,
+          "first_arm_mse": 0.03642681613564491,
+          "first_gripper_mse": 0.41621971130371094,
+          "suffix_arm_mse": 0.03847183659672737
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "variant": "action_only",
+      "metrics": [
+        {
+          "length": 0,
+          "noisy": false,
+          "first_arm_mse": 0.06604243069887161,
+          "first_gripper_mse": 0.6694466471672058,
+          "suffix_arm_mse": 0.04414542019367218
+        },
+        {
+          "length": 5,
+          "noisy": false,
+          "first_arm_mse": 0.055524926632642746,
+          "first_gripper_mse": 0.6107879877090454,
+          "suffix_arm_mse": 0.04537004232406616
+        },
+        {
+          "length": 5,
+          "noisy": true,
+          "first_arm_mse": 0.0555247962474823,
+          "first_gripper_mse": 0.6108025312423706,
+          "suffix_arm_mse": 0.04537053778767586
+        },
+        {
+          "length": 20,
+          "noisy": false,
+          "first_arm_mse": 0.036424487829208374,
+          "first_gripper_mse": 0.4161864221096039,
+          "suffix_arm_mse": 0.038468245416879654
+        },
+        {
+          "length": 20,
+          "noisy": true,
+          "first_arm_mse": 0.03642583638429642,
+          "first_gripper_mse": 0.41621464490890503,
+          "suffix_arm_mse": 0.03847008943557739
+        }
+      ]
+    },
+    {
+      "seed": 1000,
+      "variant": "original",
+      "metrics": [
+        {
+          "length": 0,
+          "noisy": false,
+          "first_arm_mse": 0.0677919089794159,
+          "first_gripper_mse": 0.7528668642044067,
+          "suffix_arm_mse": 0.04622974991798401
+        },
+        {
+          "length": 5,
+          "noisy": false,
+          "first_arm_mse": 0.06708529591560364,
+          "first_gripper_mse": 0.5938817262649536,
+          "suffix_arm_mse": 0.0485428161919117
+        },
+        {
+          "length": 5,
+          "noisy": true,
+          "first_arm_mse": 0.06708531826734543,
+          "first_gripper_mse": 0.5939003825187683,
+          "suffix_arm_mse": 0.04854279011487961
+        },
+        {
+          "length": 20,
+          "noisy": false,
+          "first_arm_mse": 0.03843234106898308,
+          "first_gripper_mse": 0.4934110641479492,
+          "suffix_arm_mse": 0.03747124597430229
+        },
+        {
+          "length": 20,
+          "noisy": true,
+          "first_arm_mse": 0.03843248263001442,
+          "first_gripper_mse": 0.49335160851478577,
+          "suffix_arm_mse": 0.037470631301403046
+        }
+      ]
+    },
+    {
+      "seed": 1000,
+      "variant": "action_only",
+      "metrics": [
+        {
+          "length": 0,
+          "noisy": false,
+          "first_arm_mse": 0.06779534369707108,
+          "first_gripper_mse": 0.7534655332565308,
+          "suffix_arm_mse": 0.0462026372551918
+        },
+        {
+          "length": 5,
+          "noisy": false,
+          "first_arm_mse": 0.06707224249839783,
+          "first_gripper_mse": 0.5939233899116516,
+          "suffix_arm_mse": 0.048502951860427856
+        },
+        {
+          "length": 5,
+          "noisy": true,
+          "first_arm_mse": 0.06707226485013962,
+          "first_gripper_mse": 0.5939420461654663,
+          "suffix_arm_mse": 0.04850292578339577
+        },
+        {
+          "length": 20,
+          "noisy": false,
+          "first_arm_mse": 0.03840963542461395,
+          "first_gripper_mse": 0.49320778250694275,
+          "suffix_arm_mse": 0.037438955157995224
+        },
+        {
+          "length": 20,
+          "noisy": true,
+          "first_arm_mse": 0.03840978443622589,
+          "first_gripper_mse": 0.49314844608306885,
+          "suffix_arm_mse": 0.03743832930922508
+        }
+      ]
+    }
+  ]
+}
