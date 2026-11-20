@@ -55,24 +55,25 @@ def physics(env):
     return env._env.env.sim.get_state().flatten().copy()
 
 
-def evaluate(suite, task, state, policy, random_switch=False):
+def evaluate(suite, task, state, policy, random_weights=None):
     env, obs = initialize(suite, task, state)
     try:
         fp = observation_fingerprint(obs)
         policy.reset()
         weights = []
         rng = np.random.default_rng(5000 + state)
-        probability = policy.weight
+        initial_weight = policy.weight
         for t in range(520):
-            if random_switch and t % 5 == 0:
-                policy.weight = float(rng.random() < probability)
+            if random_weights is not None and t % 5 == 0:
+                probability, low, high = random_weights
+                policy.weight = high if rng.random() < probability else low
             action = command(policy, obs)
             if t % 5 == 0:
                 weights.append(policy.last_weight)
             obs, _, terminated, truncated, info = env.step(action)
             if terminated or truncated:
                 break
-        policy.weight = probability
+        policy.weight = initial_weight
         return {"fingerprint": fp, "success": bool(info["is_success"]), "ticks": t + 1, "weights": weights}
     finally:
         env.close()
@@ -174,6 +175,8 @@ def main():
             "delayed",
             "mean_delayed",
             "random_delayed",
+            "bounded",
+            "random_bounded",
         ],
     )
     p.add_argument("--gate", type=Path)
@@ -188,15 +191,21 @@ def main():
     manifest = json.loads((args.root / "object_constant.json").read_text())
     switch_file = (
         args.out / f"{args.mode}_switch.json"
-        if args.mode in ("short", "delayed", "motion", "events")
+        if args.mode in ("short", "delayed", "motion", "events", "bounded")
         else None
     )
     policy = ObservedController.from_checkpoints(args.checkpoint, args.root, switch_file)
     if args.mode in ("direct", "collect", "sham", "servo"):
         policy.weight = float(args.mode == "servo")
-    if args.mode in ("mean_delayed", "random_delayed"):
+    random_weights = None
+    if args.mode in ("mean_delayed", "random_delayed", "random_bounded"):
         research = json.loads(args.gate.read_text())
-        policy.weight = research["delayed"]["fit_servo_fraction"]
+        rate = research["delayed"]["fit_servo_fraction"]
+        if args.mode == "mean_delayed":
+            policy.weight = rate
+        else:
+            limits = research["blend_weights"] if args.mode == "random_bounded" else [0.0, 1.0]
+            random_weights = (rate, *limits)
     for i in args.tasks:
         name = manifest["task_names"][i]
         (task,) = [j for j, item in enumerate(suite.tasks) if item.name == name]
@@ -207,7 +216,7 @@ def main():
             value = (
                 collect(suite, task, state, policy, sham=args.mode == "sham")
                 if args.mode in ("collect", "sham")
-                else evaluate(suite, task, state, policy, random_switch=args.mode == "random_delayed")
+                else evaluate(suite, task, state, policy, random_weights=random_weights)
             )
             value.update(task=name, seed=manifest["seed"], initial_state=state, mode=args.mode)
             tmp = dst.with_suffix(".tmp")

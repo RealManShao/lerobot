@@ -111,7 +111,8 @@ class ObservedController:
             score = ((self.features - self.gate["mean"]) / self.gate["scale"]) @ self.gate[
                 "coef"
             ] + self.gate["bias"]
-            self.last_weight = float(score > 0)
+            low, high = self.gate.get("weights", (0.0, 1.0))
+            self.last_weight = high if score > 0 else low
 
     def act(self, external_rgb, wrist_rgb, state):
         """Return a 7-D command, replanning once every five calls."""

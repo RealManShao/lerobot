@@ -119,6 +119,19 @@ def main():
         gate = {k: result[name][k] for k in ("mean", "scale", "coef", "bias")}
         export = {"head_sha256": head_hash, "gate": gate}
         (args.root / f"{name}_switch.json").write_text(json.dumps(export, allow_nan=False, indent=2) + "\n")
+    # Keep the fitted mean authority equal to the demonstration-calibrated constant.
+    delayed = result["delayed"]
+    rate = delayed["fit_servo_fraction"]
+    base = manifest["global_weight"]
+    span = min(base / rate, (1 - base) / (1 - rate)) if 0 < rate < 1 else 0.0
+    low = max(0.0, base - rate * span)
+    high = min(1.0, low + span)
+    result["blend_weights"] = [low, high]
+    cap_gate = {k: delayed[k] for k in ("mean", "scale", "coef", "bias")}
+    cap_gate["weights"] = [low, high]
+    (args.root / "bounded_switch.json").write_text(
+        json.dumps({"head_sha256": head_hash, "gate": cap_gate}, indent=2) + "\n"
+    )
     tmp = args.root / "gate.tmp"
     tmp.write_text(json.dumps(result, allow_nan=False, indent=2) + "\n")
     tmp.replace(args.root / "gate.json")
